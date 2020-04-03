@@ -10,7 +10,7 @@ router.post("/register-patient", [
   check("email", "Please introduce a valid email").isEmail(),
   check("location", "Please complete all the fileds").not().isEmpty().trim().escape(),
   check("password", "Password must be at least 5 characters long").isLength({ min: 5 }),
-  check("passwordRepeat", "Password confirmation is incorrect").custom((value, { req }) => value !== req.body.password ? false: true)
+  check("passwordRepeat", "Password confirmation is incorrect").custom((value, { req }) => value !== req.body.password ? false : true)
 ], async (req, res) => {
   const errors = validationResult(req);
   
