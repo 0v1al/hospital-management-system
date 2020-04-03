@@ -1,0 +1,94 @@
+.navbar {
+	height: var(--body-padding-top);
+	padding: 0 5rem;
+	display: flex;
+	background-color: var(--primary-color);
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: center;
+	color: #fff;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
+	z-index: 9;
+}
+
+.navbarHeader {
+	text-transform: uppercase;
+	font-size: 1.3rem;
+	text-decoration: none;
+	color: #fff;
+	font-weight: 800;
+}
+
+.navbarHeader i {
+	margin-right: .3rem;
+}
+
+.navbarLinks {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.navbarLink {
+	text-decoration: none;
+	color: inherit;
+	margin-left: 2rem;
+	font-size: var(--font-size-m);
+	font-weight: 400;
+	text-transform: uppercase;
+	position: relative;
+}
+
+.navbarLink i {
+	font-size: var(--font-size-x);
+}
+
+.navbarSettings {
+	cursor: pointer;
+}
+
+.navbarSettingsOptions {
+	background-color: rgb(226, 255, 235);
+	position: absolute;
+	box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 10rem;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-90%);
+	display: none;
+	border-radius: .2rem;
+	transition: all 200ms ease-in-out;
+}
+
+.navbarSettingsOptions > a {
+	text-decoration: none;
+	color: var(--text-light);
+	width: 100%;
+	/* text-align: center; */
+	padding: .7rem 0;
+	padding-left: .5rem;
+	font-weight: bold;
+	transition: background-color 200ms ease-in-out;
+}
+
+.navbarSettingsOptions > a > i {
+	font-size: .8rem;
+	margin-right: .3rem;
+	color: var(--primary-color);
+}
+
+.navbarSettingsOptions > a:hover {
+	background-color: rgba(8, 194, 67, 0.315);
+}
+
+.navbarSettings:hover .navbarSettingsOptions {
+	display: flex;
+}

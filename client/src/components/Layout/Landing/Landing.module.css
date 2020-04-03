@@ -1,0 +1,90 @@
+.landing {
+  position: relative;
+  height: calc(100vh - 3rem);
+}
+
+.background {
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center ;
+  height: 100%;
+  margin-left: -6.5rem;
+  z-index: 0;
+}
+
+.cards {
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-left: -6.5rem; /* ! beacause the body has padding-left 13rem, also this is not a good solition */ 
+}
+
+.card {
+  background-color: var(--primary-color-alpha);
+  padding: 1rem;
+  padding-bottom: 2.5rem;
+  width: 30%;
+  border-radius: .2rem;
+  box-shadow: 1px 1px 2px 1px rgba(1, 24, 7, 0.3);
+  height: auto;
+  position: relative;
+}
+
+.link {
+  display: inline-block;
+  background-color: var(--primary-color);
+  text-decoration: none;
+  color: #fff;
+  border-radius: .2rem;
+  padding: .3rem 1rem;
+  text-transform: uppercase;
+  transition: .2s background-color ease-in-out;
+  font-size: .9rem;
+  position: absolute;
+  bottom: .5rem;
+  height: 2rem;
+}
+
+.link:hover {
+  background-color: var(--primary-color-hover);
+}
+
+.title  {
+  margin-bottom: .5rem;
+  font-weight: 800;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+}
+
+.description, .title {
+  color: var(--text-color);
+}
+
+.description {
+  margin-bottom: 1rem;
+}
+
+.facilities {
+  margin-bottom: 1rem;
+  border-bottom: .1rem solid var(--primary-color-alpha);
+}
+
+.facilitie {
+  display: flex;
+  align-items: center;
+  color: var(--text-light);
+  margin-bottom: .3rem;
+}
+
+.facilitie:last-child { margin-bottom: 1rem; }
+
+.facilitie i {
+  color: var(--primary-color);
+  margin-right: .5rem;
+}

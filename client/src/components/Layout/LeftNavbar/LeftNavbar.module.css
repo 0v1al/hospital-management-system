@@ -1,0 +1,76 @@
+.leftNavbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  width: var(--left-navbar-width);
+  background-color:rgb(255, 255, 255);
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, .1);
+  margin-top: var(--body-padding-top);
+}
+
+.leftNavbarHeader {
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
+  background-color: var(--primary-color-alpha);
+  font-weight: lighter;
+  text-transform: uppercase;
+  padding: 1rem .5rem;
+}
+
+.leftNavbarLinks {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  transition: all .2s ease-in-out;
+}
+
+.leftNavbarLink {
+  color: var(--text-light);
+  text-decoration: none;
+  padding: .5rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 200ms ease-in-out;
+  text-transform: uppercase;
+  font-size: var(--font-size-m);
+  font-weight: 600;
+}
+
+.leftNavbarLink:hover {
+  background-color: var(--primary-color-alpha);
+}
+
+.leftNavbarIcon {
+  color: var(--primary-color);
+  margin-right: 1rem;
+}
+
+.leftNavbarArrow {
+  color: var(--primary-color);
+  position: absolute;
+  right: 1rem;
+  transform: rotate(0deg);
+  transition: transform 100ms linear;
+  display: block;
+  pointer-events: none;
+}
+
+.arrowRotate {
+  transform: rotate(90deg);
+  transition: transform 100ms linear;
+}
+
+.showSubmenu {
+  display: block !important;
+}
+
+.hideSubmenu {
+  display: none;
+}
+
+.leftNavbarSubmenuLinks {
+  display: none;
+}
