@@ -9,8 +9,13 @@
   background-repeat: no-repeat;
   background-position: center ;
   height: 100%;
-  margin-left: -6.5rem;
   z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: -13rem;
+  margin-right: -13rem;
+  width: calc(100% + 13rem);
 }
 
 .cards {
@@ -48,6 +53,7 @@
   font-size: .9rem;
   position: absolute;
   bottom: .5rem;
+  border: 1px solid rgba(27,31,35,.2);
   height: 2rem;
 }
 

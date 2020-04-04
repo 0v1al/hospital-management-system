@@ -2,7 +2,8 @@
 	height: var(--body-padding-top);
 	padding: 0 5rem;
 	display: flex;
-	background-color: var(--primary-color);
+	/* background-color: var(--primary-color); */
+	background: var(--gradient);
 	justify-content: space-between;
 	flex-direction: row;
 	align-items: center;
@@ -52,7 +53,7 @@
 }
 
 .navbarSettingsOptions {
-	background-color: rgb(226, 255, 235);
+	background-color: rgb(242, 255, 246);
 	position: absolute;
 	box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
 	display: flex;
@@ -65,7 +66,7 @@
 	transform: translateX(-90%);
 	display: none;
 	border-radius: .2rem;
-	transition: all 200ms ease-in-out;
+	transition: all 100ms ease-in-out;
 }
 
 .navbarSettingsOptions > a {

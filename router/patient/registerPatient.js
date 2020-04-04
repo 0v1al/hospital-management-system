@@ -5,11 +5,11 @@ const Patient = require("../../models/Patient");
 const bcrypt = require("bcrypt");
 
 router.post("/register-patient", [
-  check("firstname", "Please complete all the fileds").trim().escape().not().isEmpty(),
-  check("lastname", "Please complete all the fileds").trim().escape().not().isEmpty(),
-  check("email", "Please introduce a valid email").isEmail(),
-  check("location", "Please complete all the fileds").not().isEmpty().trim().escape(),
-  check("password", "Password must be at least 5 characters long").isLength({ min: 5 }),
+  check("firstname", "Complete all the fileds").trim().escape().not().isEmpty(),
+  check("lastname", "Complete all the fileds").trim().escape().not().isEmpty(),
+  check("email", "Introduce a valid email").isEmail(),
+  check("location", "Complete all the fileds").not().isEmpty().trim().escape(),
+  check("password", "Password is too short").isLength({ min: 5 }),
   check("passwordRepeat", "Password confirmation is incorrect").custom((value, { req }) => value !== req.body.password ? false : true)
 ], async (req, res) => {
   const errors = validationResult(req);
@@ -44,7 +44,7 @@ router.post("/register-patient", [
     res.status(200).send("The account was created");
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Server error, [hint: syntax error, async operation executed incorrectly");
+    res.status(500).send("Server error [register patient]");
   }
 });
 

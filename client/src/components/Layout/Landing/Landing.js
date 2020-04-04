@@ -7,27 +7,26 @@ const Landing = () => {
   return (
     <>
 			<div className={styles.landing}>
-				<div className={styles.overlay}></div>
-				{/* <img src={require("../../../assets/bg5.jpg")} alt="wallpaper" className={styles.background} /> */}
+				<img src={require("../../../assets/bg.jpg")} alt="wallpaper" className={styles.background} />
 				<div className={styles.cards}>
 					<div className={styles.card}>
 						<h3 className={styles.title}>Patients</h3>
 						<p className={styles.description}>Register or Login as a Patient</p>
 						<div className={styles.facilities}>
 							<div className={styles.facilitie}>
-								<i class="fas fa-caret-right"></i>
+								<i className="fas fa-caret-right"></i>
 								<p>Facilities that user can do!</p>
 							</div>
 							<div className={styles.facilitie}>
-								<i class="fas fa-caret-right"></i>
+								<i className="fas fa-caret-right"></i>
 								<p>Facilities that user can do!</p>
 							</div>
 							<div className={styles.facilitie}>
-								<i class="fas fa-caret-right"></i>
+								<i className="fas fa-caret-right"></i>
 								<p>Facilities that user can do!</p>
 							</div>
 							<div className={styles.facilitie}>
-								<i class="fas fa-caret-right"></i>
+								<i className="fas fa-caret-right"></i>
 								<p>Facilities that user can do!</p>
 							</div>
 						</div>
@@ -38,7 +37,11 @@ const Landing = () => {
 						<p className={styles.description}>Login as a Doctor</p>
 						<div className={styles.facilities}>
 							<div className={styles.facilitie}>
-								<i class="fas fa-caret-right"></i>
+								<i className="fas fa-caret-right"></i>
+								<p>Facilities that user can do!</p>
+							</div>
+							<div className={styles.facilitie}>
+								<i className="fas fa-caret-right"></i>
 								<p>Facilities that user can do!</p>
 							</div>
 							<div className={styles.facilitie}>
@@ -46,11 +49,7 @@ const Landing = () => {
 								<p>Facilities that user can do!</p>
 							</div>
 							<div className={styles.facilitie}>
-								<i class="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
-							</div>
-							<div className={styles.facilitie}>
-								<i class="fas fa-caret-right"></i>
+								<i className="fas fa-caret-right"></i>
 								<p>Facilities that user can do!</p>
 							</div>
 						</div>
@@ -61,19 +60,19 @@ const Landing = () => {
 						<p className={styles.description}>Login as an Admin</p>
 						<div className={styles.facilities}>
 							<div className={styles.facilitie}>
-								<i class="fas fa-caret-right"></i>
+								<i className="fas fa-caret-right"></i>
 								<p>Facilities that user can do!</p>
 							</div>
 							<div className={styles.facilitie}>
-								<i class="fas fa-caret-right"></i>
+								<i className="fas fa-caret-right"></i>
 								<p>Facilities that user can do!</p>
 							</div>
 							<div className={styles.facilitie}>
-								<i class="fas fa-caret-right"></i>
+								<i className="fas fa-caret-right"></i>
 								<p>Facilities that user can do!</p>
 							</div>
 							<div className={styles.facilitie}>
-								<i class="fas fa-caret-right"></i>
+								<i className="fas fa-caret-right"></i>
 								<p>Facilities that user can do!</p>
 							</div>
 						</div>

@@ -18,7 +18,7 @@ import  "./App.css";
 
 function App() {
   return (
-    <Router>
+      <Router>
         <Route path="/" component={Navbar} />
         <Route path="/admin-dashboard" component={LeftNavbar} />
         <Route path="/doctor-dashboard" component={LeftNavbarDoctor} />

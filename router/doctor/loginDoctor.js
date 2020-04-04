@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 
 router.post("/login-doctor", [
   check("email", "Introduce a valid email").isEmail(),
-  check("password", "Password must be at least 5 characters long").isLength({ min: 5 })
+  check("password", "Password is too short").isLength({ min: 5 })
 ], async (req, res) => {
   const errors = validationResult(req);
 
@@ -36,7 +36,7 @@ router.post("/login-doctor", [
     res.status(200).json(token);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Server error, [hint: syntax error, async operation executed incorrectly]");
+    res.status(500).send("Server error, [doctor.patient]");
   } 
 });
 

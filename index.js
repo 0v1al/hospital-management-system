@@ -6,20 +6,22 @@ const routeRegisterPatient = require("./router/patient/registerPatient");
 const routeLoginPatient = require("./router/patient/loginPatient");
 const routeLoginDoctor = require("./router/doctor/loginDoctor");
 const routeLoginAdmin = require("./router/admin/loginAdmin");
+const routeLoadPatient = require("./router/patient/loadPatient");
 
 const app = express();
 
-app.use(express.json());
+mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => console.log('Database connection established...'))
+.catch(err => console.log(`${err} [database connection]`));
+
 app.use(cors());
+app.use(express.json());
 
 app.use("/", routeRegisterPatient);
 app.use("/", routeLoginPatient);
 app.use("/", routeLoginDoctor);
 app.use("/", routeLoginAdmin);
-
-mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
-.then(() => console.log('Database connection established...'))
-.catch(err => console.log(err));
+app.use("/", routeLoadPatient);
 
 const port = process.env.PORT || 5000;
 

@@ -13,6 +13,7 @@
 	--font-size-xxx: 1.5rem;
 	--body-padding-top: 3rem;
 	--left-navbar-width: 13rem;
+	--gradient: linear-gradient(146deg, rgb(12, 172, 65) 33%, rgb(8, 175, 61) 94%);
 }
 
 * {
@@ -36,4 +37,39 @@ body {
 
 h1, h2, h3 {
 	line-height: 1;
+}
+
+.alerts {
+	width: 100%;
+	margin-bottom: 2rem;
+	position: relative;
+}
+
+.alert {
+	text-align: center;
+	padding: .5rem;
+	text-transform: uppercase;
+	font-size: .9rem;
+	position: relative;
+	margin-bottom: .3rem;
+	transition: all .2 ease-in-out;
+	width: 100%;
+	color: #fff;
+	border-radius: .2rem;
+	box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, .1);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.alert:last-child() {
+	margin-bottom: 2rem;
+}
+
+.alert-success {
+	background-color: rgba(8, 194, 67, .9);
+}
+
+.alert-fail {
+	background-color: rgba(255, 0, 0, 0.9);
 }
