@@ -11,6 +11,17 @@
   color: var(--text-light);
   letter-spacing: .1rem;
   font-weight: 400;
+  position: relative;
+}
+
+.titleAdminDashboard::before {
+  content: "";
+  position: absolute;
+  background-color: var(--primary-color);
+  width: 8rem;
+  height: .13rem;
+  bottom: -.8rem;
+  border-radius: .1rem;
 }
 
 .adminDashboardCards {

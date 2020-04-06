@@ -9,6 +9,7 @@ const routeLoginAdmin = require("./router/admin/loginAdmin");
 const routeLoadPatient = require("./router/patient/loadPatient");
 const routeLoadAdmin = require("./router/admin/loadAdmin");
 const routeDoctor = require("./router/doctor/loadDoctor");
+const routeSpecialization = require("./router/doctor/specialization");
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/", routeLoginDoctor);
 app.use("/", routeDoctor);
 app.use("/", routeLoginAdmin);
 app.use("/", routeLoadAdmin);
+app.use("/", routeSpecialization);
 
 const port = process.env.PORT || 5000;
 

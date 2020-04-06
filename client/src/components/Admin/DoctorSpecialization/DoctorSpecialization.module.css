@@ -1,0 +1,78 @@
+.formDoctorSpecialization {
+  width: 50%;
+  margin-top: 3rem;
+}
+
+.btnDoctorSpecialization {
+  width: 25% !important;
+  padding: .1rem .3rem !important;
+}
+
+.containerTable {
+  border-top: .01rem solid var(--primary-color);
+  padding-top: 3rem;
+  margin-top: 3rem;
+}
+
+.descDoctorSpecialization {
+  color: var(--text-light);
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 1.1rem;
+}
+
+.tableDoctorSpecialization {
+  margin-top: 1.5rem;
+  border-collapse: collapse;
+  background-color: var(--primary-color-alpha);
+  overflow: hidden;
+  width: 500px;
+  border-radius: .2rem;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, .2);
+  width: 100%;
+  min-height: 10rem;
+  position: relative;
+}
+
+.tableDoctorSpecializationRow {
+  transition: background-color 200ms ease-in-out;
+}
+
+.tableDoctorSpecializationRow:hover {
+  background-color: var(--primary-color-alpha-hover);
+}
+
+.tableDoctorSpecializationRow:nth-child(odd) {
+  background-color: var(--primary-color-alpha-hover);
+}
+
+.tableDoctorSpecializationRow th {
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 100 !important;
+}
+
+.tableDoctorSpecializationRow th, .tableDoctorSpecializationRow td {
+  text-align: left;
+  padding: 10px;
+}
+
+.editDoctorSpecialization, .removeDoctorSpecialization {
+  cursor: pointer;
+}
+
+.editDoctorSpecialization i, .removeDoctorSpecialization i {
+  transition: transform 200ms ease-in-out;
+}
+
+.editDoctorSpecialization:hover i, .removeDoctorSpecialization:hover i {
+  transform: scale(1.4);
+}
+
+.editDoctorSpecialization {
+  color: var(--primary-color);
+}
+
+.removeDoctorSpecialization {
+  color: rgba(255, 0, 0, 0.719);
+}

@@ -7,7 +7,9 @@ import {
   LOAD_ADMIN, 
   LOGIN_SUCCESS_ADMIN, 
   LOGIN_FAIL_ADMIN, 
-  LOGOUT_ADMIN
+  LOGOUT_ADMIN,
+  ADD_SPECIALIZATION,
+  LOAD_SPECIALIZATIONS
 } from "./types";
 
 export const loadAdmin = () => async dispatch => {
@@ -51,6 +53,46 @@ export const loginAdmin = (credentials, history) => async dispatch => {
     dispatch({
       type: LOGIN_FAIL_ADMIN
     });
+
+    console.error(err);
+  }
+};
+
+export const addSpecialization = specialization => async dispatch => {
+  const body = JSON.stringify({ specialization });
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  try {
+    let result = await axios.post("http://localhost:5000/add-specialization", body, config);
+    dispatch({
+      type: ADD_SPECIALIZATION,
+      data: result.data
+    });
+    dispatch(createAlert("Specialization added", "success", 2000));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail")));
+    }
+
+    console.error(err);
+  }
+};
+
+export const loadSpecializations = () => async dispatch => {
+  try {
+    let result = await axios.get("http://localhost:5000/load-specializations");
+    dispatch({
+      type: LOAD_SPECIALIZATIONS,
+      data: result.data
+    });
+  } catch (err) {
+    console.error(err);
   }
 };
 

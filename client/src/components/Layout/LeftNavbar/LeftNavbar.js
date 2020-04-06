@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import styles from "./LeftNavbar.module.css";
+import { Link } from "react-router-dom";
 
 const LeftNavbar = () => {
   const [openSubmenu, toggleSubmenu] = useState(true);
@@ -36,10 +37,10 @@ const LeftNavbar = () => {
             <i className={[`fas fa-chevron-right ${styles.leftNavbarArrow}`].join(" ")}></i>
           </a>
           <ul href="#!" className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
+            <Link to="/admin-doctor-specialization" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
             {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               Doctor Specialization
-            </a>
+            </Link>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
               {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               Add Doctor
