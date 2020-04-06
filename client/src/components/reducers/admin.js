@@ -1,8 +1,8 @@
 import { 
-  LOAD_PATIENT,
-  LOGIN_SUCCESS_PATIENT,
-  LOGIN_FAIL_PATIENT,
-  LOGOUT_PATIENT
+  LOAD_ADMIN,
+  LOGIN_SUCCESS_ADMIN,
+  LOGIN_FAIL_ADMIN,
+  LOGOUT_ADMIN
 } from "../actions/types";
 
 const initialState = {
@@ -17,22 +17,22 @@ const initialState = {
 
 export default function patient (state = initialState, action) {
   switch (action.type) {
-    case LOAD_PATIENT:
+    case LOAD_ADMIN:
       return {
         ...state,
         logged: true,
         loading: false,
-        firstLogin: true,
-        ...action.data
+        ...action.data,
+        firstLogin: true
       }
-    case LOGIN_SUCCESS_PATIENT:
+    case LOGIN_SUCCESS_ADMIN:
       return {
         ...state,
         logged: true,
         loading: false
       };
-    case LOGIN_FAIL_PATIENT:
-    case LOGOUT_PATIENT:
+    case LOGIN_FAIL_ADMIN:
+    case LOGOUT_ADMIN:
       return {
         ...state,
         logged: false,

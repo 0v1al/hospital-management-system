@@ -7,6 +7,8 @@ const routeLoginPatient = require("./router/patient/loginPatient");
 const routeLoginDoctor = require("./router/doctor/loginDoctor");
 const routeLoginAdmin = require("./router/admin/loginAdmin");
 const routeLoadPatient = require("./router/patient/loadPatient");
+const routeLoadAdmin = require("./router/admin/loadAdmin");
+const routeDoctor = require("./router/doctor/loadDoctor");
 
 const app = express();
 
@@ -19,9 +21,11 @@ app.use(express.json());
 
 app.use("/", routeRegisterPatient);
 app.use("/", routeLoginPatient);
-app.use("/", routeLoginDoctor);
-app.use("/", routeLoginAdmin);
 app.use("/", routeLoadPatient);
+app.use("/", routeLoginDoctor);
+app.use("/", routeDoctor);
+app.use("/", routeLoginAdmin);
+app.use("/", routeLoadAdmin);
 
 const port = process.env.PORT || 5000;
 

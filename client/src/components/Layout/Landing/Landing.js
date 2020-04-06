@@ -1,13 +1,29 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 import styles from "./Landing.module.css";
 
-const Landing = () => {
+const Landing = ({ loggedAdmin, loggedDoctor, loggedPatient }) => {
+	if (loggedAdmin || loggedDoctor || loggedPatient) {
+		if (loggedAdmin) {
+				return <Redirect to="/admin-dashboard"/>
+		}
+		
+		if (loggedDoctor) {
+			return <Redirect to="/doctor-dashboard"/>
+		}
+		
+		if (loggedPatient) {
+			return <Redirect to="/patient-dashboard"/>
+		}
+	}
+
   return (
     <>
 			<div className={styles.landing}>
 				<img src={require("../../../assets/bg.jpg")} alt="wallpaper" className={styles.background} />
+				<h2 className={styles.landingTitle}>Hospital Management System</h2>
 				<div className={styles.cards}>
 					<div className={styles.card}>
 						<h3 className={styles.title}>Patients</h3>
@@ -45,7 +61,7 @@ const Landing = () => {
 								<p>Facilities that user can do!</p>
 							</div>
 							<div className={styles.facilitie}>
-								<i class="fas fa-caret-right"></i>
+								<i className="fas fa-caret-right"></i>
 								<p>Facilities that user can do!</p>
 							</div>
 							<div className={styles.facilitie}>
@@ -84,4 +100,10 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+const mapStateToProps = state => ({
+	loggedAdmin: state.admin.logged,
+	loggedDoctor: state.doctor.logged,
+	loggedPatient: state.patient.logged
+})
+
+export default connect(mapStateToProps)(Landing);

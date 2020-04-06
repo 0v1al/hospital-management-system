@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { loadAdmin } from "../../actions/admin"; 
 
 import styles from "./AdminDashboard.module.css";
 
-const AdminDashboard = () => {
+const AdminDashboard = ({ loadAdmin }) => {
+  useEffect(() => {
+    const fetch = async () => {
+      loadAdmin();
+    }
+
+    fetch();
+  }, [loadAdmin])
+
   return (
     <div className={styles.adminDashboardContainer}>
       <h1 className={styles.titleAdminDashboard}>admin | dashboard</h1>
@@ -47,4 +57,4 @@ const AdminDashboard = () => {
   );  
 };
 
-export default AdminDashboard;
+export default connect(null, { loadAdmin })(AdminDashboard);

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setCookie, getCookie } from "../cookie";
+import { setCookie, getCookie, removeCookie } from "../cookie";
 import { createAlert } from "./alert";
 import setAxiosHeader from "../setAxiosHeader";
 
@@ -7,8 +7,7 @@ import {
   LOAD_PATIENT, 
   LOGIN_SUCCESS_PATIENT, 
   LOGIN_FAIL_PATIENT, 
-  REGISTER_FAIL_PATIENT, 
-  REGISTER_SUCCESS_PATIENT
+  LOGOUT_PATIENT
 } from "./types";
 
 export const loadPatient = () => async dispatch => {
@@ -35,8 +34,8 @@ export const registerPatient = (credentials, history) => async dispatch => {
   };
   try {
     let result = await axios.post("http://localhost:5000/register-patient", body, config);
-    dispatch(createAlert("The account was created", "success", 2000));
-    setTimeout(() => history.push("/login-patient"), 3000);
+    dispatch(createAlert("The account was created", "success", 1000));
+    setTimeout(() => history.push("/login-patient"), 1000);
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -70,5 +69,16 @@ export const loginPatient = (credentials, history) => async dispatch => {
       errors.forEach(error => dispatch(createAlert(error.msg, "fail")));
     }
 
+    dispatch({
+      type: LOGIN_FAIL_PATIENT 
+    });
   }
+};
+
+export const logoutPatient = history => dispatch => {
+  removeCookie("token");
+  dispatch({
+    type: LOGOUT_PATIENT
+  });
+  history.push("/");
 };

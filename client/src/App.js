@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { PrivateRoute } from "./components/PrivateRoute";
 
 import Navbar from "./components/Layout/Navbar/Navbar";
 import Landing from "./components/Layout/Landing/Landing";
@@ -29,9 +30,9 @@ function App() {
           <Route exact path="/login-patient" component={LoginPatient}/>
           <Route exact path="/login-admin" component={LoginAdmin}/>
           <Route exact path="/register-patient" component={RegisterPatient}/>
-          <Route exact path="/admin-dashboard" component={AdminDashboard} />
-          <Route exact path="/doctor-dashboard" component={DoctorDashboard} />
-          <Route exact path="/patient-dashboard" component={PatientDashboard} />
+          <PrivateRoute exact path="/admin-dashboard" component={AdminDashboard} />
+          <PrivateRoute exact path="/doctor-dashboard" component={DoctorDashboard} />
+          <PrivateRoute exact path="/patient-dashboard" component={PatientDashboard} />
         </Switch>
     </Router>
   );

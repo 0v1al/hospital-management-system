@@ -10,20 +10,20 @@ router.post("/login-doctor", [
   check("password", "Password is too short").isLength({ min: 5 })
 ], async (req, res) => {
   const errors = validationResult(req);
+  const { email, password } = req.body;
 
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
 
   try {
-    const { email, password } = req.body;
     let doctor = await Doctor.findOne({ email });
-
     if (!doctor) {
       return res.status(422).json({ errors: [{ msg: "Invalid credentials" }] });
     }
-
-    const match = await bcrypt.compare(password, doctor.password);
+    
+    // const match = await bcrypt.compare(password, doctor.password);
+    const match = password === doctor.password;
 
     if (!match) {
       return res.status(422).json({ errors: [{ msg: "Invalid credentials" }] });
@@ -33,7 +33,7 @@ router.post("/login-doctor", [
 
     // let decoded = await jwt.verify(token, process.env.PRIVATE_KEY);  
     
-    res.status(200).json(token);
+    return res.status(200).json(token);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error, [doctor.patient]");

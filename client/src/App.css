@@ -60,6 +60,9 @@ h1, h2, h3 {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	animation-name: fadeIn;
+  animation-fill-mode: forwards;
+  animation-duration: 750ms;
 }
 
 .alert:last-child() {
@@ -72,4 +75,9 @@ h1, h2, h3 {
 
 .alert-fail {
 	background-color: rgba(255, 0, 0, 0.9);
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; margin-top: -5rem; }
+  100% { opacity: 1; margin-top: 0; }
 }

@@ -1,0 +1,16 @@
+.loadingSpinner {
+  pointer-events: none;
+	width: 2.5em;
+	height: 2.5em;
+	border: 0.4rem solid transparent;
+	border-color: var(--primary-color-alpha);
+	border-top-color: var(--primary-color);
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	100% {
+			transform: rotate(360deg)
+	}
+}

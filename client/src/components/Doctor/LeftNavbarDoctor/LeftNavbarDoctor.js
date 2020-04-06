@@ -36,16 +36,16 @@ const LeftNavbarDoctor = () => {
             <i className={[`fas fa-chevron-right ${styles.leftNavbarArrow}`].join(" ")}></i>
           </a>
           <ul className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
-            <a href="#!" className={styles.leftNavbarLink}>
-            <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i>
+            <a href="#!"className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
+            {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
-            <a href="#!" className={styles.leftNavbarLink}>
-              <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i>
+            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
+              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
-            <a href="#!" className={styles.leftNavbarLink}>
-              <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i>
+            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
+              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
           </ul>

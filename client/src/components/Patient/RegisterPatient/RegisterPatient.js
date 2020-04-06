@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { registerPatient  } from "../../actions/patient";
+import { removeCookie } from "../../cookie";
 
 import styles from "../../Admin/LoginAdmin/LoginAdmin.module.css";
 
@@ -15,6 +16,10 @@ const RegisterPatient = ({ alerts, registerPatient, history }) => {
     passwordRepeat: ""
   });
 
+  useEffect(() => {
+    removeCookie("token");
+  }, [])
+
   const { firstname, lastname, email, location, password, passwordRepeat } = input;
 
   const registerPatientSubmit = async e => {
@@ -26,11 +31,11 @@ const RegisterPatient = ({ alerts, registerPatient, history }) => {
     <>
      <img src={require("../../../assets/bg3.jpg")} alt="wallpaper" className={[styles.background, styles.bg].join(" ")} />
       <form className={[styles.form, styles.formRegister].join(" ")} onSubmit={e => registerPatientSubmit(e)}>
-        <div className="alerts">
-          {alerts && alerts.map(alert => 
-            <span key={alert.id} className={`alert alert-${alert.type}`}>{alert.msg}</span>
-          )}
-        </div>
+        {alerts.length > 0 && <div className="alerts">{alerts.map(alert => 
+          <span key={alert.id} className={`alert alert-${alert.type}`}>{alert.msg}</span>
+          )} 
+          </div>
+        }
         <div className={styles.description}>
           <h1><i className="fas fa-user"></i>{" "}Patient</h1>
           <p>Register as a Patient</p>
@@ -76,6 +81,10 @@ const RegisterPatient = ({ alerts, registerPatient, history }) => {
         </div>
         <input type="submit" value="Register"/>
         <span className={styles.span}>Already registered? Login <Link to="/login-patient">here</Link></span>
+         <Link to="/" className={styles.back}>
+          <i className="fas fa-chevron-left"></i>
+           Back
+         </Link>
       </form>
     </>
   );

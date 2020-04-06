@@ -1,22 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { loadDoctor } from "../../actions/doctor";
 
 import styles from "../../Admin/AdminDashboard/AdminDashboard.module.css";
 
-const DoctorDashboard = () => {
+const DoctorDashboard = ({ loadDoctor }) => {
+  useEffect(() => {
+    const fetch = async () => {
+      loadDoctor();
+    }
+
+    fetch();
+  }, [loadDoctor])
+
   return (
     <div className={styles.adminDashboardContainer}>
       <h1 className={styles.titleAdminDashboard}>doctor | dashboard</h1>
       <div className={[styles.adminDashboardCards, styles.doctorCards].join(" ")}>
         <div className={styles.adminDashboardCard}>
           <span className={styles.adminDashboardCardIcon}>
-            <i class="fas fa-user"></i>
+            <i className="fas fa-user"></i>
           </span>
           <h3 className={styles.adminDashboardCardTitle}>My Profile</h3>
           <p className={styles.adminDashboardCardDesc}>Update Profile</p>
         </div>
         <div className={styles.adminDashboardCard}>
           <span className={styles.adminDashboardCardIcon}>
-            <i class="fas fa-clipboard-list"></i>
+            <i className="fas fa-clipboard-list"></i>
           </span>
           <h3 className={styles.adminDashboardCardTitle}>My Appointments</h3>
           <p className={styles.adminDashboardCardDesc}>View Appointments History</p>
@@ -26,4 +36,4 @@ const DoctorDashboard = () => {
   );  
 };
 
-export default DoctorDashboard;
+export default connect(null, { loadDoctor })(DoctorDashboard);

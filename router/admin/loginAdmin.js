@@ -23,7 +23,8 @@ router.post("/login-admin", [
       return res.status(422).json({ errors: [{ msg: "Invalid credentials" }] });
     }
 
-    const match = await bcrypt.compare(password, admin.password);
+    // const match = await bcrypt.compare(password, admin.password);
+    const match = password === admin.password;
 
     if (!match) {
       return res.status(422).json({ errors: [{ msg: "Invalid credentials" }] });
@@ -31,8 +32,6 @@ router.post("/login-admin", [
 
     const token = await jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 60), user: { id: admin._id }, algorithm: "HS384"}, process.env.PRIVATE_KEY);
 
-    // let decoded = await jwt.verify(token, process.env.PRIVATE_KEY);  
-    
     res.status(200).json(token);
   } catch (error) {
     console.error(error.message);

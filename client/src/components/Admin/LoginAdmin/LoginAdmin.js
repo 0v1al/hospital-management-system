@@ -1,30 +1,46 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { withRouter, Redirect, Link } from "react-router-dom";
+import { loginAdmin } from "../../actions/admin";
 
 import styles from "./LoginAdmin.module.css";
 
-const LoginAdmin = ({ alerts }) => {
+const LoginAdmin = ({ alerts, loginAdmin, history, loggedAdmin, loggedDoctor, loggedPatient }) => {
   const [input, setInput] = useState({
     email: "",
     password: ""
   });
 
+  if (loggedAdmin || loggedDoctor || loggedPatient) {
+    if (loggedAdmin) {
+        return <Redirect to="/admin-dashboard"/>
+    }
+    
+    if (loggedDoctor) {
+      return <Redirect to="/doctor-dashboard"/>
+    }
+    
+    if (loggedPatient) {
+      return <Redirect to="/patient-dashboard"/>
+    }
+  }
+
   const { email, password } = input;
 
   const loginAdminSubmit = e => {
     e.preventDefault();
-    console.log(input);
+    loginAdmin(input, history);
   }
 
   return (
     <>
      <img src={require("../../../assets/bg2.jpg")} alt="wallpaper" className={styles.background} />
       <form className={styles.form} onSubmit={e => loginAdminSubmit(e)}>
-        <div className="alerts">
-          {alerts && alerts.map(alert => 
+        {alerts.length > 0 && <div className="alerts">{alerts.map(alert => 
             <span key={alert.id} className={`alert alert-${alert.type}`}>{alert.msg}</span>
-          )}
-        </div>
+          )} 
+          </div>
+        }
         <div className={styles.description}>
           <h1><i className="fas fa-user-cog"></i>{" "}Admin</h1>
           <p>Login as an admin</p>
@@ -43,13 +59,20 @@ const LoginAdmin = ({ alerts }) => {
           <span>[* = required]</span>
         </div>
         <input type="submit" value="Login"/>
+        <Link to="/" className={styles.back}>
+          <i className="fas fa-chevron-left"></i>
+          Back
+        </Link>
       </form>
     </>
   );
 }
 
 const mapStateToProps = state => ({
-  alerts: state.alert
+  alerts: state.alert,
+  loggedAdmin: state.admin.firstLogin,
+  loggedDoctor: state.doctor.firstLogin,
+  loggedPatient: state.patient.firstLogin
 });
 
-export default  connect(mapStateToProps)(LoginAdmin);
+export default  connect(mapStateToProps, { loginAdmin })(withRouter(LoginAdmin));
