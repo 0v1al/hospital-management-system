@@ -9,7 +9,9 @@ import {
   LOGIN_FAIL_ADMIN, 
   LOGOUT_ADMIN,
   ADD_SPECIALIZATION,
-  LOAD_SPECIALIZATIONS
+  LOAD_SPECIALIZATIONS,
+  REMOVE_SPECIALIZATION,
+  EDIT_SPECIALIZATION
 } from "./types";
 
 export const loadAdmin = () => async dispatch => {
@@ -84,6 +86,45 @@ export const addSpecialization = specialization => async dispatch => {
   }
 };
 
+export const removeSpecialization = specializationName => async dispatch => {
+  try {
+    await axios.delete(`http://localhost:5000/remove-specialization/${specializationName}`);
+    dispatch({
+      type: REMOVE_SPECIALIZATION,
+      data: specializationName.toLowerCase()
+    })
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const editSpecialization = (specialization, newSpecialization) => async dispatch => {
+  const body = JSON.stringify({ specialization, newSpecialization });
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  try {
+    let newSpecialization =  await axios.put("http://localhost:5000/edit-specialization", body, config);
+    const result = { specialization, newSpecialization: newSpecialization.data }
+    console.log(result);
+    dispatch({
+      type: EDIT_SPECIALIZATION,
+      data: result
+    });
+    dispatch(createAlert("The specialization was edited", "success", 2000));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail")));
+    }
+
+    console.error(err.message);
+  }
+}
+
 export const loadSpecializations = () => async dispatch => {
   try {
     let result = await axios.get("http://localhost:5000/load-specializations");
@@ -92,7 +133,7 @@ export const loadSpecializations = () => async dispatch => {
       data: result.data
     });
   } catch (err) {
-    console.error(err);
+    console.error(err.message);
   }
 };
 

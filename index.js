@@ -9,11 +9,11 @@ const routeLoginAdmin = require("./router/admin/loginAdmin");
 const routeLoadPatient = require("./router/patient/loadPatient");
 const routeLoadAdmin = require("./router/admin/loadAdmin");
 const routeDoctor = require("./router/doctor/loadDoctor");
-const routeSpecialization = require("./router/doctor/specialization");
+const routeSpecialization = require("./router/admin/specialization");
 
 const app = express();
 
-mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
 .then(() => console.log('Database connection established...'))
 .catch(err => console.log(`${err} [database connection]`));
 

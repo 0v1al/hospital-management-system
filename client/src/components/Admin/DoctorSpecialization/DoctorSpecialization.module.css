@@ -76,3 +76,15 @@
 .removeDoctorSpecialization {
   color: rgba(255, 0, 0, 0.719);
 }
+
+.editSpecialization:disabled {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: #000;
+  font-size: 1rem;
+}
+
+.editSpecialization::placeholder {
+  color: #000;
+}

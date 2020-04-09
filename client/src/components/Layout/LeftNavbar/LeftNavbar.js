@@ -38,13 +38,11 @@ const LeftNavbar = () => {
           </a>
           <ul href="#!" className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
             <Link to="/admin-doctor-specialization" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-            {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               Doctor Specialization
             </Link>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
+            <Link to="/admin-add-doctor" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
               Add Doctor
-            </a>
+            </Link>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
               {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               Manage Doctors
@@ -59,15 +57,12 @@ const LeftNavbar = () => {
           </a>
           <ul className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-            {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
           </ul>
@@ -80,15 +75,12 @@ const LeftNavbar = () => {
           </a>
           <ul className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-            {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
           </ul>
@@ -107,15 +99,12 @@ const LeftNavbar = () => {
           </a>
           <ul className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-            {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
           </ul>
@@ -140,15 +129,12 @@ const LeftNavbar = () => {
           </a>
           <ul className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-            {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
             <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
               link1
             </a>
           </ul>

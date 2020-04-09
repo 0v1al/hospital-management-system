@@ -15,6 +15,7 @@ import DoctorDashboard from "./components/Doctor/DoctorDashboard/DoctorDashboard
 import LeftNavbarPatient from "./components/Patient/LeftNavbarPatient/LeftNavbarPatient";
 import PatientDashboard from "./components/Patient/PatientDashboard/PatientDashboard";
 import DoctorSpecialization from "./components/Admin/DoctorSpecialization/DoctorSpecialization";
+import AddDoctor from "./components/Admin/AddDoctor/AddDoctor";
 
 import  "./App.css";
 
@@ -22,8 +23,7 @@ function App() {
   return (
       <Router>
         <Route path="/" component={Navbar} />
-        <Route path="/admin-dashboard" component={LeftNavbar} />
-        <Route path="/admin-doctor-specialization" component={LeftNavbar} />
+        <Route path="/admin-*" component={LeftNavbar} />
         <Route path="/doctor-dashboard" component={LeftNavbarDoctor} />
         <Route path="/patient-dashboard" component={LeftNavbarPatient} />
         <Switch>
@@ -34,6 +34,7 @@ function App() {
           <Route exact path="/register-patient" component={RegisterPatient}/>
           <PrivateRoute exact path="/admin-dashboard" component={AdminDashboard} />
           <PrivateRoute exact path="/admin-doctor-specialization" component={DoctorSpecialization} />
+          <PrivateRoute exact path="/admin-add-doctor" component={AddDoctor} />
           <PrivateRoute exact path="/doctor-dashboard" component={DoctorDashboard} />
           <PrivateRoute exact path="/patient-dashboard" component={PatientDashboard} />
         </Switch>
