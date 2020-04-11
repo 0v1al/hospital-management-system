@@ -4,27 +4,27 @@ import { createAlert } from "./alert";
 import setAxiosHeader from "../setAxiosHeader";
 
 import { 
-  LOAD_PATIENT, 
-  LOGIN_SUCCESS_PATIENT, 
-  LOGIN_FAIL_PATIENT, 
-  LOGOUT_PATIENT
+  LOAD_USER, 
+  LOGIN_SUCCESS_USER, 
+  LOGIN_FAIL_USER, 
+  LOGOUT_USER
 } from "./types";
 
-export const loadPatient = () => async dispatch => {
+export const loadUser = () => async dispatch => {
   const token = getCookie("token");
   setAxiosHeader(token);
   try {
-    const res = await axios.get("http://localhost:5000/load-patient");
+    const res = await axios.get("http://localhost:5000/load-user");
     dispatch({
-      type: LOAD_PATIENT,
+      type: LOAD_USER,
       data: res.data
     });
   } catch (err) {
-    console.error(err);
+    console.error(err.message);
   }
 };
 
-export const registerPatient = (credentials, history) => async dispatch => {
+export const registerUser = (credentials, history) => async dispatch => {
   const { firstname, lastname, location, email, password, passwordRepeat } = credentials;
   const body = JSON.stringify({ firstname, lastname, location,  email, password, passwordRepeat });
   const config = {
@@ -33,19 +33,19 @@ export const registerPatient = (credentials, history) => async dispatch => {
     }
   };
   try {
-    let result = await axios.post("http://localhost:5000/register-patient", body, config);
+    await axios.post("http://localhost:5000/register-user", body, config);
     dispatch(createAlert("The account was created", "success", 1000));
-    setTimeout(() => history.push("/login-patient"), 1000);
+    setTimeout(() => history.push("/login-user"), 1000);
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
       errors.forEach(error => dispatch(createAlert(error.msg, "fail")));
     }
-    console.error(err);
+    console.error(err.message);
   }
 };
 
-export const loginPatient = (credentials, history) => async dispatch => {
+export const loginUser = (credentials, history) => async dispatch => {
   const { email, password } = credentials;
   const body = JSON.stringify({ email, password });
   const config = {
@@ -54,14 +54,14 @@ export const loginPatient = (credentials, history) => async dispatch => {
     }
   };
   try {
-    let result = await axios.post("http://localhost:5000/login-patient", body, config);
+    let result = await axios.post("http://localhost:5000/login-user", body, config);
     const token = result.data;
     setCookie("token", token, 1000 * 60 * 60);
     dispatch({
-      type: LOGIN_SUCCESS_PATIENT
+      type: LOGIN_SUCCESS_USER
     });
     dispatch(createAlert("Logged successfully", "success", 1000));
-    setTimeout(() => history.push("/patient-dashboard"), 2000);
+    setTimeout(() => history.push("/user-dashboard"), 2000);
   } catch (err) {
     const errors = err.response.data.errors;
     
@@ -70,15 +70,17 @@ export const loginPatient = (credentials, history) => async dispatch => {
     }
 
     dispatch({
-      type: LOGIN_FAIL_PATIENT 
+      type: LOGIN_FAIL_USER
     });
+
+    console.error(err.message);
   }
 };
 
-export const logoutPatient = history => dispatch => {
+export const logoutUser = history => dispatch => {
   removeCookie("token");
   dispatch({
-    type: LOGOUT_PATIENT
+    type: LOGOUT_USER
   });
   history.push("/");
 };

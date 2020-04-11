@@ -25,10 +25,10 @@ const LeftNavbar = () => {
       <h3 className={styles.leftNavbarHeader}>main navigation</h3>
       <ul className={styles.leftNavbarLinks}>
         <li>
-          <a href="#!" className={styles.leftNavbarLink}>
+          <Link to="/admin-dashboard" className={styles.leftNavbarLink}>
             <i className={[`fas fa-home ${styles.leftNavbarIcon}`].join(" ")}></i>
             Dashboard
-          </a>
+          </Link>
         </li>
         <li>
           <a href="#!" className={styles.leftNavbarLink} onClick={e => toggleLeftnavbarSubmenu(e)}>
@@ -43,47 +43,22 @@ const LeftNavbar = () => {
             <Link to="/admin-add-doctor" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
               Add Doctor
             </Link>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
+            <Link to="/admin-manage-doctor" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
               Manage Doctors
-            </a>
+            </Link>
           </ul>
         </li>
         <li>
-          <a href="#!" className={styles.leftNavbarLink} onClick={e => toggleLeftnavbarSubmenu(e)}>
+          <Link to="/admin-users" className={styles.leftNavbarLink}>
             <i className={[`fas fa-user ${styles.leftNavbarIcon}`].join(" ")}></i>
             Users
-            <i className={[`fas fa-chevron-right ${styles.leftNavbarArrow}`].join(" ")}></i>
-          </a>
-          <ul className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              link1
-            </a>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              link1
-            </a>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              link1
-            </a>
-          </ul>
+          </Link>
         </li>
         <li>
-          <a href="#!" className={styles.leftNavbarLink} onClick={e => toggleLeftnavbarSubmenu(e)}>
+          <Link to="/admin-patients" className={styles.leftNavbarLink}>
             <i className={[`fas fa-user-injured ${styles.leftNavbarIcon}`].join(" ")}></i>
             Patients
-            <i className={[`fas fa-chevron-right ${styles.leftNavbarArrow}`].join(" ")}></i>
-          </a>
-          <ul className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              link1
-            </a>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              link1
-            </a>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              link1
-            </a>
-          </ul>
+          </Link>
         </li>
         <li>
           <a href="#!" className={styles.leftNavbarLink}>
@@ -98,15 +73,12 @@ const LeftNavbar = () => {
             <i className={[`fas fa-chevron-right ${styles.leftNavbarArrow}`].join(" ")}></i>
           </a>
           <ul className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              link1
-            </a>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              link1
-            </a>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              link1
-            </a>
+            <Link to="/admin-unread-queries" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
+              Unread Queries
+            </Link>
+            <Link to="admin-read-queries" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
+              Read Queries
+            </Link>
           </ul>
         </li>
         <li>

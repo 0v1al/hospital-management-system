@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import { registerPatient  } from "../../actions/patient";
+import { registerUser  } from "../../actions/user";
 import { removeCookie } from "../../cookie";
 
 import styles from "../../Admin/LoginAdmin/LoginAdmin.module.css";
 
-const RegisterPatient = ({ alerts, registerPatient, history }) => {
+const RegisterUser = ({ alerts, registerUser, history }) => {
   const [input, setInput] = useState({
     firstname: "",
     lastname: "",
@@ -22,15 +22,15 @@ const RegisterPatient = ({ alerts, registerPatient, history }) => {
 
   const { firstname, lastname, email, location, password, passwordRepeat } = input;
 
-  const registerPatientSubmit = async e => {
+  const registerUserSubmit = async e => {
     e.preventDefault();
-    registerPatient(input, history);
+    registerUser(input, history);
   };
 
   return (
     <>
      <img src={require("../../../assets/bg3.jpg")} alt="wallpaper" className={[styles.background, styles.bg].join(" ")} />
-      <form className={[styles.form, styles.formRegister].join(" ")} onSubmit={e => registerPatientSubmit(e)}>
+      <form className={[styles.form, styles.formRegister].join(" ")} onSubmit={e => registerUserSubmit(e)}>
         {alerts.length > 0 && <div className="alerts">{alerts.map(alert => 
           <span key={alert.id} className={`alert alert-${alert.type}`}>{alert.msg}</span>
           )} 
@@ -80,7 +80,7 @@ const RegisterPatient = ({ alerts, registerPatient, history }) => {
           <span>[* = required]</span>
         </div>
         <input type="submit" value="Register"/>
-        <span className={styles.span}>Already registered? Login <Link to="/login-patient">here</Link></span>
+        <span className={styles.span}>Already registered? Login <Link to="/login-user">here</Link></span>
          <Link to="/" className={styles.back}>
           <i className="fas fa-chevron-left"></i>
            Back
@@ -94,4 +94,4 @@ const mapStateToProps = state => ({
   alerts: state.alert
 });
 
-export default connect(mapStateToProps, { registerPatient })(withRouter(RegisterPatient));
+export default connect(mapStateToProps, { registerUser })(withRouter(RegisterUser));

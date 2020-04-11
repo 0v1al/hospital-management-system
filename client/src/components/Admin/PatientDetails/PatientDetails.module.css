@@ -1,0 +1,31 @@
+.desc {
+  font-size: .9rem !important;
+}
+
+.desc i {
+  margin-right: .5rem;
+  color: var(--primary-color);
+}
+
+.pacientsDetails {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-bottom: 3rem;
+  border-bottom: .01rem solid var(--primary-color);
+  color: var(--text-light);
+  /* background-color: var(--primary-color-alpha); */
+}
+
+.pacientDetails p {
+  line-height: 3;
+  font-size: .9rem;
+}
+.pacientDetails:nth-child(odd) {
+  font-weight: bold;
+}
+
+.pacientDetails { position: relative; }
+
+.containerTable {
+  margin-top: 1rem !important;
+}

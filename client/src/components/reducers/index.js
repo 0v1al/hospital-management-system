@@ -1,13 +1,13 @@
 import { combineReducers } from "redux";
 import alert from "./alert";
-import patient from "./patient";
+import user from "./user";
 import doctor from "./doctor";
 import admin from "./admin";
 import specialization from "./specialization";
 
 export default combineReducers({
   alert,
-  patient,
+  user,
   doctor,
   admin,
   specialization

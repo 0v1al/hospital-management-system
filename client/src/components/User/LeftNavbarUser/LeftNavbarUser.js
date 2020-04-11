@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "../../Layout/LeftNavbar/LeftNavbar.module.css";
 
-const LeftNavbarPatient = () => {
+const LeftNavbarUser = () => {
 
   return (
     <nav className={styles.leftNavbar}>
@@ -37,4 +37,4 @@ const LeftNavbarPatient = () => {
   );
 };
 
-export default LeftNavbarPatient;
+export default LeftNavbarUser;

@@ -1,0 +1,48 @@
+.landing {
+  position: relative;
+  height: calc(100vh - 3rem);
+}
+
+.contactContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  margin-left: -6rem !important;
+  animation-name: fadeIn;
+  animation-fill-mode: forwards;
+  animation-duration: 750ms;
+}
+
+.background {
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center ;
+  height: 100%;
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: -13rem;
+  margin-right: -13rem;
+  width: calc(100% + 13rem);
+}
+
+.title {
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  align-self: start;
+}
+
+.btnSend {
+  width: 25% !important;
+  padding: .1rem .5rem !important;
+  align-self: start;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; margin-top: -5rem; }
+  100% { opacity: 1; margin-top: 0; }
+}

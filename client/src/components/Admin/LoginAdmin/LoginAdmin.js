@@ -5,13 +5,13 @@ import { loginAdmin } from "../../actions/admin";
 
 import styles from "./LoginAdmin.module.css";
 
-const LoginAdmin = ({ alerts, loginAdmin, history, loggedAdmin, loggedDoctor, loggedPatient }) => {
+const LoginAdmin = ({ alerts, loginAdmin, history, loggedAdmin, loggedDoctor, loggedUser }) => {
   const [input, setInput] = useState({
     email: "",
     password: ""
   });
 
-  if (loggedAdmin || loggedDoctor || loggedPatient) {
+  if (loggedAdmin || loggedDoctor || loggedUser) {
     if (loggedAdmin) {
         return <Redirect to="/admin-dashboard"/>
     }
@@ -20,8 +20,8 @@ const LoginAdmin = ({ alerts, loginAdmin, history, loggedAdmin, loggedDoctor, lo
       return <Redirect to="/doctor-dashboard"/>
     }
     
-    if (loggedPatient) {
-      return <Redirect to="/patient-dashboard"/>
+    if (loggedUser) {
+      return <Redirect to="/user-dashboard"/>
     }
   }
 
@@ -36,9 +36,11 @@ const LoginAdmin = ({ alerts, loginAdmin, history, loggedAdmin, loggedDoctor, lo
     <>
      <img src={require("../../../assets/bg2.jpg")} alt="wallpaper" className={styles.background} />
       <form className={styles.form} onSubmit={e => loginAdminSubmit(e)}>
-        {alerts.length > 0 && <div className="alerts">{alerts.map(alert => 
-            <span key={alert.id} className={`alert alert-${alert.type}`}>{alert.msg}</span>
-          )} 
+        {alerts.length > 0 && 
+          <div className="alerts">
+            {alerts.map(alert => 
+              <span key={alert.id} className={`alert alert-${alert.type}`}>{alert.msg}</span>
+            )} 
           </div>
         }
         <div className={styles.description}>
@@ -72,7 +74,7 @@ const mapStateToProps = state => ({
   alerts: state.alert,
   loggedAdmin: state.admin.firstLogin,
   loggedDoctor: state.doctor.firstLogin,
-  loggedPatient: state.patient.firstLogin
+  loggedUser: state.user.firstLogin
 });
 
 export default  connect(mapStateToProps, { loginAdmin })(withRouter(LoginAdmin));

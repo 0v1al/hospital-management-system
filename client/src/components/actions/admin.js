@@ -11,7 +11,12 @@ import {
   ADD_SPECIALIZATION,
   LOAD_SPECIALIZATIONS,
   REMOVE_SPECIALIZATION,
-  EDIT_SPECIALIZATION
+  EDIT_SPECIALIZATION,
+  LOAD_DOCTORS,
+  REMOVE_DOCTOR,
+  UPDATE_DOCTOR,
+  LOAD_USERS,
+  REMOVE_USER
 } from "./types";
 
 export const loadAdmin = () => async dispatch => {
@@ -108,7 +113,6 @@ export const editSpecialization = (specialization, newSpecialization) => async d
   try {
     let newSpecialization =  await axios.put("http://localhost:5000/edit-specialization", body, config);
     const result = { specialization, newSpecialization: newSpecialization.data }
-    console.log(result);
     dispatch({
       type: EDIT_SPECIALIZATION,
       data: result
@@ -136,6 +140,108 @@ export const loadSpecializations = () => async dispatch => {
     console.error(err.message);
   }
 };
+
+export const addDoctor = doctorData => async dispatch => {
+  const { firstname, lastname, email, address, contact, password, specialization } = doctorData;
+  const body = JSON.stringify({ firstname, lastname, email, address, contact, password, specialization });
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  try {
+    let res = await axios.post("http://localhost:5000/add-doctor", body, config);
+    
+    if (res) {
+      dispatch(createAlert("The doctor account was created", "success", 2000));
+    }
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail")));
+    }
+
+    console.error(err.message);
+  }
+};
+
+export const loadDoctors = () => async dispatch => {
+  try {
+    let res = await axios.get("http://localhost:5000/load-doctors");
+    dispatch({
+      type: LOAD_DOCTORS,
+      data: res.data
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+
+export const removeDoctor = doctorEmail => async dispatch => {
+  try {
+    await axios.delete(`http://localhost:5000/remove-doctor/${doctorEmail}`);
+    dispatch({
+      type: REMOVE_DOCTOR,
+      data: doctorEmail
+    });
+    dispatch(createAlert("Doctor account was removed!", "success", 2000));
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+
+export const updateDoctor = (doctorUpdate) => async dispatch => {
+  const body = JSON.stringify({ ...doctorUpdate });
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  try {
+    let newDoc =  await axios.put("http://localhost:5000/update-doctor", body, config);
+    const result = { doctorEmail: doctorUpdate.doctorEmail, newDoctor: newDoc.data };
+    dispatch({
+      type: UPDATE_DOCTOR,
+      data: result
+    });
+    dispatch(createAlert("The doctor account was updated", "success", 2000));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail")));
+    }
+
+    console.error(err.message);
+  }
+}
+
+export const loadUsers = () => async dispatch => {
+  try {
+    const res = await axios.get("http://localhost:5000/load-users");
+    dispatch({
+      type: LOAD_USERS,
+      data: res.data
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+
+export const removeUser = userEmail => async dispatch => {
+  try {
+    await axios.delete(`http://localhost:5000/remove-user/${userEmail}`);
+    dispatch({
+      type: REMOVE_USER,
+      data: userEmail
+    });
+    dispatch(createAlert("User account was removed!", "success", 2000));
+  } catch (err) {
+    console.error(err.message);
+  }
+}
 
 export const logoutAdmin = history => dispatch => {
   removeCookie("token");

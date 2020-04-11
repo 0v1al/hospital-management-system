@@ -5,8 +5,10 @@ const DoctorSchema = new Schema({
   firstname: String, 
   lastname: String, 
   email: String, 
-  location: String,
+  address: String,
   password: String,
+  contact: String,
+  specialization: String,
   data: {
     type: Date,
     default: Date.now

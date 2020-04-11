@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { loadPatient } from "../../actions/patient";
+import { loadUser } from "../../actions/user";
 
 import styles from "../../Admin/AdminDashboard/AdminDashboard.module.css";
 
-const PatientDashboard = ({ loadPatient }) => {
+const UserDashboard = ({ loadUser }) => {
   useEffect(() => {
     const fetch = async () => {
-      loadPatient();
+      loadUser();
     }
 
     fetch();
-  }, [loadPatient])
+  }, [loadUser])
 
   return (
     <div className={styles.adminDashboardContainer}>
@@ -43,4 +43,4 @@ const PatientDashboard = ({ loadPatient }) => {
   );  
 };
 
-export default connect(null, { loadPatient })(PatientDashboard);
+export default connect(null, { loadUser })(UserDashboard);

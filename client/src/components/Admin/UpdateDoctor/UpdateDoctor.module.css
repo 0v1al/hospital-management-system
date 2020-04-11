@@ -1,0 +1,13 @@
+.desc {
+  align-self: start;
+}
+
+.desc i {
+  color: var(--primary-color);
+  margin-right: .5rem;
+}
+
+.addBtn {
+  width: 10% !important;
+  align-self: start;
+}

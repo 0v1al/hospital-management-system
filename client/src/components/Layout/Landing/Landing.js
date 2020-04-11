@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 
 import styles from "./Landing.module.css";
 
-const Landing = ({ loggedAdmin, loggedDoctor, loggedPatient }) => {
-	if (loggedAdmin || loggedDoctor || loggedPatient) {
+const Landing = ({ loggedAdmin, loggedDoctor, loggedUser }) => {
+	if (loggedAdmin || loggedDoctor || loggedUser) {
 		if (loggedAdmin) {
 				return <Redirect to="/admin-dashboard"/>
 		}
@@ -14,8 +14,8 @@ const Landing = ({ loggedAdmin, loggedDoctor, loggedPatient }) => {
 			return <Redirect to="/doctor-dashboard"/>
 		}
 		
-		if (loggedPatient) {
-			return <Redirect to="/patient-dashboard"/>
+		if (loggedUser) {
+			return <Redirect to="/user-dashboard"/>
 		}
 	}
 
@@ -46,7 +46,7 @@ const Landing = ({ loggedAdmin, loggedDoctor, loggedPatient }) => {
 								<p>Facilities that user can do!</p>
 							</div>
 						</div>
-						<Link to="/login-patient" className={styles.link}>Login/Register</Link>
+						<Link to="/login-user" className={styles.link}>Login/Register</Link>
 					</div>
 					<div className={styles.card}>
 						<h3 className={styles.title}>Doctors</h3>
@@ -103,7 +103,7 @@ const Landing = ({ loggedAdmin, loggedDoctor, loggedPatient }) => {
 const mapStateToProps = state => ({
 	loggedAdmin: state.admin.logged,
 	loggedDoctor: state.doctor.logged,
-	loggedPatient: state.patient.logged
+	loggedUser: state.user.logged
 })
 
 export default connect(mapStateToProps)(Landing);

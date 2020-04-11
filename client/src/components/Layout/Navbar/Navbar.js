@@ -3,11 +3,11 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutAdmin } from "../../actions/admin";
 import { logoutDoctor } from "../../actions/doctor";
-import { logoutPatient } from "../../actions/patient";
+import { logoutUser } from "../../actions/user";
 
 import styles from "./Navbar.module.css";
 
-const Navbar = ({ loggedAdmin, loggedDoctor, loggedPatient, logoutAdmin, logoutDoctor, logoutPatient, loadingAdmin, loadingDoctor, loadingPatient,  history }) => {
+const Navbar = ({ loggedAdmin, loggedDoctor, loggedUser, logoutAdmin, logoutDoctor, logoutUser, loadingAdmin, loadingDoctor, loadingUser,  history }) => {
 	let links;
 
 	const logoutAdminNow = e => {
@@ -20,22 +20,23 @@ const Navbar = ({ loggedAdmin, loggedDoctor, loggedPatient, logoutAdmin, logoutD
 		logoutDoctor(history);
 	}
 
-	const logoutPatientNow = e => {
+	const logoutUserNow = e => {
 		e.preventDefault();
-		logoutPatient(history);
+		logoutUser(history);
 	}
 
-	if (!loggedAdmin && !loggedDoctor && !loggedPatient) {
+	if (!loggedAdmin && !loggedDoctor && !loggedUser) {
 		links = (
 			<ul className={styles.navbarLinks}>
-				<Link to="/login-patient" className={styles.navbarLink}>Patients</Link>
+				<Link to="/contact" className={styles.navbarLink}>Contact</Link>
+				<Link to="/login-user" className={styles.navbarLink}>Patients</Link>
 				<Link to="/login-doctor" className={styles.navbarLink}>Doctors</Link>
 				<Link to="/login-admin" className={styles.navbarLink}>Admin</Link>
 			</ul>
 			);
 	}
 
-	if (loggedAdmin || loggedDoctor || loggedPatient) {
+	if (loggedAdmin || loggedDoctor || loggedUser) {
 		if (loggedAdmin) {
 			links = (
 			<ul className={styles.navbarLinks}>
@@ -66,7 +67,7 @@ const Navbar = ({ loggedAdmin, loggedDoctor, loggedPatient, logoutAdmin, logoutD
 				)
 		}
 
-		if (loggedPatient) {
+		if (loggedUser) {
 			links = (
 				<ul className={styles.navbarLinks}>
 					<div className={[styles.navbarLink, styles.navbarSettings].join(" ")}>
@@ -74,7 +75,7 @@ const Navbar = ({ loggedAdmin, loggedDoctor, loggedPatient, logoutAdmin, logoutD
 						<div className={styles.navbarSettingsOptions}>
 								<a href="#!"><i className="fas fa-user"></i>My Profile</a>
 								<a href="#!"><i className="fas fa-lock"></i>Change Password</a>
-								<a href="#!" onClick={e => logoutPatientNow(e)}><i className="fas fa-sign-out-alt"></i>Logout</a>
+								<a href="#!" onClick={e => logoutUserNow(e)}><i className="fas fa-sign-out-alt"></i>Logout</a>
 						</div>
 					</div>
 				</ul>
@@ -82,7 +83,7 @@ const Navbar = ({ loggedAdmin, loggedDoctor, loggedPatient, logoutAdmin, logoutD
 		}
 	}
 
-	const loaded = loadingAdmin && loadingDoctor && loadingPatient;
+	const loaded = loadingAdmin && loadingDoctor && loadingUser;
 
 	return (
 		<nav className={styles.navbar}>
@@ -90,7 +91,7 @@ const Navbar = ({ loggedAdmin, loggedDoctor, loggedPatient, logoutAdmin, logoutD
 				<i className="fas fa-h-square"></i>
 				HMS
 			</Link>
-			{!loaded && links}
+			{!loaded ? links : links}
 		</nav>
 	);
 };
@@ -100,8 +101,8 @@ const mapStateToProps = state => ({
 	loadingAdmin: state.admin.loading,
 	loggedDoctor: state.doctor.logged,
 	loadingDoctor: state.doctor.loading,
-	loggedPatient: state.patient.logged,
-	loadingPatient: state.patient.loading,
+	loggedUser: state.user.logged,
+	loadingUser: state.user.loading,
 });
 
-export default connect(mapStateToProps, { logoutAdmin, logoutDoctor, logoutPatient })(withRouter(Navbar));
+export default connect(mapStateToProps, { logoutAdmin, logoutDoctor, logoutUser })(withRouter(Navbar));

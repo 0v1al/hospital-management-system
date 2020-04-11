@@ -35,7 +35,7 @@
   cursor: pointer;
   transition: background-color 200ms ease-in-out;
   text-transform: uppercase;
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-sm);
   font-weight: 600;
 }
 

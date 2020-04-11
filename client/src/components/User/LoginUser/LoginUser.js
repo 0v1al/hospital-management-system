@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { loginPatient } from "../../actions/patient";
+import { loginUser } from "../../actions/user";
 import { removeCookie } from "../../cookie";
 
 import styles from "../../Admin/LoginAdmin/LoginAdmin.module.css";
 
-const LoginPatient = ({ alerts, loginPatient, history, loggedAdmin, loggedDoctor, loggedPatient }) => {
+const LoginUser = ({ alerts, loginUser, history, loggedAdmin, loggedDoctor, loggedUser }) => {
   const [input, setInput] = useState({
     email: "",
     password: ""
@@ -16,7 +16,7 @@ const LoginPatient = ({ alerts, loginPatient, history, loggedAdmin, loggedDoctor
     removeCookie("token");
   }, [])
 
-  if (loggedAdmin || loggedDoctor || loggedPatient) {
+  if (loggedAdmin || loggedDoctor || loggedUser) {
     if (loggedAdmin) {
         return <Redirect to="/admin-dashboard"/>
     }
@@ -25,8 +25,8 @@ const LoginPatient = ({ alerts, loginPatient, history, loggedAdmin, loggedDoctor
       return <Redirect to="/doctor-dashboard"/>
     }
     
-    if (loggedPatient) {
-      return <Redirect to="/patient-dashboard"/>
+    if (loggedUser) {
+      return <Redirect to="/user-dashboard"/>
     }
   }
 
@@ -34,7 +34,7 @@ const LoginPatient = ({ alerts, loginPatient, history, loggedAdmin, loggedDoctor
 
   const loginSubmit = async e => {
     e.preventDefault();
-    loginPatient(input, history);
+    loginUser(input, history);
   }
   return (
     <>
@@ -65,7 +65,7 @@ const LoginPatient = ({ alerts, loginPatient, history, loggedAdmin, loggedDoctor
           <span>[* = required]</span>
         </div>
         <input type="submit" value="Login"/>
-        <span className={styles.span}>Don't have an account? Register <Link to="/register-patient">here</Link></span>
+        <span className={styles.span}>Don't have an account? Register <Link to="/register-user">here</Link></span>
         <Link to="/" className={styles.back}>
           <i className="fas fa-chevron-left"></i>
           Back
@@ -79,7 +79,7 @@ const mapStateToProps = state => ({
   alerts: state.alert,
   loggedAdmin: state.admin.firstLogin,
   loggedDoctor: state.doctor.firstLogin,
-  loggedPatient: state.patient.firstLogin
+  loggedUser: state.user.firstLogin
 });
 
-export default connect(mapStateToProps, { loginPatient })(withRouter(LoginPatient));
+export default connect(mapStateToProps, { loginUser })(withRouter(LoginUser));

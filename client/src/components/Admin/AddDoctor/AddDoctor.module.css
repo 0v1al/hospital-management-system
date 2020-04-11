@@ -1,0 +1,15 @@
+.addBtn {
+  width: 10% !important;
+  align-self: start;
+}
+
+.desc {
+  align-self: start;
+  color: var(--text-color) !important;
+  font-size: var(--font-size-m) !important;
+}
+
+.desc i {
+  color: var(--primary-color);
+  margin-right: .5rem;
+}

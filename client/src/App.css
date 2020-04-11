@@ -66,17 +66,9 @@ h1, h2, h3 {
   animation-duration: 750ms;
 }
 
-.alert:last-child() {
-	margin-bottom: 2rem;
-}
-
-.alert-success {
-	background-color: rgba(8, 194, 67, .9);
-}
-
-.alert-fail {
-	background-color: rgba(255, 0, 0, 0.9);
-}
+.alert:last-child() { margin-bottom: 2rem; }
+.alert-success { background-color: rgba(8, 194, 67, .9); }
+.alert-fail { background-color: rgba(255, 0, 0, 0.9); }
 
 @keyframes fadeIn {
   0% { opacity: 0; margin-top: -5rem; }
@@ -90,6 +82,29 @@ h1, h2, h3 {
   padding: 3rem 0;
 }
 
+.universalForm {
+	box-shadow: 1px 1px 2px 1px rgba(105, 105, 105, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: .2rem;
+	background-color: var(--primary-color-alpha);
+	padding: 2rem 1rem 1rem 1rem;
+  margin-bottom: 3rem;
+}
+
+.universalFormBg { 
+	width: 50%;
+  margin-top: 3rem;
+}
+
+.universalBtnBg {
+	width: 25% !important;
+	padding: .1rem .3rem !important;
+}
+
 .universalTitle {
 	text-transform: uppercase;
   font-size: var(--font-size-x);
@@ -97,6 +112,7 @@ h1, h2, h3 {
   letter-spacing: .1rem;
 	font-weight: 400;
 	position: relative;
+	margin-bottom: 5rem;
 }
 
 .universalTitle::before {
@@ -106,7 +122,15 @@ h1, h2, h3 {
   width: 8rem;
   height: .13rem;
   bottom: -.8rem;
-  border-radius: .1rem;
+	border-radius: .1rem;
+}
+
+.universalDesc {
+	color: var(--text-light);
+  text-transform: uppercase;
+  font-weight: 100;
+	font-size: 1rem;
+	margin-bottom: 1.5rem;
 }
 
 .universalBtn {
@@ -133,9 +157,7 @@ h1, h2, h3 {
   appearance: none;
 }
 
-.universalBtn:hover {
-  background-color: var(--primary-color-hover);
-}
+.universalBtn:hover { background-color: var(--primary-color-hover); }
 
 .universalInputGroup {
 	display: flex;
@@ -173,4 +195,47 @@ h1, h2, h3 {
 	font-size: .8rem;
   color: rgba(0, 0, 0, .7);
   margin-bottom: .1rem;
+  align-self: start;
 }
+
+.universalContainerTable, .universalContainerTableNoBorder {
+	border-top: .01rem solid var(--primary-color);
+  padding-top: 3rem;
+  margin-top: 3rem;
+}
+
+.universalContainerTableNoBorder { border-top: none; }
+
+.universalTable {
+	margin-top: 1.5rem;
+  border-collapse: collapse;
+  background-color: var(--primary-color-alpha);
+  overflow: hidden;
+  width: 500px;
+  border-radius: .2rem;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, .2);
+  width: 100%;
+  min-height: 10rem;
+  position: relative;
+}
+
+.universalTableRow { transition: background-color 200ms ease-in-out; }
+.universalTableRow:hover { background-color: var(--primary-color-alpha-hover); }
+.universalTableRow:nth-child(odd) { background-color: var(--primary-color-alpha-hover); }
+
+.universalTableRow th {
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 100 !important;
+}
+
+.universalTableRow th, .universalTableRow td {
+  text-align: left;
+  padding: 10px;
+}
+
+.universalEditIcon, .universalRemoveIcon { cursor: pointer; }
+.universalEditIcon i, .universalRemoveIcon i { transition: transform 200ms ease-in-out; }
+.universalEditIcon:hover i, .universalRemoveIcon:hover i { transform: scale(1.4); }
+.universalEditIcon { color: var(--primary-color); }
+.universalRemoveIcon { color: rgba(255, 0, 0, 0.719); }

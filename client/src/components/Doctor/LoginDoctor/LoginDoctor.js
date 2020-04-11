@@ -77,7 +77,7 @@ const mapStateToProps = state => ({
   alerts: state.alert,
   loggedAdmin: state.admin.firstLogin,
   loggedDoctor: state.doctor.firstLogin,
-  loggedPatient: state.patient.firstLogin
+  loggedUser: state.user.firstLogin
 });
 
 export default connect(mapStateToProps, { loginDoctor })(withRouter(LoginDoctor));
