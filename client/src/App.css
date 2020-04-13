@@ -46,6 +46,11 @@ h1, h2, h3 {
 	position: relative;
 }
 
+:focus:not(input) {
+  outline: .1rem solid var(--primary-color);
+  outline-offset: .1rem;
+}
+
 .alert {
 	text-align: center;
 	padding: .5rem;
@@ -132,6 +137,21 @@ h1, h2, h3 {
 	font-size: 1rem;
 	margin-bottom: 1.5rem;
 }
+
+.universalDescForm {
+  font-size: .9rem !important;
+}
+
+.universalDescForm i {
+  margin-right: .5rem;
+  color: var(--primary-color);
+}
+
+.universalBtnForm {
+  width: 20% !important;
+  padding: .1rem .5rem !important;
+  align-self: start;
+} 
 
 .universalBtn {
 	margin-top: 1rem;
@@ -239,3 +259,7 @@ h1, h2, h3 {
 .universalEditIcon:hover i, .universalRemoveIcon:hover i { transform: scale(1.4); }
 .universalEditIcon { color: var(--primary-color); }
 .universalRemoveIcon { color: rgba(255, 0, 0, 0.719); }
+
+input:disabled {
+  color: var(--primary-color);
+}

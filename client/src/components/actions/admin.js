@@ -34,6 +34,8 @@ export const loadAdmin = () => async dispatch => {
 };
 
 export const loginAdmin = (credentials, history) => async dispatch => {
+  const token = getCookie("token");
+  setAxiosHeader(token);
   const { email, password } = credentials;
   const body = JSON.stringify({ email, password });
   const config = {
@@ -142,8 +144,8 @@ export const loadSpecializations = () => async dispatch => {
 };
 
 export const addDoctor = doctorData => async dispatch => {
-  const { firstname, lastname, email, address, contact, password, specialization } = doctorData;
-  const body = JSON.stringify({ firstname, lastname, email, address, contact, password, specialization });
+  const { firstname, lastname, email, address, contact, password, specialization, consultationPrice } = doctorData;
+  const body = JSON.stringify({ firstname, lastname, email, address, contact, password, specialization, consultationPrice });
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -245,6 +247,7 @@ export const removeUser = userEmail => async dispatch => {
 
 export const logoutAdmin = history => dispatch => {
   removeCookie("token");
+  setAxiosHeader(null);
   dispatch({
     type: LOGOUT_ADMIN
   });

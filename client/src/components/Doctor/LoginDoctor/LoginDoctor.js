@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { loginDoctor } from "../../actions/doctor";
 import { withRouter, Redirect, Link } from "react-router-dom";
-import { removeCookie } from "../../cookie";
 
 import styles from "../../Admin/LoginAdmin/LoginAdmin.module.css";
 
@@ -12,10 +11,6 @@ const LoginDoctor = ({ alerts, loginDoctor, history, loggedAdmin, loggedDoctor, 
     password: ""
   });
   
-  useEffect(() => {
-    removeCookie("token");
-  }, [])
-
   const { email, password } = input; 
 
   if (loggedAdmin || loggedDoctor || loggedPatient) {

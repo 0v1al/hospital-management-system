@@ -42,7 +42,7 @@ router.post("/add-specialization", [authorization,
 
 router.get("/load-specializations", authorization, async (req, res) => {
   try {
-    const specializations = await Specialization.find();
+    const specializations = await Specialization.find().select(["-__v", "-_id"]);
     res.status(200).json(specializations);
   } catch (err) {
     console.error(error.message);

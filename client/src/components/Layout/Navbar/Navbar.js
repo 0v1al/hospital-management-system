@@ -7,7 +7,7 @@ import { logoutUser } from "../../actions/user";
 
 import styles from "./Navbar.module.css";
 
-const Navbar = ({ loggedAdmin, loggedDoctor, loggedUser, logoutAdmin, logoutDoctor, logoutUser, loadingAdmin, loadingDoctor, loadingUser,  history }) => {
+const Navbar = ({ loggedAdmin, loggedDoctor, loggedUser, logoutAdmin, logoutDoctor, logoutUser, loadingAdmin, loadingDoctor, loadingUser, doctorEmail, userEmail,  history }) => {
 	let links;
 
 	const logoutAdminNow = e => {
@@ -17,12 +17,12 @@ const Navbar = ({ loggedAdmin, loggedDoctor, loggedUser, logoutAdmin, logoutDoct
 
 	const logoutDoctorNow = e => {
 		e.preventDefault();
-		logoutDoctor(history);
+		logoutDoctor(history, doctorEmail);
 	}
 
 	const logoutUserNow = e => {
 		e.preventDefault();
-		logoutUser(history);
+		logoutUser(history, userEmail);
 	}
 
 	if (!loggedAdmin && !loggedDoctor && !loggedUser) {
@@ -101,8 +101,10 @@ const mapStateToProps = state => ({
 	loadingAdmin: state.admin.loading,
 	loggedDoctor: state.doctor.logged,
 	loadingDoctor: state.doctor.loading,
+	doctorEmail: state.doctor.email,
 	loggedUser: state.user.logged,
 	loadingUser: state.user.loading,
+	userEmail: state.user.email
 });
 
 export default connect(mapStateToProps, { logoutAdmin, logoutDoctor, logoutUser })(withRouter(Navbar));

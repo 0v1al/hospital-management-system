@@ -6,8 +6,14 @@ const MessageSchema = new Schema({
   email: String, 
   contact: String, 
   message: String,
-  read: Boolean,
-  response: String,
+  read: {
+    type: Boolean,
+    default: false
+  },
+  response: {
+    type: String,
+    default: ""
+  },
   updateDate: Date,
   date: {
     type: Date,
@@ -15,5 +21,5 @@ const MessageSchema = new Schema({
   }
 });
 
-const Message = mongoose.model("Message", MessageSchema);
+const Message = mongoose.model("messages", MessageSchema);
 module.exports = Message;

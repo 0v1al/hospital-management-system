@@ -31,11 +31,22 @@ router.post("/login-user", [
 
     const token = await jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 60), user: { id: user._id }, algorithm: "HS384"}, process.env.PRIVATE_KEY);
 
+    await User.findOneAndUpdate({ email }, { loginTime: new Date() });
     return res.status(200).json(token);
   } catch (error) {
     console.error(error.message);
      res.status(500).send("Server error [login user]");
   } 
+});
+
+router.put("/logout-user/:userEmail", async (req, res) => {
+  try {
+    const userEmail = req.params.userEmail;
+    await User.findOneAndUpdate({ email: userEmail }, { logoutTime: new Date() });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("server error [logout user]");
+  }
 });
 
 module.exports = router;

@@ -23,7 +23,7 @@ const UpdateDoctor = ({ match, loadDoctors, loadAdmin, loadSpecializations, doct
     setDoctor(getDoctorByEmail());
   }, [doctors]);
 
-  const { firstname, lastname, email, address, contact, password, specialization } = doctor || "";
+  const { firstname, lastname, email, address, contact, password, specialization, consultationPrice } = doctor || "";
 
   function getDoctorByEmail() {
     const doctorEmail = match.params.doctorEmail;
@@ -84,6 +84,12 @@ const UpdateDoctor = ({ match, loadDoctors, loadAdmin, loadSpecializations, doct
           <label>* Doctor Email:</label>
           <div className={[stylesLoginAdmin.inputRegister, stylesLoginAdmin.emailIcon].join(" ")}>
             <input type="text" placeholder="Enter email..." name="email" value={email} onChange={e => setDoctor({ ...doctor, [e.target.name]: e.target.value }) }/>
+          </div>
+        </div>
+        <div className={stylesLoginAdmin.inputGroup}>
+          <label>* Doctor Consultation Price:</label>
+          <div className={[stylesLoginAdmin.inputRegister, stylesLoginAdmin.dollarIcon].join(" ")}>
+            <input type="text" placeholder="Enter contact number..." name="consultationPrice" value={consultationPrice} onChange={e => setDoctor({ ...doctor, [e.target.name]: e.target.value }) }/>
           </div>
         </div>
         <div className={stylesLoginAdmin.inputGroup}>

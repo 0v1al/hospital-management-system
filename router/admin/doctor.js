@@ -11,9 +11,10 @@ router.post("/add-doctor", [authorization,
   check("address", "You need to complete all the fields").trim().escape().not().isEmpty(),
   check("email", "Add a valid email").isEmail(),
   check("contact").trim().escape().not().isEmpty(),
-  check("password", "Password is too short").trim().escape().isLength({ min: 5 })
+  check("password", "Password is too short").trim().escape().isLength({ min: 5 }),
+  check("consultationPrice", "You need to add a consultation price").trim().escape().not().isEmpty()
 ], async (req, res) => {
-  const { firstname, lastname, address, email, contact, password, specialization } = req.body;
+  const { firstname, lastname, address, email, contact, password, specialization, consultationPrice } = req.body;
   const errors = validationResult(req);
  
   if (!errors.isEmpty()) {
@@ -34,7 +35,8 @@ router.post("/add-doctor", [authorization,
       contact: contact,
       address: address,
       password: password,
-      specialization: specialization
+      specialization: specialization,
+      consultationPrice: consultationPrice
     });
 
     await newDoctor.save();
@@ -77,9 +79,10 @@ router.put("/update-doctor", [
   check("address", "You need to complete all the fields").trim().escape().not().isEmpty(),
   check("email", "Add a valid email").isEmail(),
   check("contact").trim().escape().not().isEmpty(),
-  check("password", "Password is too short").trim().escape().isLength({ min: 5 })
+  check("password", "Password is too short").trim().escape().isLength({ min: 5 }),
+  check("consultationPrice", "You need to add a consultation price").trim().escape().not().isEmpty()
 ], async (req, res) => {
-  const { firstname, lastname, address, email, contact, password, specialization, doctorEmail } = req.body;
+  const { firstname, lastname, address, email, contact, password, specialization, doctorEmail, consultationPrice } = req.body;
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -106,7 +109,8 @@ router.put("/update-doctor", [
         email: email,
         contact: contact,
         password: password,
-        specialization: specialization
+        specialization: specialization,
+        consultationPrice: consultationPrice
       },
       { 
         new: true

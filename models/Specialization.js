@@ -10,5 +10,5 @@ const SpecializationSchema = new Schema({
   updateDate: Date
 });
 
-const Specialization = mongoose.model("Specialization", SpecializationSchema);
+const Specialization = mongoose.model("specializations", SpecializationSchema);
 module.exports = Specialization;

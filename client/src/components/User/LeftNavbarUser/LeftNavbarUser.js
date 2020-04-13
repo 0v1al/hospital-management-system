@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import styles from "../../Layout/LeftNavbar/LeftNavbar.module.css";
 
@@ -9,16 +10,16 @@ const LeftNavbarUser = () => {
       <h3 className={styles.leftNavbarHeader}>main navigation</h3>
       <ul className={styles.leftNavbarLinks}>
         <li>
-          <a href="#!" className={styles.leftNavbarLink}>
+          <Link to="/user-dashboard" className={styles.leftNavbarLink}>
             <i className={[`fas fa-home ${styles.leftNavbarIcon}`].join(" ")}></i>
             Dashboard
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#!" className={styles.leftNavbarLink}>
+          <Link to="/user-appointment-consultation" className={styles.leftNavbarLink}>
             <i className={[`fas fa-book-open ${styles.leftNavbarIcon}`].join(" ")}></i>
-            Book Appointment
-          </a>
+            Appointment Consultation
+          </Link>
         </li>
         <li>
           <a href="#!" className={styles.leftNavbarLink}>

@@ -1,0 +1,59 @@
+.messageContainer {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: .1rem solid var(--primary-color-alpha);
+  font-size: .9rem;
+}
+
+.messageContainer form textarea { margin-top: 1rem; resize: none; }
+
+.desc {
+  font-size: .9rem !important;
+}
+
+.desc i {
+  margin-right: .5rem;
+  color: var(--primary-color);
+}
+
+.messageFields {
+  display: inline-block;
+  color: var(--text-light);
+  font-weight: 800;
+  width: 15%;
+}
+
+.messageValue {
+  font-weight: 100;
+  color: var(--text-light);
+}
+
+.btnSend {
+  width: 7rem !important;
+  padding: .2rem .3rem !important;
+  font-size: .9rem !important;
+}
+
+.btnSend:last-child {
+  margin-left: 1rem;
+  width: 8rem !important;
+  background: transparent;
+  border: .1rem solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btnSend:last-child:hover {
+  color: #fff;
+  background-color: var(--primary-color);
+}
+
+.messageReaded {
+  color: var(--primary-color);
+  width: 10rem;
+  align-self: flex-end;
+  margin-left: 1rem;
+}
+
+.containerBtns {
+  display: flex;
+}

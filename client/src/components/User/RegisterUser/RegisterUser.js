@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { registerUser  } from "../../actions/user";
-import { removeCookie } from "../../cookie";
 
 import styles from "../../Admin/LoginAdmin/LoginAdmin.module.css";
 
@@ -15,10 +14,6 @@ const RegisterUser = ({ alerts, registerUser, history }) => {
     password: "",
     passwordRepeat: ""
   });
-
-  useEffect(() => {
-    removeCookie("token");
-  }, [])
 
   const { firstname, lastname, email, location, password, passwordRepeat } = input;
 

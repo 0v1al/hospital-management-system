@@ -69,53 +69,41 @@ const LeftNavbar = () => {
         <li>
           <a href="#!" className={styles.leftNavbarLink} onClick={e => toggleLeftnavbarSubmenu(e)}>
             <i className={[`fas fa-copy ${styles.leftNavbarIcon}`].join(" ")}></i>
-            Contacts Queries
+            Contact Messages
             <i className={[`fas fa-chevron-right ${styles.leftNavbarArrow}`].join(" ")}></i>
           </a>
           <ul className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
-            <Link to="/admin-unread-queries" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              Unread Queries
+            <Link to="/admin-unread-messages" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
+              Unread Messages
             </Link>
-            <Link to="admin-read-queries" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              Read Queries
+            <Link to="/admin-read-messages" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
+              Read Messages
             </Link>
           </ul>
         </li>
         <li>
-          <a href="#!" className={styles.leftNavbarLink}>
+          <Link to="/admin-doctor-session-logs" className={styles.leftNavbarLink}>
             <i className={[`fas fa-list-alt ${styles.leftNavbarIcon}`].join(" ")}></i>
             Doctor Session Logs
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#!" className={styles.leftNavbarLink}>
+          <Link to="/admin-user-session-logs" className={styles.leftNavbarLink}>
             <i className={[`fas fa-list-alt ${styles.leftNavbarIcon}`].join(" ")}></i>
             User Session Logs
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#!" className={styles.leftNavbarLink} onClick={e => toggleLeftnavbarSubmenu(e)}>
+          <Link to="/admin-reports" className={styles.leftNavbarLink}>
             <i className={[`fas fa-exclamation-circle ${styles.leftNavbarIcon}`].join(" ")}></i>
             Reports
-            <i className={[`fas fa-chevron-right ${styles.leftNavbarArrow}`].join(" ")}></i>
-          </a>
-          <ul className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              link1
-            </a>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              link1
-            </a>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              link1
-            </a>
-          </ul>
+          </Link>
         </li>
         <li>
-          <a href="#!" className={styles.leftNavbarLink}>
+          <Link to="/admin-search-patient" className={styles.leftNavbarLink}>
             <i className={[`fas fa-search ${styles.leftNavbarIcon}`].join(" ")}></i>
-            Patient Search
-          </a>
+            Search Patient
+          </Link>
         </li>
       </ul>
     </nav>

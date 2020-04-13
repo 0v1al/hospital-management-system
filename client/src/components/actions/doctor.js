@@ -25,6 +25,8 @@ export const loadDoctor = () => async dispatch => {
 };
 
 export const loginDoctor = (credentials, history) => async dispatch => {
+  const token = getCookie("token");
+  setAxiosHeader(token);
   const { email, password } = credentials;
   const body = JSON.stringify({ email, password });
   const config = {
@@ -54,8 +56,16 @@ export const loginDoctor = (credentials, history) => async dispatch => {
   }
 };
 
-export const logoutDoctor = history => dispatch => {
+export const logoutDoctor = (history, doctorEmail) => async dispatch => {
   removeCookie("token");
+  setAxiosHeader(null);
+  const body = JSON.stringify({ doctorEmail });
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }
+  axios.put(`http://localhost:5000/logout-doctor/${doctorEmail}`, body, config);
   dispatch({
     type: LOGOUT_DOCTOR
   });

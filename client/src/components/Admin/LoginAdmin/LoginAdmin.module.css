@@ -140,6 +140,7 @@
 .locationIcon::after { content: "\f3c5"; }
 .doctorIcon::after { content: "\f0f0"; }
 .contactIcon::after { content: "\f095"; }
+.dollarIcon::after { content: "\f155"; }
 
 .inputCheckbox {
   display: flex;

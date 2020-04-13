@@ -7,7 +7,11 @@ import {
   LOAD_USER, 
   LOGIN_SUCCESS_USER, 
   LOGIN_FAIL_USER, 
-  LOGOUT_USER
+  LOGOUT_USER,
+  ADD_APPOINTMENT_CONSULTATION,
+  REMOVE_APPOINTMENT_CONSULTATION,
+  CANCEL_APPOINTMENT_CONSULTATION,
+  LOAD_APPOINTMENT_CONSULTATIONS
 } from "./types";
 
 export const loadUser = () => async dispatch => {
@@ -46,6 +50,8 @@ export const registerUser = (credentials, history) => async dispatch => {
 };
 
 export const loginUser = (credentials, history) => async dispatch => {
+  const token = getCookie("token");
+  setAxiosHeader(token);
   const { email, password } = credentials;
   const body = JSON.stringify({ email, password });
   const config = {
@@ -77,8 +83,66 @@ export const loginUser = (credentials, history) => async dispatch => {
   }
 };
 
-export const logoutUser = history => dispatch => {
+export const addAppointmentConsultation = consultation => async dispatch => {
+  const { userEmail, doctorEmail, consultationDate, consultationTime, doctorSelect, specializationSelect } = consultation;
+  const body = JSON.stringify({ userEmail, doctorEmail, consultationDate, consultationTime, doctorSelect, specializationSelect });
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  try {
+    const res = await axios.post("http://localhost:5000/add-appointment-consultation", body, config);
+    dispatch({
+      type: ADD_APPOINTMENT_CONSULTATION,
+      data: res.data
+    });
+    dispatch(createAlert("Consultation was scheduled and sended to the doctor", "success", 2000));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail")));
+    }
+
+    console.error(err.message);
+  }
+};
+
+export const loadUserAppointmentConsultations = userEmail => async dispatch => {
+  try {
+    const res = await axios.get(`http://localhost:5000/load-user-appointment-consultations/${userEmail}`);
+    dispatch({
+      type: LOAD_APPOINTMENT_CONSULTATIONS,
+      data: res.data
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const loadDoctorAppointmentConsultations = doctorEmail => async dispatch => {
+  try {
+    const res = await axios.get(`http://localhost:5000/load-doctor-appointment-consultations/${doctorEmail}`);
+    dispatch({
+      type: LOAD_APPOINTMENT_CONSULTATIONS,
+      data: res.data
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const logoutUser = (history, userEmail) => async dispatch => {
   removeCookie("token");
+  setAxiosHeader(null);
+  const body = JSON.stringify({ userEmail });
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }
+  axios.put(`http://localhost:5000/logout-user/${userEmail}`, body, config);
   dispatch({
     type: LOGOUT_USER
   });

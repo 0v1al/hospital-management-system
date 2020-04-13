@@ -32,12 +32,22 @@ router.post("/login-doctor", [
     const token = await jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 60), user: { id: doctor._id }, algorithm: "HS384"}, process.env.PRIVATE_KEY);
 
     // let decoded = await jwt.verify(token, process.env.PRIVATE_KEY);  
-    
+    await Doctor.findOneAndUpdate({ email: email }, { loginTime: new Date() });
     return res.status(200).json(token);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Server error, [doctor.patient]");
+    res.status(500).send("Server error, [login doctor]");
   } 
+});
+
+router.put("/logout-doctor/:doctorEmail", async (req, res) => {
+  try {
+    const doctorEmail = req.params.doctorEmail;
+    await Doctor.findOneAndUpdate({ email: doctorEmail }, { logoutTime: new Date() });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("server error [logout doctor]");
+  }
 });
 
 module.exports = router;

@@ -1,0 +1,8 @@
+.desc {
+  font-size: .9rem !important;
+}
+
+.desc i {
+  margin-right: .5rem;
+  color: var(--primary-color);
+}

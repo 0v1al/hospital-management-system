@@ -14,7 +14,8 @@ const AddDoctor = ({ loadAdmin, addDoctor, loadSpecializations, specializations,
     address: "",
     contact: "",
     password: "",
-    specialization: ""
+    specialization: "",
+    consultationPrice: ""
   });
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const AddDoctor = ({ loadAdmin, addDoctor, loadSpecializations, specializations,
     fetch();
   }, [loadSpecializations]);
 
-  const { firstname, lastname, email, address, contact, password, specialization } = input;
+  const { firstname, lastname, email, address, contact, password, consultationPrice ,specialization } = input;
 
   const addDoctorSubmit = e => {
     e.preventDefault();
@@ -81,6 +82,12 @@ const AddDoctor = ({ loadAdmin, addDoctor, loadSpecializations, specializations,
             <label>* Doctor Email:</label>
             <div className={[stylesLoginAdmin.inputRegister, stylesLoginAdmin.emailIcon].join(" ")}>
               <input type="text" placeholder="Enter email..." name="email" value={email} onChange={e => setInput({ ...input, [e.target.name]: e.target.value })}/>
+            </div>
+          </div>
+          <div className={stylesLoginAdmin.inputGroup}>
+            <label>* Doctor Consultation Price:</label>
+            <div className={[stylesLoginAdmin.inputRegister, stylesLoginAdmin.dollarIcon].join(" ")}>
+              <input type="text" placeholder="Enter consultation price..." name="consultationPrice" value={consultationPrice} onChange={e => setInput({ ...input, [e.target.name]: e.target.value })}/>
             </div>
           </div>
           <div className={stylesLoginAdmin.inputGroup}>

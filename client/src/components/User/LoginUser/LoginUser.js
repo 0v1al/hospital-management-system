@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/user";
-import { removeCookie } from "../../cookie";
 
 import styles from "../../Admin/LoginAdmin/LoginAdmin.module.css";
 
@@ -11,10 +10,6 @@ const LoginUser = ({ alerts, loginUser, history, loggedAdmin, loggedDoctor, logg
     email: "",
     password: ""
   });
-
-  useEffect(() => {
-    removeCookie("token");
-  }, [])
 
   if (loggedAdmin || loggedDoctor || loggedUser) {
     if (loggedAdmin) {

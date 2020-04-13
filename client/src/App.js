@@ -22,7 +22,14 @@ import UpdateDoctor from "./components/Admin/UpdateDoctor/UpdateDoctor";
 import Users from "./components/Admin/Users/Users";
 import Patients from "./components/Admin/Patients/Patients";
 import PatientDetails from "./components/Admin/PatientDetails/PatientDetails";
-
+import ReadMessages from "./components/Admin/Messages/ReadMessages";
+import UnreadMessages from "./components/Admin/Messages/UnreadMessages";
+import UpdateMessage from "./components/Admin/Messages/UpdateMessage";
+import UserSessionLogs from "./components/UserSessionLogs/UserSessionLogs";
+import DoctorSessionLogs from "./components/DoctorSessionLogs/DoctorSessionLogs";
+import Reports from "./components/Admin/Reports/Reports";
+import SearchPatient from "./components/Admin/SearchPatient/SearchPatient";
+import AppointmentConsultation from "./components/User/AppointmentConsultation/AppointmentConsultation";
 import  "./App.css";
 
 function App() {
@@ -30,8 +37,8 @@ function App() {
       <Router>
         <Route path="/" component={Navbar} />
         <Route path="/admin-*" component={LeftNavbar} />
-        <Route path="/doctor-dashboard" component={LeftNavbarDoctor} />
-        <Route path="/user-dashboard" component={LeftNavbarUser} />
+        <Route path="/doctor-*" component={LeftNavbarDoctor} />
+        <Route path="/user-*" component={LeftNavbarUser} />
         <Switch>
           <Route exact path="/" component={Landing}/>
           <Route exact path="/login-doctor" component={LoginDoctor}/>
@@ -39,6 +46,7 @@ function App() {
           <Route exact path="/login-admin" component={LoginAdmin}/>
           <Route exact path="/register-user" component={RegisterUser}/>
           <Route exact path="/contact" component={Contact}/>
+     
           <PrivateRoute exact path="/admin-dashboard" component={AdminDashboard} />
           <PrivateRoute exact path="/admin-doctor-specialization" component={DoctorSpecialization} />
           <PrivateRoute exact path="/admin-add-doctor" component={AddDoctor} />
@@ -47,8 +55,18 @@ function App() {
           <PrivateRoute exact path="/admin-users" component={Users} />
           <PrivateRoute exact path="/admin-patients" component={Patients} />
           <PrivateRoute exact path="/admin-patient-details/:patientEmail" component={PatientDetails} />
+          <PrivateRoute exact path="/admin-read-messages" component={ReadMessages} />
+          <PrivateRoute exact path="/admin-unread-messages" component={UnreadMessages} />
+          <PrivateRoute exact path="/admin-update-message/:messageId" component={UpdateMessage} />
+          <PrivateRoute exact path="/admin-doctor-session-logs" component={DoctorSessionLogs} />
+          <PrivateRoute exact path="/admin-user-session-logs" component={UserSessionLogs} />
+          <PrivateRoute exact path="/admin-reports" component={Reports} />
+          <PrivateRoute exact path="/admin-search-patient" component={SearchPatient} />
+     
           <PrivateRoute exact path="/doctor-dashboard" component={DoctorDashboard} />
+
           <PrivateRoute exact path="/user-dashboard" component={UserDashboard} />
+          <PrivateRoute exact path="/user-appointment-consultation" component={AppointmentConsultation} />
         </Switch>
     </Router>
   );

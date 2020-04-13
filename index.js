@@ -12,6 +12,8 @@ const routeDoctor = require("./router/doctor/loadDoctor");
 const routeSpecialization = require("./router/admin/specialization");
 const routeAdminDoctor = require("./router/admin/doctor");
 const routeUser = require("./router/admin/user");
+const routeMessage = require("./router/message/message");
+const routeAppointment = require("./router/user/consultation");
 
 const app = express();
 
@@ -32,6 +34,8 @@ app.use("/", routeLoginAdmin);
 app.use("/", routeLoadAdmin);
 app.use("/", routeSpecialization);
 app.use("/", routeAdminDoctor);
+app.use("/", routeMessage);
+app.use("/", routeAppointment);
 
 const port = process.env.PORT || 5000;
 
