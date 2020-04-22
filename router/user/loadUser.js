@@ -6,7 +6,7 @@ const authorization = require("../../middlewares/authorization");
 router.get("/load-user", authorization, async (req, res) => {
   const user = req.user;
   try {
-    const userLoaded = await User.findById(user.id).select(["-password", "-data", "-_id", "-__v"]);
+    const userLoaded = await User.findById(user.id).select(["-password", "-data", "-__v"]);
     if (!userLoaded) return res.status(400).send("somthing went wrong on loading the user");
     res.status(200).json(userLoaded);
   } catch (err) {

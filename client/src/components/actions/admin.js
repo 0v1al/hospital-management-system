@@ -16,7 +16,8 @@ import {
   REMOVE_DOCTOR,
   UPDATE_DOCTOR,
   LOAD_USERS,
-  REMOVE_USER
+  REMOVE_USER,
+  PATIENT_REPORTS
 } from "./types";
 
 export const loadAdmin = () => async dispatch => {
@@ -241,6 +242,47 @@ export const removeUser = userEmail => async dispatch => {
     });
     dispatch(createAlert("User account was removed!", "success", 2000));
   } catch (err) {
+    console.error(err.message);
+  }
+}
+
+export const changePassword = change => async dispatch => {
+  const { email, password, newPassword, repeatNewPassword } = change;
+  const body = JSON.stringify({ email, password, newPassword, repeatNewPassword });
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  try {
+    await axios.put("http://localhost:5000/change-password-admin", body, config);
+    dispatch(createAlert("Your password was changed with success", "success", 2000));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail", 2000)));
+    }
+
+    console.error(err.message);
+  }
+};
+
+export const patientReports = (fromDate, toDate) => async dispatch => {
+  try {
+    const res = await axios.get(`http://localhost:5000/patient-reports/${fromDate}/${toDate}`);
+    dispatch({
+      type: PATIENT_REPORTS,
+      data: res.data
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+    
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail")));
+    }
+
     console.error(err.message);
   }
 }

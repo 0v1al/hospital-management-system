@@ -11,7 +11,10 @@ import {
   ADD_APPOINTMENT_CONSULTATION,
   REMOVE_APPOINTMENT_CONSULTATION,
   CANCEL_APPOINTMENT_CONSULTATION,
-  LOAD_APPOINTMENT_CONSULTATIONS
+  LOAD_APPOINTMENT_CONSULTATIONS,
+  CANCEL_APPOINTMENT_CONSULTATION_DOCTOR,
+  FINISH_APPOINTMENT_CONSULTATION,
+  UPDATE_PROFILE_USER
 } from "./types";
 
 export const loadUser = () => async dispatch => {
@@ -67,7 +70,7 @@ export const loginUser = (credentials, history) => async dispatch => {
       type: LOGIN_SUCCESS_USER
     });
     dispatch(createAlert("Logged successfully", "success", 1000));
-    setTimeout(() => history.push("/user-dashboard"), 2000);
+    setTimeout(() => history.push("/user-dashboard"), 1000);
   } catch (err) {
     const errors = err.response.data.errors;
     
@@ -133,6 +136,132 @@ export const loadDoctorAppointmentConsultations = doctorEmail => async dispatch 
   }
 };
 
+export const loadAllAppointmentConsultations = doctorEmail => async dispatch => {
+  try {
+    const res = await axios.get("http://localhost:5000/load-all-appointment-consultations");
+    dispatch({
+      type: LOAD_APPOINTMENT_CONSULTATIONS,
+      data: res.data
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const removeAppointmentConsultation = consultationId => async dispatch => {
+  try {
+    const res = await axios.delete(`http://localhost:5000/remove-appointment-consultation/${consultationId}`);
+    dispatch({
+      type: REMOVE_APPOINTMENT_CONSULTATION,
+      data: res.data._id
+    });
+    dispatch(createAlert("The consultation was removed", "success", 2000));
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const cancelAppointmentConsultation = consultationId => async dispatch => {
+  try {
+    const res = await axios.put(`http://localhost:5000/cancel-appointment-consultation/${consultationId}`);
+    dispatch({
+      type: CANCEL_APPOINTMENT_CONSULTATION,
+      data: res.data._id
+    });
+    dispatch(createAlert("The consultation was canceled", "success", 2000));
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const cancelAppointmentConsultationDoctor = consultationId => async dispatch => {
+  try {
+    const res = await axios.put(`http://localhost:5000/cancel-appointment-consultation-doctor/${consultationId}`);
+    dispatch({
+      type: CANCEL_APPOINTMENT_CONSULTATION_DOCTOR,
+      data: res.data._id
+    });
+    dispatch(createAlert("The consultation was canceled", "success", 2000));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail")));
+    }
+
+    console.error(err.message);
+  }
+};
+
+export const finishAppointmentConsultationDoctor = consultationId => async dispatch => {
+  try {
+    const res = await axios.put(`http://localhost:5000/finish-appointment-consultation/${consultationId}`);
+    dispatch({
+      type: FINISH_APPOINTMENT_CONSULTATION,
+      data: res.data._id
+    });
+    dispatch(createAlert("The consultation was finished", "success", 2000));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail")));
+    }
+
+    console.error(err.message);
+  }
+};
+
+export const changePassword = change => async dispatch => {
+  const { email, password, newPassword, repeatNewPassword } = change;
+  const body = JSON.stringify({ email, password, newPassword, repeatNewPassword });
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  try {
+    await axios.put("http://localhost:5000/change-password-user", body, config);
+    dispatch(createAlert("Your password was changed with success", "success", 2000));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail", 2000)));
+    }
+
+    console.error(err.message);
+  }
+};
+
+export const updateProfile = updateProfile => async dispatch => {
+  const { userEmail, firstname, lastname, email, location } = updateProfile;
+  const body = JSON.stringify({ userEmail, firstname, lastname, email, location });
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  try {
+    const res = await axios.put(`http://localhost:5000/update-profile-user/${userEmail}`, body, config);
+    dispatch({
+      type: UPDATE_PROFILE_USER,
+      data: res.data
+    });
+    dispatch(createAlert("Your profile was updated with success", "success", 2000));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail", 2000)));
+    }
+
+    console.error(err.message);
+  }
+};
+
 export const logoutUser = (history, userEmail) => async dispatch => {
   removeCookie("token");
   setAxiosHeader(null);
@@ -141,7 +270,7 @@ export const logoutUser = (history, userEmail) => async dispatch => {
     headers: {
       "Content-Type": "application/json"
     }
-  }
+  };
   axios.put(`http://localhost:5000/logout-user/${userEmail}`, body, config);
   dispatch({
     type: LOGOUT_USER

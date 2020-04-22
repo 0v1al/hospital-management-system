@@ -2,7 +2,8 @@ import {
   LOAD_USER,
   LOGIN_SUCCESS_USER,
   LOGIN_FAIL_USER,
-  LOGOUT_USER
+  LOGOUT_USER,
+  UPDATE_PROFILE_USER
 } from "../actions/types";
 
 const initialState = {
@@ -31,6 +32,15 @@ export default function user (state = initialState, action) {
         logged: true,
         loading: false
       };
+    case UPDATE_PROFILE_USER:
+      return {
+        ...state,
+        loading: false,
+        firstname: action.data.firstname,
+        lastname: action.data.lastname,
+        location: action.data.location,
+        email: action.data.email
+      }
     case LOGIN_FAIL_USER:
     case LOGOUT_USER:
       return {

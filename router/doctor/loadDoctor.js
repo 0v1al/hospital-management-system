@@ -6,11 +6,11 @@ const authorization = require("../../middlewares/authorization");
 router.get("/load-doctor", authorization, async (req, res) => {
   const user = req.user;
   try {
-    const userLoaded = await (await Doctor.findById(user.id).select(["-password", "-data", "-_id", "-__v"]));
-    res.status(200).json(userLoaded);
+    const doctor = await Doctor.findById(user.id).select(["-password", "-__v"]);
+    res.status(200).json(doctor);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error [register doctor]");
+    res.status(500).send("Server error [load doctor]");
   }
 });
 

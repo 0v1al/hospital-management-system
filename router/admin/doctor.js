@@ -3,6 +3,7 @@ const router = express.Router();
 const authorization = require("../../middlewares/authorization");
 const { check, validationResult } = require("express-validator");
 const Doctor = require("../../models/Doctor");
+const Patient = require("../../models/Patient");
 
 router.post("/add-doctor", [authorization,
   check("specialization", "You need to select a specialization").not().isEmpty(),
@@ -28,7 +29,7 @@ router.post("/add-doctor", [authorization,
       return res.status(400).json({ errors: [{ msg: "A doctor with that email already exist" }] });
     }
   
-    const newDoctor = await new Doctor({
+    const newDoctor = new Doctor({
       firstname: firstname,
       lastname: lastname,
       email: email,
@@ -38,9 +39,7 @@ router.post("/add-doctor", [authorization,
       specialization: specialization,
       consultationPrice: consultationPrice
     });
-
-    await newDoctor.save();
-
+    await newDoctor.save(error => error ? console.log(error) : null);
     res.status(200).send("The doctor account was created");
   } catch (err) {
     console.error(err);
@@ -125,6 +124,30 @@ router.put("/update-doctor", [
   } catch (err) {
     console.error(err);
     res.status(500).send("server error [update doctor]");
+  }
+});
+
+router.get("/patient-reports/:fromDate/:toDate", async (req, res) => {
+  const fromDate = new Date(req.params.fromDate);
+  const toDate = new Date(req.params.toDate);
+  if (!fromDate || !toDate) {
+    return res.status(400).json({ errors: [{ msg: "You need to add the dates" }] }); 
+  }
+
+  if (fromDate.getTime() >= toDate.getTime()) {
+    return res.status(400).json({ errors: [{ msg: "From date cannot be greater than to date" }] });
+  }
+  
+  try {
+    const patients = await Patient.find({ date: { $gte: fromDate, $lte: toDate } }).select(["-__v"]);
+    
+    if (!patients.length) {
+      return res.status(400).json({ errors: [{ msg: "No patients was registered between this dates" }] });
+    }
+    res.status(200).json(patients);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("server error [admin reports patients]");
   }
 });
 

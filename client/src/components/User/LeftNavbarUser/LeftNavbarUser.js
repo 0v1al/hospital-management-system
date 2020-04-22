@@ -22,16 +22,16 @@ const LeftNavbarUser = () => {
           </Link>
         </li>
         <li>
-          <a href="#!" className={styles.leftNavbarLink}>
+          <Link to="/user-appointment-history" className={styles.leftNavbarLink}>
             <i className={[`fas fa-list-alt ${styles.leftNavbarIcon}`].join(" ")}></i>
             Appointment History
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#!" className={styles.leftNavbarLink}>
+          <Link to="/user-medical-history" className={styles.leftNavbarLink}>
             <i className={[`fas fa-list ${styles.leftNavbarIcon}`].join(" ")}></i>
               Medical History
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>

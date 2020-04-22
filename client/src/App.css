@@ -134,12 +134,13 @@ h1, h2, h3 {
 	color: var(--text-light);
   text-transform: uppercase;
   font-weight: 100;
-	font-size: 1rem;
+	font-size: .8rem;
 	margin-bottom: 1.5rem;
 }
 
 .universalDescForm {
-  font-size: .9rem !important;
+  font-size: .8rem !important;
+  align-self: start;
 }
 
 .universalDescForm i {
@@ -263,3 +264,8 @@ h1, h2, h3 {
 input:disabled {
   color: var(--primary-color);
 }
+
+.canceled {
+  /* background-color: rgba(12, 44, 22, 0.6) !important; */
+}
+

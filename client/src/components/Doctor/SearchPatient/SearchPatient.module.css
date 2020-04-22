@@ -1,0 +1,9 @@
+.formSearch {
+  margin-bottom: 3rem;
+}
+
+.patientDetailsHere {
+  border-bottom: none !important;
+  padding-top: 3rem;
+  border-top: .01rem solid var(--primary-color);
+}

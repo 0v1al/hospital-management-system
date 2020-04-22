@@ -40,9 +40,10 @@ router.post("/login-doctor", [
   } 
 });
 
-router.put("/logout-doctor/:doctorEmail", async (req, res) => {
+router.put("/logout-doctor", async (req, res) => {
   try {
-    const doctorEmail = req.params.doctorEmail;
+    // const doctorEmail = req.params.doctorEmail;
+    const { doctorEmail } = req.body;
     await Doctor.findOneAndUpdate({ email: doctorEmail }, { logoutTime: new Date() });
   } catch (err) {
     console.error(err);

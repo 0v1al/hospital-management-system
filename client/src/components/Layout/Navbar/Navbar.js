@@ -43,9 +43,14 @@ const Navbar = ({ loggedAdmin, loggedDoctor, loggedUser, logoutAdmin, logoutDoct
 				<div className={[styles.navbarLink, styles.navbarSettings].join(" ")}>
 					<i className="fas fa-user-circle"></i>
 					<div className={styles.navbarSettingsOptions}>
-							<a href="#!"><i className="fas fa-user"></i>My Profile</a>
-							<a href="#!"><i className="fas fa-lock"></i>Change Password</a>
-							<a href="#!" onClick={e => logoutAdminNow(e)}><i className="fas fa-sign-out-alt"></i>Logout</a>
+							<Link to="/admin-change-password">
+								<i className="fas fa-lock"></i>
+								Change Password
+							</Link>
+							<a href="#!" onClick={e => logoutAdminNow(e)}>
+								<i className="fas fa-sign-out-alt"></i>
+								Logout
+							</a>
 					</div>
 				</div>
 			</ul>
@@ -58,9 +63,9 @@ const Navbar = ({ loggedAdmin, loggedDoctor, loggedUser, logoutAdmin, logoutDoct
 					<div className={[styles.navbarLink, styles.navbarSettings].join(" ")}>
 						<i className="fas fa-user-circle"></i>
 						<div className={styles.navbarSettingsOptions}>
-								<a href="#!"><i className="fas fa-user"></i>My Profile</a>
-								<a href="#!"><i className="fas fa-lock"></i>Change Password</a>
-								<a href="#!" onClick={e => logoutDoctorNow(e)}><i className="fas fa-sign-out-alt"></i>Logout</a>
+							<Link to="/doctor-update-profile"><i className="fas fa-user"></i>My Profile</Link>
+							<Link to="/doctor-change-password"><i className="fas fa-lock"></i>Change Password</Link>
+							<a href="#!" onClick={e => logoutDoctorNow(e)}><i className="fas fa-sign-out-alt"></i>Logout</a>
 						</div>
 					</div>
 				</ul>
@@ -73,8 +78,14 @@ const Navbar = ({ loggedAdmin, loggedDoctor, loggedUser, logoutAdmin, logoutDoct
 					<div className={[styles.navbarLink, styles.navbarSettings].join(" ")}>
 						<i className="fas fa-user-circle"></i>
 						<div className={styles.navbarSettingsOptions}>
-								<a href="#!"><i className="fas fa-user"></i>My Profile</a>
-								<a href="#!"><i className="fas fa-lock"></i>Change Password</a>
+								<Link to="/user-update-profile">
+									<i className="fas fa-user"></i>
+									My Profile
+								</Link>
+								<Link to="/user-change-password">
+									<i className="fas fa-lock"></i>
+									Change Password
+								</Link>
 								<a href="#!" onClick={e => logoutUserNow(e)}><i className="fas fa-sign-out-alt"></i>Logout</a>
 						</div>
 					</div>

@@ -9,7 +9,7 @@ import rootReducers from "./components/reducers";
 
 const middleware = [thunk];
 
-const store = createStore(
+export const store = createStore(
   rootReducers, 
   composeWithDevTools(applyMiddleware(...middleware))  
 );

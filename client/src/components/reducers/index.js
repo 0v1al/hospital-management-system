@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+
 import alert from "./alert";
 import user from "./user";
 import doctor from "./doctor";
@@ -7,6 +8,8 @@ import specialization from "./specialization";
 import message from "./message";
 import data from "./data";
 import consultation from "./consultation";
+import patient from "./patient";
+import medicalHistory from "./medicalHistory";
 
 export default combineReducers({
   alert,
@@ -16,5 +19,7 @@ export default combineReducers({
   specialization,
   message,
   data,
-  consultation
+  consultation,
+  patient,
+  medicalHistory
 });

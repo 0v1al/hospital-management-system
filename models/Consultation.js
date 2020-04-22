@@ -27,6 +27,10 @@ const ConsultationSchema = new Schema({
   canceled: {
     type: Boolean,
     default: false
+  },
+  canceledByDoctor: {
+    type: Boolean,
+    default: false
   }
 });
 

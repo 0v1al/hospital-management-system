@@ -61,10 +61,10 @@ const LeftNavbar = () => {
           </Link>
         </li>
         <li>
-          <a href="#!" className={styles.leftNavbarLink}>
+          <Link to="/admin-appointment-history" className={styles.leftNavbarLink}>
             <i className={[`fas fa-file ${styles.leftNavbarIcon}`].join(" ")}></i>
             Apointment History
-          </a>
+          </Link>
         </li>
         <li>
           <a href="#!" className={styles.leftNavbarLink} onClick={e => toggleLeftnavbarSubmenu(e)}>

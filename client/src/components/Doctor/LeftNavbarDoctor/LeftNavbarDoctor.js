@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import styles from "../../Layout/LeftNavbar/LeftNavbar.module.css";
 
@@ -24,10 +25,10 @@ const LeftNavbarDoctor = () => {
       <h3 className={styles.leftNavbarHeader}>main navigation</h3>
       <ul className={styles.leftNavbarLinks}>
         <li>
-          <a href="#!" className={styles.leftNavbarLink}>
+          <Link to="/doctor-dashboard" className={styles.leftNavbarLink}>
             <i className={[`fas fa-home ${styles.leftNavbarIcon}`].join(" ")}></i>
             Dashboard
-          </a>
+          </Link>
         </li>
         <li>
           <a href="#!" className={styles.leftNavbarLink} onClick={e => toggleLeftnavbarSubmenu(e)}>
@@ -36,31 +37,25 @@ const LeftNavbarDoctor = () => {
             <i className={[`fas fa-chevron-right ${styles.leftNavbarArrow}`].join(" ")}></i>
           </a>
           <ul className={[styles.leftNavbarLinks, styles.leftNavbarSubmenuLinks].join(" ")}>
-            <a href="#!"className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-            {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
-              link1
-            </a>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
-              link1
-            </a>
-            <a href="#!" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
-              {/* <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i> */}
-              link1
-            </a>
+            <Link to="/doctor-add-patient" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
+              Add Patient
+            </Link>
+            <Link to="/doctor-manage-patient" className={[styles.leftNavbarLink, styles.leftNavbarSubmenuLink].join(" ")}>
+              Manage Patients
+            </Link>
           </ul>
         </li>
         <li>
-          <a href="#!" className={styles.leftNavbarLink}>
+          <Link to="/doctor-appointment-history" className={styles.leftNavbarLink}>
             <i className={[`fas fa-file ${styles.leftNavbarIcon}`].join(" ")}></i>
             Apointment History
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#!" className={styles.leftNavbarLink}>
+          <Link to="/doctor-search-patient" className={styles.leftNavbarLink}>
             <i className={[`fas fa-search ${styles.leftNavbarIcon}`].join(" ")}></i>
             Patient Search
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>

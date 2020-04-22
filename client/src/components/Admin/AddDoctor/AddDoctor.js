@@ -27,7 +27,7 @@ const AddDoctor = ({ loadAdmin, addDoctor, loadSpecializations, specializations,
     fetch();
   }, [loadSpecializations]);
 
-  const { firstname, lastname, email, address, contact, password, consultationPrice ,specialization } = input;
+  const { firstname, lastname, email, address, contact, password, consultationPrice, specialization } = input;
 
   const addDoctorSubmit = e => {
     e.preventDefault();

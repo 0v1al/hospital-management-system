@@ -1,0 +1,9 @@
+.profileDesc {
+  margin-bottom: 1rem;
+}
+
+.profileDesc p {
+  font-size: .8rem;
+  font-weight: lighter;
+  color: var(--text-light);
+}

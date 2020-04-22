@@ -141,6 +141,9 @@
 .doctorIcon::after { content: "\f0f0"; }
 .contactIcon::after { content: "\f095"; }
 .dollarIcon::after { content: "\f155"; }
+.weightIcon::after { content: "\f496"; }
+.temperatureIcon::after { content: "\f769"; }
+.bloodIcon::after { content: "\f043"; }
 
 .inputCheckbox {
   display: flex;

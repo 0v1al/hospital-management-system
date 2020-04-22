@@ -52,11 +52,14 @@ router.get("/load-specializations", authorization, async (req, res) => {
 
 router.delete("/remove-specialization/:specializationName", authorization, async (req, res) => {
   const specializationName = req.params.specializationName.toLowerCase();
+  
   try {
     const result = await Specialization.findOneAndDelete({ specialization: specializationName });
+  
     if (!result) {
       return res.status(400).json({ errors: [{ msg: "Something went wrong on removing the specialization!" }] });
     }
+  
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
@@ -77,8 +80,6 @@ router.put("/edit-specialization",[
     let { specialization, newSpecialization } = req.body;
     specialization = specialization.toLowerCase();
     newSpecialization = newSpecialization.toLowerCase();
-    console.log(specialization);
-    console.log(newSpecialization);
     let alreadyExist = await Specialization.findOne({ specialization: newSpecialization });
    
     if (alreadyExist) {
@@ -90,7 +91,7 @@ router.put("/edit-specialization",[
       { specialization: newSpecialization, updateDate: new Date() },
       { new: true }
     ).select(["-_id", "-__v"]);
-    console.log(editSpecialization);
+
     if (!editSpecialization) {
       return res.status(400).json({ errors: [{ msg: "Something went wrong on editing a specialization" }] });
     }

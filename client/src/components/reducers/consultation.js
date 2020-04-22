@@ -1,4 +1,11 @@
-import { ADD_APPOINTMENT_CONSULTATION, REMOVE_APPOINTMENT_CONSULTATION, LOAD_APPOINTMENT_CONSULTATIONS  } from "../actions/types";
+import { 
+  ADD_APPOINTMENT_CONSULTATION, 
+  REMOVE_APPOINTMENT_CONSULTATION, 
+  LOAD_APPOINTMENT_CONSULTATIONS, 
+  CANCEL_APPOINTMENT_CONSULTATION, 
+  CANCEL_APPOINTMENT_CONSULTATION_DOCTOR,
+  FINISH_APPOINTMENT_CONSULTATION
+} from "../actions/types";
 
 const initialState = {
   loading: true,
@@ -23,8 +30,44 @@ export default function appointment(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        consultation: [ ...action.data ]
-      }
+        consultations: [ ...action.data ]
+      };
+    case CANCEL_APPOINTMENT_CONSULTATION:
+      return {
+        ...state,
+        loading: false,
+        consultations: state.consultations.map(consultation => {
+          if (consultation._id === action.data) {
+            consultation.canceled = true;
+            consultation.active = false;
+          }
+          return consultation;
+        })
+      };
+      case CANCEL_APPOINTMENT_CONSULTATION_DOCTOR:
+        return {
+          ...state,
+          loading: false,
+          consultations: state.consultations.map(consultation => {
+            if (consultation._id === action.data) {
+              consultation.canceledByDoctor = true;
+              consultation.active = false;
+            }
+            return consultation;
+          })
+        };
+      case FINISH_APPOINTMENT_CONSULTATION:
+        return {
+          ...state,
+          loading: false,
+          consultations: state.consultations.map(consultation => {
+            if (consultation._id === action.data) {
+              consultation.finished = true;
+              consultation.active = false;
+            }
+            return consultation;
+          })
+        };
     default:
       return state;
   }
