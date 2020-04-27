@@ -4,8 +4,19 @@ import Moment from "react-moment";
 
 import Spinner from "../../Layout/Spinner/Spinner";
 import { loadUser, loadUserAppointmentConsultations, removeAppointmentConsultation, cancelAppointmentConsultation } from "../../actions/user";
+import { addNotificationDoctor } from "../../actions/notification";
 
-const AppointmentHistory = ({ loadUser, loadUserAppointmentConsultations, consultations, removeAppointmentConsultation, cancelAppointmentConsultation, userEmail, alerts, loading }) => {
+const AppointmentHistory = ({ 
+  loadUser, 
+  loadUserAppointmentConsultations, 
+  consultations, 
+  removeAppointmentConsultation, 
+  cancelAppointmentConsultation, 
+  addNotificationDoctor,
+  userEmail, 
+  alerts, 
+  loading 
+}) => {
   const [email, setEmail] = useState(null);
   
   useEffect(() => {
@@ -26,7 +37,7 @@ const AppointmentHistory = ({ loadUser, loadUserAppointmentConsultations, consul
     if (userEmail) {
       fetch();
     }
-  }, [email]);
+  }, [email, loadUserAppointmentConsultations]);
 
   const removeConsultation = async e => {
     const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");
@@ -35,7 +46,10 @@ const AppointmentHistory = ({ loadUser, loadUserAppointmentConsultations, consul
  
   const cancelConsultation = async e => {
     const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");
-    cancelAppointmentConsultation(consultationId);
+    if(cancelAppointmentConsultation(consultationId)) {
+      const doctorId = e.target.parentElement.parentElement.getAttribute("doctor-id");
+      addNotificationDoctor(doctorId, `Consultation of was canceled`);
+    }
   }
 
   return (
@@ -68,7 +82,7 @@ const AppointmentHistory = ({ loadUser, loadUserAppointmentConsultations, consul
           </thead>
           <tbody>
           {!loading > 0 ? (consultations.map((consultation, index) => 
-             (<tr className={[`universalTableRow ${consultation.active ? "" : "canceled"}`].join(" ")} data-id={consultation._id}  key={index}>
+             (<tr className={[`universalTableRow ${consultation.active ? "" : "canceled"}`].join(" ")} data-id={consultation._id} doctor-id={consultation._doctor._id} key={index}>
                 <td>{index + 1}</td>
                 <td>
                   {
@@ -131,4 +145,10 @@ const mapStateToProps = state => ({
   alerts: state.alert
 });
 
-export default connect(mapStateToProps, { loadUser, loadUserAppointmentConsultations, cancelAppointmentConsultation, removeAppointmentConsultation })(AppointmentHistory)
+export default connect(mapStateToProps, { 
+  loadUser, 
+  loadUserAppointmentConsultations, 
+  cancelAppointmentConsultation, 
+  removeAppointmentConsultation, 
+  addNotificationDoctor
+})(AppointmentHistory)

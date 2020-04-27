@@ -170,8 +170,10 @@ export const cancelAppointmentConsultation = consultationId => async dispatch =>
       data: res.data._id
     });
     dispatch(createAlert("The consultation was canceled", "success", 2000));
+    return true;
   } catch (err) {
     console.error(err.message);
+    return false;
   }
 };
 

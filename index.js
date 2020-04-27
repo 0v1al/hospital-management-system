@@ -17,6 +17,7 @@ const routeAppointment = require("./router/user/consultation");
 const routePatient = require("./router/doctor/patient");
 const routeMedicalHistory = require("./router/doctor/medicalHistory");
 const routePdf = require("./router/doctor/generatePdf"); 
+const routeNotification = require("./router/notification/notification");
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use("/", routeAppointment);
 app.use("/", routePatient);
 app.use("/", routeMedicalHistory);
 app.use("/", routePdf);
+app.use("/", routeNotification);
 
 const port = process.env.PORT || 5000;
 
