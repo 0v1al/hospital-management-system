@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const User = require("../../models/User");
+const Doctor = require("../../models/Doctor");
+const Admin = require("../../models/Admin");
+
 const bcrypt = require("bcrypt");
 
 router.post("/register-user", [
@@ -19,12 +22,19 @@ router.post("/register-user", [
   }
   
   try {
-    const { firstname, lastname, email, location, password } = req.body;
+    const { firstname, lastname, email, location, password, male, female } = req.body;
+
+    if (!male && !female) {
+      return res.status(400).json({ errors: [{ msg: "You need to select a gender" }] });
+    }
+  
     const salt = 10;
-    let alreadyExistByEmail = await User.findOne({ email });
+    let emailAlreadyUser = await User.findOne({ email });
+    let emailAlreadyDoctor = await Doctor.findOne({ email });
+    let emailAlreadyAdmin = await Admin.findOne({ email });
    
-    if (alreadyExistByEmail) {
-      return res.status(422).json({ errors: [{ msg: "An account with the same email already exists" }] });
+    if (emailAlreadyUser || emailAlreadyDoctor || emailAlreadyAdmin) {
+      return res.status(422).json({ errors: [{ msg: "An account with this email already exist" }] });
     }
     
     let user = new User({
@@ -32,7 +42,9 @@ router.post("/register-user", [
       lastname, 
       email,
       location,
-      password
+      password,
+      male, 
+      female
     });
 
     const passwordCrypted = await bcrypt.hash(password, salt); //! error if it is not use with await

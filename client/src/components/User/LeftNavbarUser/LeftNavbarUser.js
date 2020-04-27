@@ -18,19 +18,25 @@ const LeftNavbarUser = () => {
         <li>
           <Link to="/user-appointment-consultation" className={styles.leftNavbarLink}>
             <i className={[`fas fa-book-open ${styles.leftNavbarIcon}`].join(" ")}></i>
-            Appointment Consultation
+             Consultations
           </Link>
         </li>
         <li>
           <Link to="/user-appointment-history" className={styles.leftNavbarLink}>
             <i className={[`fas fa-list-alt ${styles.leftNavbarIcon}`].join(" ")}></i>
-            Appointment History
+            Consultations History
           </Link>
         </li>
         <li>
           <Link to="/user-medical-history" className={styles.leftNavbarLink}>
             <i className={[`fas fa-list ${styles.leftNavbarIcon}`].join(" ")}></i>
               Medical History
+          </Link>
+        </li>
+        <li>
+          <Link to="/user-view-doctors" className={styles.leftNavbarLink}>
+            <i className={[`fas fa-user-md ${styles.leftNavbarIcon}`].join(" ")}></i>
+              View Doctors
           </Link>
         </li>
       </ul>

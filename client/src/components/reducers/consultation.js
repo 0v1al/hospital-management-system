@@ -4,7 +4,8 @@ import {
   LOAD_APPOINTMENT_CONSULTATIONS, 
   CANCEL_APPOINTMENT_CONSULTATION, 
   CANCEL_APPOINTMENT_CONSULTATION_DOCTOR,
-  FINISH_APPOINTMENT_CONSULTATION
+  FINISH_APPOINTMENT_CONSULTATION,
+  ACCEPT_APPOINTMENT_CONSULTATION_DOCTOR
 } from "../actions/types";
 
 const initialState = {
@@ -44,6 +45,18 @@ export default function appointment(state = initialState, action) {
           return consultation;
         })
       };
+      case ACCEPT_APPOINTMENT_CONSULTATION_DOCTOR:
+        return {
+          ...state,
+          loading: false,
+          consultations: state.consultations.map(consultation => {
+            if (consultation._id === action.data) {
+              consultation.accepted = true;
+              consultation.active = true;
+            }
+            return consultation;
+          })
+        };
       case CANCEL_APPOINTMENT_CONSULTATION_DOCTOR:
         return {
           ...state,

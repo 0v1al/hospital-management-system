@@ -55,7 +55,11 @@ const AddDoctor = ({ loadAdmin, addDoctor, loadSpecializations, specializations,
               <select name="specialization" onChange={e => setInput({ ...input, [e.target.name]: e.target.value }) }>
                 <option value="">Specialization</option>
                 {specializations.map((specialization, idx) => (
-                  <option key={idx} value={specialization.specialization}>{specialization.specialization}</option>
+                  <option key={idx} value={specialization.specialization}>
+                    {
+                      `${specialization.specialization[0].toUpperCase()}${specialization.specialization.slice(1)}`
+                    }
+                  </option>
                 ))}
               </select>
             </div>

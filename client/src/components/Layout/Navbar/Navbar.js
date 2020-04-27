@@ -59,25 +59,44 @@ const Navbar = ({ loggedAdmin, loggedDoctor, loggedUser, logoutAdmin, logoutDoct
 		
 		if (loggedDoctor) {
 			links = (
-				<ul className={styles.navbarLinks}>
-					<div className={[styles.navbarLink, styles.navbarSettings].join(" ")}>
-						<i className="fas fa-user-circle"></i>
-						<div className={styles.navbarSettingsOptions}>
-							<Link to="/doctor-update-profile"><i className="fas fa-user"></i>My Profile</Link>
-							<Link to="/doctor-change-password"><i className="fas fa-lock"></i>Change Password</Link>
-							<a href="#!" onClick={e => logoutDoctorNow(e)}><i className="fas fa-sign-out-alt"></i>Logout</a>
+				<div className={styles.navbarContainerLinks}>
+					<ul className={styles.navbarLinks}>
+						<div className={[styles.navbarLink, styles.navbarSettings].join(" ")}>
+							<i className="fas fa-bell"></i>
+							<div className={styles.navbarSettingsOptions}>
+								<a>No notifactions now</a>
+							</div>
 						</div>
-					</div>
-				</ul>
-				)
+					</ul>
+					<ul className={styles.navbarLinks}>
+						<div className={[styles.navbarLink, styles.navbarSettings].join(" ")}>
+							<i className="fas fa-user-circle"></i>
+							<div className={styles.navbarSettingsOptions}>
+								<Link to="/doctor-update-profile"><i className="fas fa-user"></i>My Profile</Link>
+								<Link to="/doctor-change-password"><i className="fas fa-lock"></i>Change Password</Link>
+								<a href="#!" onClick={e => logoutDoctorNow(e)}><i className="fas fa-sign-out-alt"></i>Logout</a>
+							</div>
+						</div>
+					</ul>
+				</div>
+			)
 		}
 
 		if (loggedUser) {
 			links = (
-				<ul className={styles.navbarLinks}>
-					<div className={[styles.navbarLink, styles.navbarSettings].join(" ")}>
-						<i className="fas fa-user-circle"></i>
-						<div className={styles.navbarSettingsOptions}>
+				<div className={styles.navbarContainerLinks}>
+					<ul className={styles.navbarLinks}>
+						<div className={[styles.navbarLink, styles.navbarSettings].join(" ")}>
+							<i className="fas fa-bell"></i>
+							<div className={styles.navbarSettingsOptions}>
+								<a>No notifactions now</a>
+							</div>
+						</div>
+					</ul>
+					<ul className={styles.navbarLinks}>
+						<div className={[styles.navbarLink, styles.navbarSettings].join(" ")}>
+							<i className="fas fa-user-circle"></i>
+							<div className={styles.navbarSettingsOptions}>
 								<Link to="/user-update-profile">
 									<i className="fas fa-user"></i>
 									My Profile
@@ -86,11 +105,14 @@ const Navbar = ({ loggedAdmin, loggedDoctor, loggedUser, logoutAdmin, logoutDoct
 									<i className="fas fa-lock"></i>
 									Change Password
 								</Link>
-								<a href="#!" onClick={e => logoutUserNow(e)}><i className="fas fa-sign-out-alt"></i>Logout</a>
+								<a href="#!" onClick={e => logoutUserNow(e)}><i className="fas fa-sign-out-alt"></i>
+									Logout
+								</a>
+							</div>
 						</div>
-					</div>
-				</ul>
-				)
+					</ul>
+				</div>
+			)
 		}
 	}
 

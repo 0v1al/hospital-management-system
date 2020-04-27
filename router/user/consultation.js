@@ -5,6 +5,7 @@ const { check, validationResult } = require("express-validator");
 const Consultation = require("../../models/Consultation");
 const Doctor = require("../../models/Doctor");
 const User = require("../../models/User");
+const Patient = require("../../models/Patient");
 
 router.post("/add-appointment-consultation", [
   check("specializationSelect", "You need to select a specialization").not().isEmpty(),
@@ -33,6 +34,12 @@ router.post("/add-appointment-consultation", [
     }
 
     const user = await User.findOne({ email: userEmail });    
+    const patient = await Patient.findOne({ email: userEmail });
+
+    if (patient) {
+      patient.consultationActive = true;
+      await patient.save();
+    }
     
     if (!user) {
       return res.status(400).send("something went wrong on adding appointment consultation");
@@ -105,7 +112,7 @@ router.get("/load-all-appointment-consultations", async (req, res) => {
     if (!consultations){
       return res.status(400).send("something went wrong on loading the consultations");
     } 
-   
+    console.log(consultations);
     res.status(200).json(consultations);
   } catch (err) {
     console.error(err);
@@ -118,7 +125,8 @@ router.delete("/remove-appointment-consultation/:consultationId", async (req, re
   
   try {
     const consultation = await Consultation.findById(consultationId);
-    
+    const patientId = consultation._user;
+
     if (consultation.active) {
       return res.status(400).json({ errors: [{ msg: "You cannot delete consultation if it is not canceled or finished"}] });
     } 
@@ -127,6 +135,14 @@ router.delete("/remove-appointment-consultation/:consultationId", async (req, re
     
     if (!consultationRemoved) {
       return res.status(400).send("something went wrong on removing the consultation");
+    }
+
+    const consultations = await Consultation.find({ _user: patientId, active: true });
+
+    if (!consultations) {
+      const patient = await Patient.find({ _user: patientId });
+      patient.consultationActive = false;
+      await patient.save();
     }
     
     res.status(200).json(consultationRemoved);
@@ -215,6 +231,7 @@ router.put("/cancel-appointment-consultation-doctor/:consultationId", async (req
 
 router.put("/finish-appointment-consultation/:consultationId", async (req, res) => {
   const consultationId = req.params.consultationId;
+
   try {
      const consultation = await Consultation.findById(consultationId);
 
@@ -248,6 +265,49 @@ router.put("/finish-appointment-consultation/:consultationId", async (req, res) 
   } catch (err) {
     console.error(err);
     res.status(500).send("server error [finish appointment consultation]");
+  }
+});
+
+router.put("/accept-appointment-consultation-doctor/:consultationId", async (req, res) => {
+  const consultationId = req.params.consultationId;
+
+  try {
+    const consultation = await Consultation.findById(consultationId);
+  
+    if (!consultation) {
+      return res.status(400).json({ errors: [{ msg: "Consultation doesn't exist anymore"}] });
+    }
+  
+    if (!consultation.active) {
+      return res.status(400).json({ errors: [{ msg: "Consultation was already canceled or finished"}] });
+    }
+  
+    if (consultation.finished) {
+      return res.status(400).json({ errors: [{ msg: "Consultation was already finished"}] });
+    }
+  
+    if (consultation.canceled || consultation.canceledByDoctor) {
+      return res.status(400).json({ errors: [{ msg: "Consultation was already canceled"}] });
+    }
+
+    if (consultation.accepted) {
+      return res.status(400).json({ errors: [{ msg: "Consultation was already accepted"}] });
+    }
+  
+    const consultationUpdate = await Consultation.findOneAndUpdate(
+      { _id: consultationId },
+      { accepted: true },
+      { new: true }
+    );
+  
+    if (!consultationUpdate) {
+      return res.status(400).send("something went wrong on updating the consultation");
+    }
+    
+    res.status(200).json(consultationUpdate); 
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("server error [accept appointment consultation]");
   }
 });
 

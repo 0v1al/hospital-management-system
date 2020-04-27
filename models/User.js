@@ -9,6 +9,8 @@ const UserSchema = new Schema({
   password: String,
   loginTime: Date,
   logoutTime: Date,
+  male: Boolean,
+  female: Boolean,
   data: {
     type: Date,
     default: Date.now

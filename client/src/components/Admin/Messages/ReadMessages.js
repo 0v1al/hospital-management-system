@@ -60,9 +60,9 @@ const ReadMessages = ({ loadAdmin, loadMessages, removeMessage, messages, alerts
                     <td>{`${message.message}`}</td>
                     <td><Moment format="YYYY/MM/DD-HH:mm">{`${message.date}`}</Moment></td>
                     <td>
-                      <Link to={`/admin-update-message/${message._id}`} className="universalEditIcon">
+                      {/* <Link to={`/admin-update-message/${message._id}`} className="universalEditIcon">
                         <i className="fas fa-edit"></i> {"| "}
-                      </Link>
+                      </Link> */}
                       <span className="universalRemoveIcon" onClick={e => removeMessageNow(e)}>
                         <i className="fas fa-trash"></i>
                       </span>

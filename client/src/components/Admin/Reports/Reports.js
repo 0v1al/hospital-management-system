@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from "react-redux";
 import Moment from "react-moment";
+import { Link } from "react-router-dom";
 
 import { store } from "../../../index";
 import { loadAdmin, patientReports } from "../../actions/admin";
@@ -20,7 +21,7 @@ const Reports = ({ loadAdmin, patientReports, patients, loading, alerts}) => {
     const fetch = async () => {
       loadAdmin();
     };
-    loadAdmin();
+    fetch();
   }, [loadAdmin]);
 
   const patientReportsNow = async e => {
@@ -90,9 +91,9 @@ const Reports = ({ loadAdmin, patientReports, patients, loading, alerts}) => {
                     <td><Moment format="YYYY-MM-DD">{patient.date}</Moment></td>
                     <td><Moment format="YYYY/MM/DD-HH:mm">{patient.updateDate}</Moment></td>
                     <td>
-                      <a href="#!" className="universalEditIcon" >
+                      <Link to={`/admin-patient-details/${patient.email}/${patient._id}`} className="universalEditIcon">
                         <i className="fas fa-eye"></i>
-                      </a>
+                      </Link>
                     </td>
                   </tr>
                 ))) : (<Spinner />)}

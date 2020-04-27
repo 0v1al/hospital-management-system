@@ -37,11 +37,15 @@
 .navbarLink {
 	text-decoration: none;
 	color: inherit;
-	margin-left: 2rem;
 	font-size: var(--font-size-m);
 	font-weight: 400;
 	text-transform: uppercase;
 	position: relative;
+	margin-left: 2rem;
+}
+
+.navbarLink:last-child {
+	margin-left: 1rem;
 }
 
 .navbarLink i {
@@ -101,4 +105,9 @@
 
 .navbarSettings:hover .navbarSettingsOptions {
 	display: flex;
+}
+
+.navbarContainerLinks {
+	display: flex;
+	flex-direction: row;
 }

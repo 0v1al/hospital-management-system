@@ -10,6 +10,7 @@ import data from "./data";
 import consultation from "./consultation";
 import patient from "./patient";
 import medicalHistory from "./medicalHistory";
+import notification from "./notification";
 
 export default combineReducers({
   alert,
@@ -21,5 +22,6 @@ export default combineReducers({
   data,
   consultation,
   patient,
-  medicalHistory
+  medicalHistory,
+  notification
 });

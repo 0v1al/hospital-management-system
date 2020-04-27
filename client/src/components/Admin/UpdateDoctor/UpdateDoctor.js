@@ -55,9 +55,15 @@ const UpdateDoctor = ({ match, loadDoctors, loadAdmin, loadSpecializations, doct
           <label>* Doctor Specialization:</label>
           <div className={[stylesLoginAdmin.inputRegister].join(" ")}>
             <select name="specialization" onChange={e => setDoctor({ ...doctor, [e.target.name]: e.target.value }) }>
-              <option value={doctor.specialization}>{doctor.specialization}</option>
+              <option value={doctor.specialization}>
+                {`${doctor.specialization[0].toUpperCase()}${doctor.specialization.slice(1)}`}
+              </option>
               {specializations.map((specialization, idx) => (
-                    <option key={idx} value={specialization.specialization}>{specialization.specialization}</option>
+                <option key={idx} value={specialization.specialization}>
+                  {
+                    `${specialization.specialization[0].toUpperCase()}${specialization.specialization.slice(1)}`
+                  }
+                </option>
               ))}
             </select>
           </div>

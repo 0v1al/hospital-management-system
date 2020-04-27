@@ -62,9 +62,21 @@ export const removeMedicalHistoryPatient = medicalHistoryId => async dispatch =>
   }
 };
 
-export const loadMedicalHistories = patientId => async dispatch => {
+export const loadMedicalHistoriesByPatientId = patientId => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:5000/load-medical-histories/${patientId}`);
+    const res = await axios.get(`http://localhost:5000/load-medical-histories-by-patientId/${patientId}`);
+    dispatch({
+      type: LOAD_MEDICAL_HISTORIES,
+      data: res.data
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const loadMedicalHistoriesByUserId = patientId => async dispatch => {
+  try {
+    const res = await axios.get(`http://localhost:5000/load-medical-histories-by-userId/${patientId}`);
     dispatch({
       type: LOAD_MEDICAL_HISTORIES,
       data: res.data

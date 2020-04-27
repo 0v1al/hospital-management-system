@@ -1,32 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from "react-redux";
+import Moment from "react-moment";
 
-import { loadAdmin, loadUsers } from "../../actions/admin";
+import { loadAdmin } from "../../actions/admin";
+import { loadAllPatients } from '../../actions/doctor';
+import { loadMedicalHistoriesByPatientId } from "../../actions/medicalHistory";
 import Spinner from "../../Layout/Spinner/Spinner";
 
 import styles from "./PatientDetails.module.css";
 
-const PatientDetails = ({ loadAdmin, loadUsers, users, match }) => {
+const PatientDetails = ({ 
+  loadAdmin, 
+  loadAllPatients, 
+  loadMedicalHistoriesByPatientId, 
+  patients, 
+  medicalHistories, 
+  loadingMedicalHistories,
+  match 
+}) => {
   const [patient, setPatient] = useState(null);
 
   useEffect(() => {
     const fetch = async () => {
       loadAdmin();
-      loadUsers();
+      loadAllPatients();
+      loadMedicalHistoriesByPatientId(match.params.patientId);
+      console.log(match.params.patientId);
     };
     fetch();
-  }, [loadAdmin, loadUsers]);
+  }, [loadAdmin, loadAllPatients, loadMedicalHistoriesByPatientId]);
 
   useEffect(() => {
-    setPatient(getUserByEmail());
-  }, [users]);
+    setPatient(getPatientByEmail());
+  }, [patients]);
 
-  function getUserByEmail() {
-    const userEmail = match.params.patientEmail;
-    return users.filter(user => user.email === userEmail)[0];
+  function getPatientByEmail() {
+    const patientEmail = match.params.patientEmail;
+    return patients.filter(patient => patient.email === patientEmail)[0];
   }
 
-  const { firstname, lastname, email, address, contact, password, specialization } = patient || "";
+  // const { firstname, lastname, email, address, contact, password, specialization } = patient || "";
 
   return patient ? (
     <div className="universalContainer">
@@ -43,10 +56,10 @@ const PatientDetails = ({ loadAdmin, loadUsers, users, match }) => {
             <p>Patient Medical History:</p>
         </div>
         <div className={styles.pacientDetails}>
-            <p>answer</p>
-            <p>answer</p>
-            <p>answer</p>
-            <p>answer</p>
+            <p>{`${patient.firstname} ${patient.lastname}`}</p>
+            <p>{patient.contact}</p>
+            <p>{patient.male ? "Male" : "Female"}</p>
+            <p>{patient.medicalHistory ? patient.medicalHistory : "---"}</p>
         </div>
         <div className={styles.pacientDetails}>
             <p>Patient Email:</p>
@@ -55,10 +68,10 @@ const PatientDetails = ({ loadAdmin, loadUsers, users, match }) => {
             <p>Patient Reg Date:</p>
         </div>
         <div className={styles.pacientDetails}>
-            <p>answer</p>
-            <p>answer</p>
-            <p>answer</p>
-            <p>answer</p>
+            <p>{patient.email}</p>
+            <p>{patient.address}</p>
+            <p>{patient.age}</p>
+            <p><Moment format="YYYY-MM-DD">{patient.date}</Moment></p>
         </div>
       </div>
       <div className={["universalContainerTableNoBorder", styles.containerTable].join(" ")}>
@@ -79,15 +92,19 @@ const PatientDetails = ({ loadAdmin, loadUsers, users, match }) => {
               </tr>
           </thead>
           <tbody>
-              <tr className="universalTableRow">
-                  <td>1</td>
-                  <td>80/120</td>
-                  <td>85</td>
-                  <td>120</td>
-                  <td>98.6</td>
-                  <td>Prescription</td>
-                  <td>2019/03/04</td>
-              </tr>
+            {!loadingMedicalHistories ? (
+              medicalHistories.map((medicalHistory, index) => (
+                <tr className="universalTableRow" key={index} data-id={medicalHistory._id}>
+                  <td>{index + 1}</td>
+                  <td>{medicalHistory.bloodPressure}</td>
+                  <td>{medicalHistory.weight}</td>
+                  <td>{medicalHistory.bloodSugar}</td>
+                  <td>{medicalHistory.bodyTemperature}</td>
+                  <td>{medicalHistory.prescription}</td>
+                  <td><Moment format="YYYY-MM-DD">{medicalHistory.date}</Moment></td>
+                </tr>
+              ))
+            ) : (<Spinner/>)}
           </tbody>
         </table>
       </div>
@@ -98,8 +115,14 @@ const PatientDetails = ({ loadAdmin, loadUsers, users, match }) => {
 }
 
 const mapStateToProps = state => ({
-  users: state.admin.users,
-  loading: state.admin.loading
+  patients: state.patient.patients,
+  loading: state.patient.loading,
+  medicalHistories: state.medicalHistory.medicalHistories,
+  loadingMedicalHistories: state.medicalHistory.loading
 });
 
-export default connect(mapStateToProps, { loadAdmin, loadUsers })(PatientDetails)
+export default connect(mapStateToProps, { 
+  loadAdmin, 
+  loadAllPatients, 
+  loadMedicalHistoriesByPatientId 
+})(PatientDetails)

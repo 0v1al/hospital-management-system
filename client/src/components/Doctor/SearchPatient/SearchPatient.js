@@ -101,7 +101,7 @@ const SearchPatient = ({
                       <th>Body Temperature</th>
                       <th>Medical Prescription</th>
                       <th>Visit Date</th>
-                      <th>Actions</th>
+                      {/* <th></th> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -116,11 +116,11 @@ const SearchPatient = ({
                             <td>{medicalHistory.bodyTemperature}</td>
                             <td>{medicalHistory.prescription}</td>
                             <td><Moment format="YYYY/MM/DD-HH:mm">{medicalHistory.date}</Moment></td>
-                            <td>
+                            {/* <td>
                               <span className="universalRemoveIcon">
                                 <i className="fas fa-trash"></i>
                               </span>
-                            </td>
+                            </td> */}
                           </tr>
                       )
                     }

@@ -14,11 +14,12 @@ import {
   LOAD_APPOINTMENT_CONSULTATIONS,
   CANCEL_APPOINTMENT_CONSULTATION_DOCTOR,
   FINISH_APPOINTMENT_CONSULTATION,
-  UPDATE_PROFILE_USER
+  UPDATE_PROFILE_USER,
+  ACCEPT_APPOINTMENT_CONSULTATION_DOCTOR
 } from "./types";
 
 export const loadUser = () => async dispatch => {
-  const token = getCookie("token");
+  const token = getCookie("tokenUser");
   setAxiosHeader(token);
   try {
     const res = await axios.get("http://localhost:5000/load-user");
@@ -32,8 +33,8 @@ export const loadUser = () => async dispatch => {
 };
 
 export const registerUser = (credentials, history) => async dispatch => {
-  const { firstname, lastname, location, email, password, passwordRepeat } = credentials;
-  const body = JSON.stringify({ firstname, lastname, location,  email, password, passwordRepeat });
+  const { firstname, lastname, location, email, password, passwordRepeat, male, female } = credentials;
+  const body = JSON.stringify({ firstname, lastname, location,  email, password, passwordRepeat, male, female });
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -53,7 +54,7 @@ export const registerUser = (credentials, history) => async dispatch => {
 };
 
 export const loginUser = (credentials, history) => async dispatch => {
-  const token = getCookie("token");
+  const token = getCookie("tokenUser");
   setAxiosHeader(token);
   const { email, password } = credentials;
   const body = JSON.stringify({ email, password });
@@ -65,7 +66,7 @@ export const loginUser = (credentials, history) => async dispatch => {
   try {
     let result = await axios.post("http://localhost:5000/login-user", body, config);
     const token = result.data;
-    setCookie("token", token, 1000 * 60 * 60);
+    setCookie("tokenUser", token, 1000 * 60 * 60);
     dispatch({
       type: LOGIN_SUCCESS_USER
     });
@@ -136,7 +137,7 @@ export const loadDoctorAppointmentConsultations = doctorEmail => async dispatch 
   }
 };
 
-export const loadAllAppointmentConsultations = doctorEmail => async dispatch => {
+export const loadAllAppointmentConsultations = () => async dispatch => {
   try {
     const res = await axios.get("http://localhost:5000/load-all-appointment-consultations");
     dispatch({
@@ -182,6 +183,25 @@ export const cancelAppointmentConsultationDoctor = consultationId => async dispa
       data: res.data._id
     });
     dispatch(createAlert("The consultation was canceled", "success", 2000));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail")));
+    }
+
+    console.error(err.message);
+  }
+};
+
+export const acceptAppointmentConsultationDoctor = consultationId => async dispatch => {
+  try {
+    const res = await axios.put(`http://localhost:5000/accept-appointment-consultation-doctor/${consultationId}`);
+    dispatch({
+      type: ACCEPT_APPOINTMENT_CONSULTATION_DOCTOR,
+      data: res.data._id
+    });
+    dispatch(createAlert("The consultation was accepted", "success", 2000));
   } catch (err) {
     const errors = err.response.data.errors;
     
@@ -263,7 +283,7 @@ export const updateProfile = updateProfile => async dispatch => {
 };
 
 export const logoutUser = (history, userEmail) => async dispatch => {
-  removeCookie("token");
+  removeCookie("tokenUser");
   setAxiosHeader(null);
   const body = JSON.stringify({ userEmail });
   const config = {

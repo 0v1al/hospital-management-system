@@ -17,11 +17,12 @@ import {
   UPDATE_DOCTOR,
   LOAD_USERS,
   REMOVE_USER,
-  PATIENT_REPORTS
+  PATIENT_REPORTS,
+  LOAD_ENTITY_NUMBER
 } from "./types";
 
 export const loadAdmin = () => async dispatch => {
-  const token = getCookie("token");
+  const token = getCookie("tokenAdmin");
   setAxiosHeader(token);
   try {
     const res = await axios.get("http://localhost:5000/load-admin");
@@ -35,7 +36,7 @@ export const loadAdmin = () => async dispatch => {
 };
 
 export const loginAdmin = (credentials, history) => async dispatch => {
-  const token = getCookie("token");
+  const token = getCookie("tokenAdmin");
   setAxiosHeader(token);
   const { email, password } = credentials;
   const body = JSON.stringify({ email, password });
@@ -47,7 +48,7 @@ export const loginAdmin = (credentials, history) => async dispatch => {
   try {
     let result = await axios.post("http://localhost:5000/login-admin", body, config);
     const token = result.data;
-    setCookie("token", token, 1000 * 60 * 60);
+    setCookie("tokenAdmin", token, 1000 * 60 * 60);
     dispatch({
       type: LOGIN_SUCCESS_ADMIN
     });
@@ -100,7 +101,8 @@ export const removeSpecialization = specializationName => async dispatch => {
     dispatch({
       type: REMOVE_SPECIALIZATION,
       data: specializationName.toLowerCase()
-    })
+    });
+    dispatch(createAlert("The specialization was removed", "success", 2000));
   } catch (err) {
     console.error(err.message);
   }
@@ -287,8 +289,20 @@ export const patientReports = (fromDate, toDate) => async dispatch => {
   }
 }
 
+export const loadEntityNumber = () => async dispatch => {
+  try {
+    const res = await axios.get("http://localhost:5000/load-entity-number");
+    dispatch({
+      type: LOAD_ENTITY_NUMBER,
+      data: res.data
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+
 export const logoutAdmin = history => dispatch => {
-  removeCookie("token");
+  removeCookie("tokenAdmin");
   setAxiosHeader(null);
   dispatch({
     type: LOGOUT_ADMIN

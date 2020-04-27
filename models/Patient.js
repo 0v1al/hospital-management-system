@@ -8,6 +8,10 @@ const PatientSchema = new Schema({
       ref: "doctors"
     }
   ],
+  _user: {
+    type: Schema.ObjectId,
+    ref: "users"
+  },
   firstname: String,
   lastname: String,
   address: String,

@@ -55,13 +55,13 @@ const ManagePatient = ({ loadDoctor, loadPatients, removePatient, doctorId, pati
               <th>Patient Name</th>
               <th>Contact Number</th>
               <th>Gender</th>
-              <th>Creation Date</th>
+              <th>Register Date</th>
               <th>Update Date</th>
-              <th>Action</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-          {(!loading && doctorId)? (patients.map((patient, index) => 
+          {(!loading && doctorId) ? (patients.map((patient, index) => 
             (<tr className="universalTableRow" data-id={patient._id}  key={index}>
                 <td>{index + 1}</td>
                 <td>

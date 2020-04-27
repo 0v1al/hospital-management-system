@@ -4,18 +4,17 @@ import Moment from "react-moment";
 import { Link } from "react-router-dom";
 
 import Spinner from "../../Layout/Spinner/Spinner";
-import { loadAdmin, loadUsers } from "../../actions/admin";
+import { loadAdmin } from "../../actions/admin";
+import  { loadAllPatients } from '../../actions/doctor';
 
-const Patients = ({ loadAdmin, loadUsers, users, loading }) => {
+const Patients = ({ loadAdmin, loadAllPatients, patients, loading }) => {
   useEffect(() => {
     const fetch = async () => {
       loadAdmin();
-      loadUsers();
+      loadAllPatients();
     };
     fetch();
-  }, [loadAdmin]);
-
-  const viewUserNow = e => {};
+  }, [loadAdmin, loadAllPatients]);
 
   return (
     <div className="universalContainer">
@@ -27,31 +26,31 @@ const Patients = ({ loadAdmin, loadUsers, users, loading }) => {
             <tr className="universalTableRow">
               <th>#</th>
               <th>Full Name</th>
-              <th>Address</th>
-              <th>City</th>
-              <th>Gender</th>
               <th>Email</th>
-              <th>Creation Date</th>
-              <th>Action</th>
+              <th>Location</th>
+              <th>Contact</th>
+              <th>Gender</th>
+              <th>Registration Date</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            {!loading ? (users.map((user, index) => 
-              (<tr className="universalTableRow" data-email={user.email}  key={index}>
+            {!loading ? (patients.map((patient, index) => 
+              (<tr className="universalTableRow" data-email={patient.email}  key={index}>
                   <td>{index + 1}</td>
                   <td>
                     {
-                      `${user.firstname[0].toUpperCase()}${user.firstname.slice(1)} 
-                      ${user.lastname[0].toUpperCase()}${user.lastname.slice(1)}`
+                      `${patient.firstname[0].toUpperCase()}${patient.firstname.slice(1)} 
+                      ${patient.lastname[0].toUpperCase()}${patient.lastname.slice(1)}`
                     }
                   </td>
-                  <td></td>
-                  <td>{user.location}</td>
-                  <td></td>
-                  <td>{user.email}</td>
-                  <td><Moment format="YYYY/MM/DD-HH:mm">{user.date}</Moment></td>
+                  <td>{patient.email}</td>
+                  <td>{patient.address}</td>
+                  <td>{patient.contact}</td>
+                  <td>{patient.male ? "Male" : "Female"}</td>
+                  <td><Moment format="YYYY/MM/DD-HH:mm">{patient.date}</Moment></td>
                   <td>
-                    <Link to={`/admin-patient-details/${user.email}`} className="universalEditIcon" onClick={e => viewUserNow(e)}>
+                    <Link to={`/admin-patient-details/${patient.email}/${patient._id}`} className="universalEditIcon">
                       <i className="fas fa-eye"></i>
                     </Link>
                   </td>
@@ -65,9 +64,9 @@ const Patients = ({ loadAdmin, loadUsers, users, loading }) => {
 }
 
 const mapStateToProps = state => ({
-  users: state.admin.users,
-  loading: state.admin.loading,
+  patients: state.patient.patients,
+  loading: state.patient.loading,
   alerts: state.alert
 });
 
-export default connect(mapStateToProps, { loadAdmin, loadUsers })(Patients)
+export default connect(mapStateToProps, { loadAdmin, loadAllPatients })(Patients)

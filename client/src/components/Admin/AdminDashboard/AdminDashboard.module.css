@@ -53,13 +53,14 @@
 
 .adminDashboardCard, .patientDashboardCard {
   background-color: var(--primary-color-alpha);
-  padding: 1rem;
+  padding: 2rem 1rem;
   border-radius: .2rem;
   box-shadow: 1px 1px 5px 1px rgba(19, 19, 19, 0.2);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .adminDashboardCardIcon {
@@ -82,12 +83,30 @@
   text-transform: uppercase;
   color: var(--text-light);
   letter-spacing: .1rem;
-  margin-bottom: .5rem;
+  margin-bottom: 1rem;
 }
 
 .adminDashboardCardDesc {
   color: var(--text-light);
   /* color: var(--primary-color-hover); */
+  text-align: center;
+}
+
+.adminDashboardCardDescLink {
+  color: var(--text-light);
+  color: var(--primary-color);
+  text-decoration: none;
+  text-align: center;
+}
+
+.adminDashboardCardDescLink:hover {
+  transform: scale(0.98);
+}
+
+.adminDashboardCardDesc span {
+  font-weight: 800;
+  color: var(--primary-color);
+  font-size: 1.1rem;
 }
 
 

@@ -4,6 +4,8 @@ const authorization = require("../../middlewares/authorization");
 const { check, validationResult } = require("express-validator");
 const Patient = require("../../models/Patient");
 const Doctor = require("../../models/Doctor");
+const User = require("../../models/User");
+const Admin = require("../../models/Admin");
 
 router.post("/add-patient/:doctorId", [
   check("firstname", "You need to add the firstname").trim().escape().not().isEmpty(),
@@ -22,16 +24,27 @@ router.post("/add-patient/:doctorId", [
   const doctorId = req.params.doctorId;
   const { firstname, lastname, email, age, contact, address, male, female, medicalHistory } = req.body;
 
+  const emailAlreadyDoctor = await Doctor.findOne({ email: email });
+  const emailAlreadyAdmin = await Admin.findOne({ email: email });
+
+  if (emailAlreadyDoctor || emailAlreadyAdmin) {
+    return res.status(400).json({ errors: [{ msg: "An account with this email already exist" }] });
+  }
+
   if (!male && !female) {
     return res.status(400).json({ errors: [{ msg: "You need to select a gender" }] });
   }
 
   try {
-    const emailAlready = await Patient.findOne({ email: email });
+    const patient = await Patient.findOne({ email: email });
     
-    if (emailAlready) {
-      return res.status(400).json({ errors: [{ msg: "A patient with that email already exist" }] });
+    if (patient) {
+      patient._doctor.push(doctorId);
+      await newPatient.save(error => error ? console.log(error) : null);
+      return res.status(200).json(patient);
     }
+
+    const user = await User.findOne({ email: email });
 
     const newPatient = new Patient({
       firstname: firstname,
@@ -43,13 +56,18 @@ router.post("/add-patient/:doctorId", [
       male: male,
       female: female,
       medicalHistory: medicalHistory,
-      consultationActive: true
+      consultationActive: false
     });
+   
+    if (user) {
+      newPatient._user = user._id;
+    }
+   
     newPatient._doctor.push(doctorId);
     await newPatient.save(error => error ? console.log(error) : null);
     res.status(200).json(newPatient);
   } catch (err) {
-    console.err(err);
+    console.error(err);
     res.status(500).send("server error [add patient]");
   }
 });
@@ -58,6 +76,21 @@ router.get("/load-patients/:doctorId", async (req, res) => {
   const doctorId = req.params.doctorId;
   try {
     const patients = await Patient.find({ _doctor: doctorId }).select(["-__v"]).sort({ firstname: "asc", lastname: "asc" });
+   
+    if (!patients) {
+      return res.status(400).send("something went wrong at loading the patients");
+    }
+   
+    res.status(200).json(patients);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("server error [load patients");
+  }
+});
+
+router.get("/load-all-patients", async (req, res) => {
+  try {
+    const patients = await Patient.find().select(["-__v"]).sort({ firstname: "asc", lastname: "asc" });
    
     if (!patients) {
       return res.status(400).send("something went wrong at loading the patients");
@@ -111,9 +144,11 @@ router.put("/update-patient/:patientEmail", [
   try {
     if (patientEmail !== email) {
       const emailAlready = await Patient.findOne({ email: email });
+      const emailAlreadyAdmin = await Admin.findOne({ email: email });
+      const emailAlreadyDoctor = await Doctor.findOne({ email: email });
 
-      if (emailAlready) {
-        return res.status(400).json({ errors: [{ msg: "A patient with that email already exist" }] });
+      if (emailAlready || emailAlreadyAdmin || emailAlreadyDoctor) {
+        return res.status(400).json({ errors: [{ msg: "An account with this email already exist" }] });
       }
     }
 
@@ -165,7 +200,7 @@ router.delete("/remove-patient/:patientId/:doctorId", async (req, res) => {
     }
    
     patient._doctor.pull({ _id: doctorId });
-   
+    await patient.save();
     res.status(200).json(patient);
   } catch (err) {
     console.error(err.message);
@@ -256,10 +291,13 @@ router.put("/update-profile-doctor/:doctorEmail", [
   try {
 
     if (doctorEmail !== email) {
-      const emailAlready = await Doctor.findOne({ email: email });
+      const emailAlreadyDoctor = await Doctor.findOne({ email: email });
+      const emailAlreadyUser = await User.findOne({ email: email });
+      const emailAlreadyAdmin = await Admin.findOne({ email: email });
+      const emailAlreadyPatient = await Patient.findOne({ email: email });
       
-      if (emailAlready) {
-        return res.status(400).json({ errors: [{ msg: "A doctor with this email already exist" }] });
+      if (emailAlreadyDoctor || emailAlreadyAdmin || emailAlreadyPatient || emailAlreadyUser) {
+        return res.status(400).json({ errors: [{ msg: "An account with this email already exist" }] });
       }
     }
 

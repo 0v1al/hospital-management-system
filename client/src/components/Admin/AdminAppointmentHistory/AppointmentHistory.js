@@ -40,21 +40,21 @@ const AppointmentHistory = ({ loadAdmin, loadAllAppointmentConsultations, consul
             </tr>
           </thead>
           <tbody>
-            {loading ? (consultations.map((consultation, index) => 
+            {!loading ? (consultations.map((consultation, index) => 
                 (<tr className="universalTableRow" data-id={consultation._id}  key={index}>
                     <td>{index + 1}</td>
                     <td>
                       {
-                        `${consultation._doctor.firstname} ${consultation._doctor.lastname}`
+                        // `${consultation._doctor.firstname} ${consultation._doctor.lastname}`
                       }
                     </td>
                     <td>
                       {
-                        `${consultation._user.firstname} ${consultation._user.lastname}`
+                        // `${consultation._user.firstname} ${consultation._user.lastname}`
                       }
                     </td>
-                    <td>{consultation._doctor.specialization}</td>
-                    <td>{consultation._doctor.consultationPrice}</td>
+                    {/* <td>{consultation._doctor.specialization}</td> */}
+                    {/* <td>{consultation._doctor.consultationPrice}</td> */}
                     <td>
                       <Moment format="YYYY-MM-DD">{`${consultation.consultationDate}`}</Moment>
                       {`/${consultation.time}`}
@@ -64,7 +64,7 @@ const AppointmentHistory = ({ loadAdmin, loadAllAppointmentConsultations, consul
                     </td>
                     <td>{
                       consultation.canceled ? 
-                      <p className="universalCancel">Canceled By User</p> :
+                      <p className="universalCancel">Canceled By Patient</p> :
                       consultation.canceledByDoctor ? 
                       <p className="universalCancel">Canceled By Doctor</p> :
                       consultation.finished ? 
@@ -82,7 +82,7 @@ const AppointmentHistory = ({ loadAdmin, loadAllAppointmentConsultations, consul
 }
 
 const mapStateToProps = state => ({
-  loading: state.medicalHistory.loading,
+  loading: state.consultation.loading,
   consultations: state.consultation.consultations
 });
 

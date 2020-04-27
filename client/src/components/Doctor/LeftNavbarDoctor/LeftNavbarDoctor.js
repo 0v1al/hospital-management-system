@@ -48,7 +48,7 @@ const LeftNavbarDoctor = () => {
         <li>
           <Link to="/doctor-appointment-history" className={styles.leftNavbarLink}>
             <i className={[`fas fa-file ${styles.leftNavbarIcon}`].join(" ")}></i>
-            Apointment History
+            Consultations
           </Link>
         </li>
         <li>

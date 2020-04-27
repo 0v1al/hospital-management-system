@@ -6,7 +6,8 @@ import {
   LOAD_DOCTORS,
   REMOVE_DOCTOR,
   LOAD_USERS,
-  REMOVE_USER
+  REMOVE_USER,
+  LOAD_ENTITY_NUMBER
 } from "../actions/types";
 
 const initialState = {
@@ -18,10 +19,11 @@ const initialState = {
   loading: true,
   firstLogin: false,
   doctors: [],
-  users: []
+  users: [],
+  entityNumber: null
 };
 
-export default function patient (state = initialState, action) {
+export default function admin(state = initialState, action) {
   switch (action.type) {
     case LOAD_ADMIN:
       return {
@@ -73,6 +75,12 @@ export default function patient (state = initialState, action) {
         loading: false,
         users: state.users.filter(user => user.email !== action.data)
       };
+    case LOAD_ENTITY_NUMBER:
+      return {
+        ...state,
+        loading: false,
+        entityNumber: action.data
+      }
     default:
       return state;
   }

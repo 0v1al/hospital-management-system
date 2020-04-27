@@ -1,12 +1,22 @@
 import React, { useEffect } from 'react'
 import { connect } from "react-redux";
+import Moment from "react-moment";
 
+import Spinner from "../../Layout/Spinner/Spinner";
 import { loadUser } from "../../actions/user";
-import { loadMedicalHistory } from "../../actions/medicalHistory";
+import { loadMedicalHistoriesByUserId, removeMedicalHistoryPatient } from "../../actions/medicalHistory";
 
 import stylesAdminPatientDetails from "../../Admin/PatientDetails/PatientDetails.module.css";
 
-const MedicalHistory = ({ loadUser, loadMedicalHistory , patientId }) => {
+const MedicalHistory = ({ 
+  loadUser, 
+  loadMedicalHistoriesByUserId,
+  removeMedicalHistoryPatient,
+  userId, 
+  loading,
+  medicalHistories,
+  alerts
+}) => {
 
   useEffect(() => {
     const fetch = async () => {
@@ -16,13 +26,31 @@ const MedicalHistory = ({ loadUser, loadMedicalHistory , patientId }) => {
   }, [loadUser]);
 
   useEffect(() => {
-    loadMedicalHistory(patientId);
-  }, [patientId]);
+    const fetch = async () => {
+      console.log(userId);
+      loadMedicalHistoriesByUserId(userId);
+    };
+    if (userId) {
+      fetch();
+    }
+  }, [userId, loadMedicalHistoriesByUserId]);
+
+  const removeMedicalHistoryUserNow = async e => {
+    const medicalHistoryId = e.target.parentElement.parentElement.parentElement.getAttribute("data-id");
+    removeMedicalHistoryPatient(medicalHistoryId);
+  }
 
   return (
       <div className="universalContainer">
         <h1 className="universalTitle">Patient | Medical History</h1>
         <div className={["universalContainerTableNoBorder", stylesAdminPatientDetails.containerTable].join(" ")}>
+          {alerts.length > 0 && 
+              <div className="alerts">
+                {alerts.map(alert => 
+                  <span key={alert.id} className={`alert alert-${alert.type}`}>{alert.msg}</span>
+                )} 
+              </div>
+            }
         <h3 className={["universalDesc", stylesAdminPatientDetails.desc].join(" ")}>
           <i class="fas fa-notes-medical"></i>
           Medical History
@@ -37,12 +65,12 @@ const MedicalHistory = ({ loadUser, loadMedicalHistory , patientId }) => {
                 <th>Body Temperature</th>
                 <th>Medical Prescription</th>
                 <th>Visit Date</th>
-                <th>Actions</th>
+                <th></th>
               </tr>
           </thead>
           <tbody>
-            {/* {(!loading && medicalHistories) ? (medicalHistories.map((medicalHistory, index) => {
-              if (!medicalHistory.deleteDoctor) {
+            {(!loading) ? (medicalHistories.map((medicalHistory, index) => {
+              if (!medicalHistory.deletePatient) {
                   return (
                     <tr className="universalTableRow" data-id={medicalHistory._id}  key={index}>
                       <td>{index + 1}</td>
@@ -53,7 +81,7 @@ const MedicalHistory = ({ loadUser, loadMedicalHistory , patientId }) => {
                       <td>{medicalHistory.prescription}</td>
                       <td><Moment format="YYYY/MM/DD-HH:mm">{medicalHistory.date}</Moment></td>
                       <td>
-                        <span className="universalRemoveIcon" onClick={e => removeMedicalHistoryDoctorNow(e)}>
+                        <span className="universalRemoveIcon" onClick={e => removeMedicalHistoryUserNow(e)}>
                           <i className="fas fa-trash"></i>
                         </span>
                       </td>
@@ -61,7 +89,7 @@ const MedicalHistory = ({ loadUser, loadMedicalHistory , patientId }) => {
                   )
               }
             }
-            )) : (<Spinner />)} */}
+            )) : (<Spinner />)}
           </tbody>
         </table>
       </div>
@@ -70,7 +98,10 @@ const MedicalHistory = ({ loadUser, loadMedicalHistory , patientId }) => {
 }
 
 const mapStateToProps = state => ({
-  patientId: state.user._id
+  userId: state.user._id,
+  medicalHistories: state.medicalHistory.medicalHistories,
+  loading: state.medicalHistory.loading,
+  alerts: state.alert
 });
 
-export default connect(mapStateToProps, { loadUser, loadMedicalHistory })(MedicalHistory);
+export default connect(mapStateToProps, { loadUser, loadMedicalHistoriesByUserId, removeMedicalHistoryPatient })(MedicalHistory);

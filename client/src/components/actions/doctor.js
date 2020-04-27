@@ -1,7 +1,7 @@
 import axios from "axios";
 import { setCookie, getCookie, removeCookie } from "../cookie";
 import { createAlert } from "./alert";
-import { loadMedicalHistories } from "./medicalHistory";
+import { loadMedicalHistoriesByPatientId } from "./medicalHistory";
 import setAxiosHeader from "../setAxiosHeader";
 
 import { 
@@ -18,7 +18,7 @@ import {
 } from "./types";
 
 export const loadDoctor = () => async dispatch => {
-  const token = getCookie("token");
+  const token = getCookie("tokenDoctor");
   setAxiosHeader(token);
   try {
     const res = await axios.get("http://localhost:5000/load-doctor");
@@ -32,7 +32,7 @@ export const loadDoctor = () => async dispatch => {
 };
 
 export const loginDoctor = (credentials, history) => async dispatch => {
-  const token = getCookie("token");
+  const token = getCookie("tokenDoctor");
   setAxiosHeader(token);
   const { email, password } = credentials;
   const body = JSON.stringify({ email, password });
@@ -44,7 +44,7 @@ export const loginDoctor = (credentials, history) => async dispatch => {
   try {
     let result = await axios.post("http://localhost:5000/login-doctor", body, config);
     const token = result.data;
-    setCookie("token", token, 1000 * 60 * 60);
+    setCookie("tokenDoctor", token, 1000 * 60 * 60);
     dispatch({
       type: LOGIN_SUCCESS_DOCTOR
     });
@@ -90,6 +90,18 @@ export const addPatient = (doctorId, patient) => async dispatch => {
 export const loadPatients = doctorId => async dispatch => {
   try {
     const res = await axios.get(`http://localhost:5000/load-patients/${doctorId}`);
+    dispatch({
+      type: LOAD_PATIENTS,
+      data: res.data
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const loadAllPatients = () => async dispatch => {
+  try {
+    const res = await axios.get("http://localhost:5000/load-all-patients");
     dispatch({
       type: LOAD_PATIENTS,
       data: res.data
@@ -148,6 +160,12 @@ export const removePatient = data => async dispatch => {
     });
     dispatch(createAlert("The patient was removed", "success", 2000));
   } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(createAlert(error.msg, "fail", 2000)));
+    }
+
     console.error(err.message);
   }
 };
@@ -165,7 +183,7 @@ export const searchPatient = patientEmail => async dispatch => {
       type: SEARCH_PATIENT,
       data: res.data
     });
-    dispatch(loadMedicalHistories(res.data._id));
+    dispatch(loadMedicalHistoriesByPatientId(res.data._id));
     dispatch(createAlert("The patient was found", "success", 2000));
   } catch (err) {
     const errors = err.response.data.errors;
@@ -229,7 +247,7 @@ export const updateProfile = updateProfile => async dispatch => {
 };
 
 export const logoutDoctor = (history, doctorEmail) => async dispatch => {
-  removeCookie("token");
+  removeCookie("tokenDoctor");
   setAxiosHeader(null);
   const body = JSON.stringify({ doctorEmail });
   const config = {

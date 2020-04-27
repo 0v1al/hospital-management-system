@@ -7,8 +7,9 @@ import { loadDoctor } from "../../actions/doctor";
 import { 
   loadDoctorAppointmentConsultations, 
   removeAppointmentConsultation, 
-  cancelAppointmentConsultationDoctor ,
-  finishAppointmentConsultationDoctor
+  cancelAppointmentConsultationDoctor,
+  finishAppointmentConsultationDoctor,
+  acceptAppointmentConsultationDoctor
 } from "../../actions/user";
 
 const AppointmentHistory = ({ 
@@ -17,6 +18,7 @@ const AppointmentHistory = ({
   cancelAppointmentConsultationDoctor, 
   removeAppointmentConsultation, 
   finishAppointmentConsultationDoctor,
+  acceptAppointmentConsultationDoctor,
   consultations, 
   doctorEmail, 
   doctor: { 
@@ -41,7 +43,8 @@ const AppointmentHistory = ({
 
   useEffect(() => {
     const fetch = async () => {
-      loadDoctorAppointmentConsultations(doctorEmail);
+      console.log(email);
+      loadDoctorAppointmentConsultations(email);
     };
     if (email) {
       fetch();
@@ -49,7 +52,7 @@ const AppointmentHistory = ({
   }, [email]);
 
   const removeConsultation = async e => {
-    const consultationId = e.target.parentElement.parentElement.parentElement.getAttribute("data-id");
+    const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");
     removeAppointmentConsultation(consultationId);
   }
  
@@ -57,17 +60,22 @@ const AppointmentHistory = ({
     const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");
     cancelAppointmentConsultationDoctor(consultationId);
   }
+  
+  const acceptConsultation = async e => {
+    const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");
+    acceptAppointmentConsultationDoctor(consultationId);
+  };
 
   const finishConsultation = async e => {
-    const consultationId = e.target.parentElement.parentElement.parentElement.getAttribute("data-id");
+    const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");
     finishAppointmentConsultationDoctor(consultationId);
   }
 
   return (
     <div className="universalContainer">
-      <h1 className="universalTitle">User | Appointment History</h1>
+      <h1 className="universalTitle">Doctor | Consultations History</h1>
       <div className="universalContainerTableNoBorder">
-        <h3 className="universalDesc">Appointment History</h3>
+        <h3 className="universalDesc">Consultations History</h3>
         {alerts.length > 0 && 
             <div className="alerts">
               {alerts.map(alert => 
@@ -85,59 +93,51 @@ const AppointmentHistory = ({
               <th>Consultation Date/Time</th>
               <th>Send Time</th>
               <th>Status</th>
-              <th>Action</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-          {!loading && !!doctorEmail && consultations.length > 0 ? (consultations.map((consultation, index) => 
+          {!loading ? (consultations.map((consultation, index) => 
              (<tr className={[`universalTableRow ${consultation.active ? "" : "canceled"}`].join(" ")} data-id={consultation._id}  key={index}>
                 <td>{index + 1}</td>
-                <td>
-                  {
+                <td>{
                     consultation._doctor && (
                       `${consultation._user.firstname} ${consultation._user.lastname}`
-                      // `${consultation._doctor.firstname[0].toUpperCase()}${consultation._doctor.firstname.slice(1)}
-                      // ${consultation._doctor.lastname[0].toUpperCase()}${consultation._doctor.lastname.slice(1)}`
-                    )
-                  }
-                </td>
-                <td>
-                  {
-                  specialization
-                  // `${consultation._doctor.specialization[0].toUpperCase()}${consultation._doctor.specialization.slice(1)}`
-                  } 
-                </td>
+                )}</td>
+                <td>{specialization}</td>
                 <td>{consultationPrice}</td>
                 <td>
                   <Moment format="YYYY/MM/DD">{`${new Date(consultation.consultationDate)}`}</Moment>
                   {`/${consultation.time}`}
                 </td>
                 <td><Moment format="YYYY/MM/DD">{consultations.creationDate}</Moment></td>
-                <td>
-                  {
+                <td>{
                     consultation.canceledByDoctor ? 
                     <p className="universalCancel">Canceled By You</p> : 
                     consultation.finished ?
                     <p className="universalFinished">Finished</p> :
                     consultation.canceled ? 
                     <p className="universalCancel">Canceled By Patient </p> : 
-                    <p className="universalActive">"Active"</p>
-                  }
-                </td>
-                <td> 
-                  {consultation.active ? (
+                    consultation.accepted ? 
+                    <p className="universalActive">Accepted</p> :
+                    <p className="universalActive">Active</p>
+                }</td>
+                <td>{(consultation.active && !consultation.accepted) ? (
                     <>
                       <span className="universalRemoveIcon" onClick={e => cancelConsultation(e)}>
-                        {/* <i className="fas fa-edit"></i> {"| "} */}
-                        <i className="fas fa-window-close"></i>
+                        {/* <i className="fas fa-window-close"></i> */}cancel
                       </span>{" | "}
-                      <span className="universalEditIcon" onClick={e => finishConsultation(e)}>
-                        {/* FINISH */}<i className="fas fa-check-circle"></i>
+                      <span className="universalEditIcon" onClick={e => acceptConsultation(e)}>
+                        {/* <i className="fas fa-check-circle"></i> */}accept
                       </span>
                      </>
+                  ) : (consultation.active && consultation.accepted) ? (
+                    <span className="universalEditIcon" onClick={e => finishConsultation(e)}>
+                      {/* <i className="fas fa-check-circle"></i> */}finish consultation
+                    </span>
                   ) : (
                     <span className="universalRemoveIcon" onClick={e => removeConsultation(e)}>
-                     <i className="fas fa-trash"></i>
+                     {/* <i className="fas fa-trash"></i> */} delete
                     </span>
                   )}
                 </td>
@@ -163,5 +163,6 @@ export default connect(mapStateToProps, {
   loadDoctorAppointmentConsultations,
   cancelAppointmentConsultationDoctor,
   removeAppointmentConsultation,
-  finishAppointmentConsultationDoctor
+  finishAppointmentConsultationDoctor,
+  acceptAppointmentConsultationDoctor
 })(AppointmentHistory);

@@ -4,6 +4,8 @@ const authorization = require("../../middlewares/authorization");
 const { check, validationResult } = require("express-validator");
 const Doctor = require("../../models/Doctor");
 const Patient = require("../../models/Patient");
+const User = require("../../models/User");
+const Admin = require("../../models/Admin");
 
 router.post("/add-doctor", [authorization,
   check("specialization", "You need to select a specialization").not().isEmpty(),
@@ -23,10 +25,13 @@ router.post("/add-doctor", [authorization,
   }
 
   try {
-    const emailAlready = await Doctor.findOne({ email: email});
+    const emailAlreadyDoctor = await Doctor.findOne({ email: email});
+    const emailAlreadyUser = await User.findOne({ email: email });
+    const emailAlreadyPatient = await Patient.findOne({ email: email });
+    const emailAlreadyAdmin = await Admin.findOne({ email: email });
 
-    if (emailAlready) {
-      return res.status(400).json({ errors: [{ msg: "A doctor with that email already exist" }] });
+    if (emailAlreadyDoctor || emailAlreadyPatient || emailAlreadyUser || emailAlreadyAdmin) {
+      return res.status(400).json({ errors: [{ msg: "An account with this email already exist" }] });
     }
   
     const newDoctor = new Doctor({
@@ -49,7 +54,7 @@ router.post("/add-doctor", [authorization,
 
 router.get("/load-doctors", authorization, async (req, res) => {
   try {
-    const doctors = await Doctor.find().select(["-__v"]);
+    const doctors = await Doctor.find().select(["-__v", "-password"]);
     res.status(200).json(doctors);
   } catch (err) {
     console.error(error.message);
@@ -90,10 +95,13 @@ router.put("/update-doctor", [
 
   try {
     if (email !== doctorEmail) {
-      const emailAlready = await Doctor.findOne({ email: email });
+      const emailAlreadyDoctor = await Doctor.findOne({ email: email });
+      const emailAlreadyUser = await User.findOne({ email: email });
+      const emailAlreadyAdmin = await Admin.findOne({ email: email });
+      const emailAlreadyPatient = await Patient.findOne({ email: email });
       
-      if (emailAlready) {
-        return res.status(400).json({ errors: [{ msg: "A doctor with that email already exist" }] });
+      if (emailAlreadyDoctor || emailAlreadyPatient || emailAlreadyUser || emailAlreadyAdmin) {
+        return res.status(400).json({ errors: [{ msg: "An account with this email already exist" }] });
       }
     }
 

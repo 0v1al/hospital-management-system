@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { loadUser } from "../../actions/user";
+import { Link } from "react-router-dom";
 
+import { loadUser } from "../../actions/user";
 import styles from "../../Admin/AdminDashboard/AdminDashboard.module.css";
 
 const UserDashboard = ({ loadUser }) => {
@@ -22,21 +23,21 @@ const UserDashboard = ({ loadUser }) => {
             <i className="fas fa-user"></i>
           </span>
           <h3 className={styles.adminDashboardCardTitle}>My Profile</h3>
-          <p className={styles.adminDashboardCardDesc}>Update Profile</p>
+          <Link to="/user-update-profile" className={styles.adminDashboardCardDescLink}>Update Profile</Link>
         </div>
         <div className={styles.patientDashboardCard}>
           <span className={styles.adminDashboardCardIcon}>
             <i className="fas fa-clipboard-list"></i>
           </span>
-          <h3 className={styles.adminDashboardCardTitle}>My Appointments</h3>
-          <p className={styles.adminDashboardCardDesc}>View Appointments History</p>
+          <h3 className={styles.adminDashboardCardTitle}>My Consultations</h3>
+          <Link to="user-appointment-history" className={styles.adminDashboardCardDescLink}>View Consultations History</Link>
         </div>
         <div className={[styles.patientDashboardCard].join(" ")}>
           <span className={styles.adminDashboardCardIcon}>
             <i className="fas fa-book-open"></i>
           </span>
-          <h3 className={styles.adminDashboardCardTitle}>Book My Appointments</h3>
-          <p className={styles.adminDashboardCardDesc}>Book Appointments</p>
+          <h3 className={styles.adminDashboardCardTitle}>Consultations Scheduling</h3>
+          <Link to="/user-appointment-consultation" className={styles.adminDashboardCardDescLink}>Send a Consultation</Link>
         </div>
       </div>
     </div>

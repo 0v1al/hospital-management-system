@@ -58,7 +58,7 @@ const UnreadMessages = ({ loadAdmin, loadMessages, removeMessage, messages, aler
                   <td>{`${message.email}`}</td>
                   <td>{`${message.contact}`}</td>
                   <td>{`${message.message}`}</td>
-                  <td><Moment format="YYYY/MM/DD-HH:mm">{`${message.date}`}</Moment></td>
+                  <td><Moment format="YYYY-MM-DD/3HH:mm">{`${message.date}`}</Moment></td>
                   <td>
                     <Link to={`/admin-update-message/${message._id}`} className="universalEditIcon">
                       <i className="fas fa-edit"></i> {"| "}

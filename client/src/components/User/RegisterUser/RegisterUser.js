@@ -12,10 +12,12 @@ const RegisterUser = ({ alerts, registerUser, history }) => {
     email: "",
     location: "",
     password: "",
-    passwordRepeat: ""
+    passwordRepeat: "",
+    male: false,
+    female: false
   });
 
-  const { firstname, lastname, email, location, password, passwordRepeat } = input;
+  const { firstname, lastname, email, location, password, passwordRepeat, male, female } = input;
 
   const registerUserSubmit = async e => {
     e.preventDefault();
@@ -57,9 +59,9 @@ const RegisterUser = ({ alerts, registerUser, history }) => {
         <div className={[styles.inputCheckbox].join(" ")} >
           <label>* Gender: </label>
           <label>Male </label>
-          <input type="checkbox" name="male" value="" />
+          <input type="checkbox" name="male" checked={male} onChange={e => setInput({ ...input, male: true, female: false })} />
           <label>Female</label>
-          <input type="checkbox" name="female" value="" />
+          <input type="checkbox" name="female" checked={female} onChange={e => setInput({ ...input, female: true, male: false })} />
         </div>
         <div className={styles.inputGroup}>
           <label>* Patient password: </label>

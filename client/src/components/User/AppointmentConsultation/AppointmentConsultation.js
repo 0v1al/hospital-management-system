@@ -6,7 +6,18 @@ import { loadUsersData, loadDoctorsData, loadSpecializationsData } from "../../a
 import styles from "./AppointmentConsultation.module.css";
 import stylesLoginAdmin from "../../Admin/LoginAdmin/LoginAdmin.module.css";
 
-const AppointmentConsultation = ({ loadUser, loadUsersData, loadDoctorsData, loadSpecializationsData, addAppointmentConsultation, doctors, specializations, userEmail, alerts, loading }) => {
+const AppointmentConsultation = ({
+	 loadUser, 
+	 loadUsersData, 
+	 loadDoctorsData, 
+	 loadSpecializationsData, 
+	 addAppointmentConsultation, 
+	 doctors, 
+	 specializations, 
+	 userEmail, 
+	 alerts, 
+	 loading 
+	}) => {
 	const [specialization, setSpecialization] = useState("");
 	const [doctor, setDoctor] = useState("");
 	const [consultationPrice, setConsultationPrice] = useState("");
@@ -70,7 +81,9 @@ const AppointmentConsultation = ({ loadUser, loadUsersData, loadDoctorsData, loa
 							<select onChange={e => setSpecialization(e.target.value)}>
 								<option value={null}>Select Doctor Specialization</option>
 								{!loading && specializations.length > 0 && specializations.map((specialization, index) => 
-									<option key={index} value={specialization.specialization}>{specialization.specialization}</option>)}
+									<option key={index} value={specialization.specialization}>
+										{`${specialization.specialization[0].toUpperCase()}${specialization.specialization.slice(1)}`}
+									</option>)}
 							</select>
 						</div>
 				</div>

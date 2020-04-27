@@ -3,6 +3,7 @@ const router = express.Router();
 const authorization = require("../../middlewares/authorization");
 const { check, validationResult } = require("express-validator");
 const MedicalHistory = require("../../models/MedicalHistory");
+const Patient = require("../../models/Patient");
 
 router.post("/add-medical-history", [
   check("bloodPressure", "please complete all the fields").trim().escape().not().isEmpty(),
@@ -68,13 +69,14 @@ router.delete("/remove-medical-history-doctor/:medicalHistoryId", async (req, re
 router.delete("/remove-medical-history-patient/:medicalHistoryId", async (req, res) => {
   const medicalHistoryId = req.params.medicalHistoryId;
   try {
-    const medicalHistory = await MedicalHistory.findById(medicalHistoryId);
+    let medicalHistory = await MedicalHistory.findById(medicalHistoryId);
     
     if (!medicalHistory.deletePatient) {
       await MedicalHistory.findOneAndUpdate(
-        { id: medicalHistoryId },
+        { _id: medicalHistoryId },
         { deletePatient: true }
       );
+      medicalHistory = await MedicalHistory.findById(medicalHistoryId); 
     }
    
     if (medicalHistory.deleteDoctor && medicalHistory.deletePatient) {
@@ -93,15 +95,39 @@ router.delete("/remove-medical-history-patient/:medicalHistoryId", async (req, r
   }
 });
 
-router.get("/load-medical-histories/:patientId", async (req, res) => {
+router.get("/load-medical-histories-by-userId/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const patient = await Patient.findOne({ _user: userId });
+    
+    if (!patient) {
+      return res.status(400).send("something went wrong on loading medical history");
+    }
+
+    const medicalHistories = await MedicalHistory.find({ _patient: patient._id }).select(["-__v"]).sort({ date: "asc" });
+    
+    if (!medicalHistories) {
+      return res.status(400).send("something went wrong on loading medical history");
+    }
+
+    res.status(200).json(medicalHistories);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("server error [load medical history]");
+  }
+});
+
+router.get("/load-medical-histories-by-patientId/:patientId", async (req, res) => {
   const patientId = req.params.patientId;
+
   try {
     const medicalHistories = await MedicalHistory.find({ _patient: patientId }).select(["-__v"]).sort({ date: "asc" });
     
     if (!medicalHistories) {
       return res.status(400).send("something went wrong on loading medical history");
     }
-    
+
     res.status(200).json(medicalHistories);
   } catch (err) {
     console.error(err);

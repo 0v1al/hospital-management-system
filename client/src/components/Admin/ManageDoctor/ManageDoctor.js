@@ -39,8 +39,8 @@ const ManageDoctor = ({ loadAdmin, loadDoctors, removeDoctor, doctors, alerts, l
               <th>#</th>
               <th>Specialization</th>
               <th>Doctor Name</th>
-              <th>Creation Date</th>
-              <th>Action</th>
+              <th>Registration Date</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -54,7 +54,7 @@ const ManageDoctor = ({ loadAdmin, loadDoctors, removeDoctor, doctors, alerts, l
                     ${doctor.lastname[0].toUpperCase()}${doctor.lastname.slice(1)}`
                   }
                 </td>
-                <td><Moment format="YYYY/MM/DD-HH:mm">{doctor.date}</Moment></td>
+                <td><Moment format="YYYY-MM-DD/HH:mm">{doctor.date}</Moment></td>
                 <td>
                   <Link to={`/admin-update-doctor/${doctor.email}`} className="universalEditIcon">
                     <i className="fas fa-edit"></i> {"| "}

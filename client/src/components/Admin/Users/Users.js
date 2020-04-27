@@ -23,25 +23,24 @@ const Users = ({ loadAdmin, loadUsers, removeUser, users, loading, alerts }) => 
     <div className="universalContainer">
     <h2 className="universalTitle">Admin | Users</h2>
     <div className="universalContainerTableNoBorder">
-      <h3 className="universalDesc">Manage Users</h3>
       {alerts.length > 0 && 
         <div className="alerts">
           {alerts.map(alert => 
             <span key={alert.id} className={`alert alert-${alert.type}`}>{alert.msg}</span>
-          )} 
+            )} 
         </div>
       } 
+      <h3 className="universalDesc">Manage Users</h3>
       <table className="universalTable">
         <thead>
           <tr className="universalTableRow">
             <th>#</th>
             <th>Full Name</th>
-            <th>Address</th>
-            <th>City</th>
+            <th>Location</th>
             <th>Gender</th>
             <th>Email</th>
-            <th>Creation Date</th>
-            <th>Action</th>
+            <th>Registration Date</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -54,9 +53,8 @@ const Users = ({ loadAdmin, loadUsers, removeUser, users, loading, alerts }) => 
                     ${user.lastname[0].toUpperCase()}${user.lastname.slice(1)}`
                   }
                 </td>
-                <td></td>
                 <td>{user.location}</td>
-                <td></td>
+                <td>{user.male ? "Male" : "Female"}</td>
                 <td>{user.email}</td>
                 <td><Moment format="YYYY/MM/DD-HH:mm">{user.date}</Moment></td>
                 <td>

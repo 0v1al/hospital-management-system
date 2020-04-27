@@ -5,6 +5,8 @@ const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Patient = require("../../models/Patient");
+const Admin = require("../../models/Admin");
+const Doctor = require("../../models/Doctor");
 
 router.post("/login-user", [
   check("email", "The email is not valid").isEmail(),
@@ -102,10 +104,13 @@ router.put("/update-profile-user/:userEmail", [
   try {
 
     if (userEmail !== email) {
-      const emailAlready = await User.findOne({ email: email });
+      const emailAlreadyUser = await User.findOne({ email: email });
+      const emailAlreadyAdmin = await Admin.findOne({ email: email });
+      const emailAlreadyPatient = await Patient.findOne({ email: email });
+      const emailAlreadyDoctor = await Doctor.findOne({ email: email });
       
-      if (emailAlready) {
-        return res.status(400).json({ errors: [{ msg: "A user with this email already exist" }] });
+      if (emailAlreadyUser || emailAlreadyAdmin || emailAlreadyDoctor || emailAlreadyPatient) {
+        return res.status(400).json({ errors: [{ msg: "A account with this email already exist" }] });
       }
     }
 

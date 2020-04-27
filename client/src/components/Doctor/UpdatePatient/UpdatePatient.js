@@ -7,7 +7,7 @@ import Spinner from "../../Layout/Spinner/Spinner";
 import stylesLoginAdmin from "../../Admin/LoginAdmin/LoginAdmin.module.css";
 import styles from "../../Admin/UpdateDoctor/UpdateDoctor.module.css";
 
-const UpdatePatient = ({ loadDoctor, loadPatients, updatePatient, patients, loading, alerts, match }) => {
+const UpdatePatient = ({ loadDoctor, loadPatients, doctorId, updatePatient, patients, loading, alerts, match }) => {
   
   const [patient, setPatient] = useState(null);
   const { 
@@ -23,12 +23,18 @@ const UpdatePatient = ({ loadDoctor, loadPatients, updatePatient, patients, load
   } = patient || ""; 
 
   useEffect(() => {
-    const fetch = () => {
+    const fetch = async () => {
       loadDoctor();
-      loadPatients();
     };
     fetch();
-  }, [loadDoctor, loadPatients]);
+  }, [loadDoctor]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      if (doctorId) loadPatients(doctorId);
+    };
+    fetch();
+  }, [doctorId]);
 
   useEffect(() => {
     const patientEmail = match.params.patientEmail;
@@ -80,7 +86,7 @@ const UpdatePatient = ({ loadDoctor, loadPatients, updatePatient, patients, load
           <label>Male </label>
           <input type="checkbox" name="male" checked={male} onChange={e => setPatient({ ...patient, male: true, female: false})}/>
           <label>Female</label>
-          <input type="checkbox" name="female" checked={female} onChange={e => setPatient({ ...patient, male: true, female: false }) }/>
+          <input type="checkbox" name="female" checked={female} onChange={e => setPatient({ ...patient, male: false, female: true }) }/>
         </div>
         <div className={stylesLoginAdmin.inputGroup}>
           <label>* Patient Email:</label>
@@ -115,6 +121,7 @@ const UpdatePatient = ({ loadDoctor, loadPatients, updatePatient, patients, load
 
 const mapStateToProps = state => ({
   patients: state.patient.patients,
+  doctorId: state.doctor._id,
   loading: state.patient.loading,
   alerts: state.alert
 }); 

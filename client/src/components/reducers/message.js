@@ -31,6 +31,7 @@ export default function message(state = initialState, action) {
         loading: false,
         messages: state.messages.map(message => {
           if (message._id === action.data.messageId) {
+            message.read = true;
             message.response = action.data.response;
             message.updateDate = action.data.updateDate;
             return message;

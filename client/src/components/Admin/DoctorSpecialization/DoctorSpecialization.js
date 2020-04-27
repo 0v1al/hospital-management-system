@@ -54,22 +54,22 @@ const DoctorSpecialization = ({ loadAdmin, addSpecialization, loadSpecialization
         <input type="submit" value="Add" className={styles.btnDoctorSpecialization}/>
       </form>
       <div className={styles.containerTable}>
-        <h3 className={styles.descDoctorSpecialization}>Doctor Specializations</h3>
         {alerts.length > 0 && 
             <div className="alerts">
               {alerts.map(alert => 
                 <span key={alert.id} className={`alert alert-${alert.type}`}>{alert.msg}</span>
-              )} 
+                )} 
             </div>
           } 
+        <h3 className={styles.descDoctorSpecialization}>Doctor Specializations</h3>
         <table className={styles.tableDoctorSpecialization}>
           <thead>
             <tr className={styles.tableDoctorSpecializationRow}>
               <th>#</th>
               <th>Specialization</th>
-              <th>Creation Date</th>
+              <th>Registration Date</th>
               <th>Update Date</th>
-              <th>Action</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -79,8 +79,15 @@ const DoctorSpecialization = ({ loadAdmin, addSpecialization, loadSpecialization
                 <td>
                   <input className={styles.editSpecialization} placeholder={`${specialization.specialization[0].toUpperCase()}${specialization.specialization.slice(1)}`} onKeyPress={e => editSpecializationInput(e)}  disabled />
                 </td>
-                <td><Moment format="YYYY/MM/DD-HH:mm">{specialization.creationDate}</Moment></td>
-                <td><Moment format="YYYY/MM/DD-HH:mm">{specialization.updateDate}</Moment></td>
+                <td><Moment format="YYYY-MM-DD/HH:mm">{specialization.creationDate}</Moment></td>
+                <td>
+                  {
+                    specialization.updateDate ? 
+                    <Moment format="YYYY-MM-DD">
+                      {specialization.updateDate}
+                    </Moment> : "---"
+                  }
+                </td>
                 <td>
                   <span className={styles.editDoctorSpecialization} onClick={e => setInputEditOn(e)}>
                     <i className="fas fa-edit"></i> {"| "}
