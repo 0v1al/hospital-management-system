@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 const NotificationSchema = new Schema({
   message: String,
-  _patient: {
+  _user: {
     type: Schema.ObjectId,
-    ref: "patients"
+    ref: "users"
   },
   _doctor: {
     type: Schema.ObjectId,
@@ -19,7 +19,7 @@ const NotificationSchema = new Schema({
     type: Boolean,
     default: false
   },
-  viewByPatient: {
+  viewByUser: {
     type: Boolean,
     default: false
   },

@@ -11,7 +11,7 @@ export const addMessage = messageInfo => async dispatch => {
       }
     }
     try {
-      const res = await axios.post("http://localhost:5000/contact-add-message", body, config);
+      const res = await axios.post("/contact-add-message", body, config);
       dispatch({
         type: ADD_MESSAGE,
         data: res.data
@@ -30,7 +30,7 @@ export const addMessage = messageInfo => async dispatch => {
 
 export const removeMessage = messageId => async dispatch => {
   try {
-    await axios.delete(`http://localhost:5000/remove-message/${messageId}`);
+    await axios.delete(`/remove-message/${messageId}`);
     dispatch({
       type: REMOVE_MESSAGE,
       data: messageId
@@ -43,7 +43,7 @@ export const removeMessage = messageId => async dispatch => {
 
 export const loadMessages = () => async dispatch => {
   try {
-    const res = await axios.get("http://localhost:5000/load-messages"); 
+    const res = await axios.get("/load-messages"); 
     dispatch({
       type: LOAD_MESSAGES,
       data: res.data
@@ -62,7 +62,7 @@ export const updateMessage = (messageId, updateMessage) => async dispatch => {
     }
   }
   try {
-    const res = await axios.put(`http://localhost:5000/update-message/${messageId}`, body, config);
+    const res = await axios.put(`/update-message/${messageId}`, body, config);
     dispatch({
       type: UPDATE_MESSAGE,
       data: res.data
@@ -87,7 +87,7 @@ export const markAsReadMessage = messageId => async dispatch => {
     }
   }
   try {
-    const res = await axios.put(`http://localhost:5000/mark-read-message/${messageId}`, body, config);
+    const res = await axios.put(`/mark-read-message/${messageId}`, body, config);
     dispatch({
       type: MARK_READ_MESSAGE,
       data: res.data

@@ -9,6 +9,8 @@ import { addNotificationDoctor } from "../../actions/notification";
 const AppointmentHistory = ({ 
   loadUser, 
   loadUserAppointmentConsultations, 
+  userFirstname,
+  userLastname, 
   consultations, 
   removeAppointmentConsultation, 
   cancelAppointmentConsultation, 
@@ -48,7 +50,7 @@ const AppointmentHistory = ({
     const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");
     if(cancelAppointmentConsultation(consultationId)) {
       const doctorId = e.target.parentElement.parentElement.getAttribute("doctor-id");
-      addNotificationDoctor(doctorId, `Consultation of was canceled`);
+      addNotificationDoctor(doctorId, `Patient ${userFirstname} ${userLastname} canceled his consultation request`);
     }
   }
 
@@ -142,7 +144,9 @@ const mapStateToProps = state => ({
   consultations: state.consultation.consultations,
   loading: state.consultation.loading,
   userEmail: state.user.email,
-  alerts: state.alert
+  alerts: state.alert,
+  userFirstname: state.user.firstname,
+  userLastname: state.user.lastname
 });
 
 export default connect(mapStateToProps, { 

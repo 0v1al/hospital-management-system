@@ -27,7 +27,6 @@ const MedicalHistory = ({
 
   useEffect(() => {
     const fetch = async () => {
-      console.log(userId);
       loadMedicalHistoriesByUserId(userId);
     };
     if (userId) {

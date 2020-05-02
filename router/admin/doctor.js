@@ -76,7 +76,7 @@ router.delete("/remove-doctor/:doctorEmail", authorization, async (req, res) => 
   }
 });
 
-router.put("/update-doctor", [
+router.put("/update-doctor", [authorization,
   check("specialization", "You need to select a specialization").not().isEmpty(),
   check("firstname", "You need to complete all the fields").trim().escape().not().isEmpty(),
   check("lastname", "You need to complete all the fields").trim().escape().not().isEmpty(),
@@ -135,7 +135,7 @@ router.put("/update-doctor", [
   }
 });
 
-router.get("/patient-reports/:fromDate/:toDate", async (req, res) => {
+router.get("/patient-reports/:fromDate/:toDate", authorization, async (req, res) => {
   const fromDate = new Date(req.params.fromDate);
   const toDate = new Date(req.params.toDate);
   if (!fromDate || !toDate) {

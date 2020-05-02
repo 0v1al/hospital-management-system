@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Moment from "react-moment";
 
 import Spinner from "../../Layout/Spinner/Spinner";
+import { addNotificationUser } from "../../actions/notification";
 import { loadDoctor } from "../../actions/doctor";
 import { 
   loadDoctorAppointmentConsultations, 
@@ -19,11 +20,14 @@ const AppointmentHistory = ({
   removeAppointmentConsultation, 
   finishAppointmentConsultationDoctor,
   acceptAppointmentConsultationDoctor,
+  addNotificationUser,
   consultations, 
   doctorEmail, 
   doctor: { 
     specialization,
-    consultationPrice
+    consultationPrice,
+    firstname : doctorFirstname,
+    lastname : doctorLastname
     }, 
   loading, 
   alerts 
@@ -58,17 +62,27 @@ const AppointmentHistory = ({
  
   const cancelConsultation = async e => {
     const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");
-    cancelAppointmentConsultationDoctor(consultationId);
+    if (cancelAppointmentConsultationDoctor(consultationId)) {
+      const userId = e.target.parentElement.parentElement.getAttribute("data-user");
+      addNotificationUser(userId, `Doctor ${doctorFirstname} ${doctorLastname} canceled your consultation request`);
+    }
   }
   
   const acceptConsultation = async e => {
     const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");
-    acceptAppointmentConsultationDoctor(consultationId);
+    const userId = e.target.parentElement.parentElement.getAttribute("data-user");
+    if (acceptAppointmentConsultationDoctor(consultationId)) {
+      const userId = e.target.parentElement.parentElement.getAttribute("data-user");
+      addNotificationUser(userId, `Doctor ${doctorFirstname} ${doctorLastname} accepted your consultation request`);
+    }
   };
 
   const finishConsultation = async e => {
     const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");
-    finishAppointmentConsultationDoctor(consultationId);
+    if (finishAppointmentConsultationDoctor(consultationId)) {
+      const userId = e.target.parentElement.parentElement.getAttribute("data-user");
+      addNotificationUser(userId, `Doctor ${doctorFirstname} ${doctorLastname} finished your consultation`);
+    }
   }
 
   return (
@@ -98,7 +112,7 @@ const AppointmentHistory = ({
           </thead>
           <tbody>
           {!loading ? (consultations.map((consultation, index) => 
-             (<tr className={[`universalTableRow ${consultation.active ? "" : "canceled"}`].join(" ")} data-id={consultation._id}  key={index}>
+             (<tr className={[`universalTableRow ${consultation.active ? "" : "canceled"}`].join(" ")} data-id={consultation._id} data-user={consultation._user._id}  key={index}>
                 <td>{index + 1}</td>
                 <td>{
                     consultation._doctor && (
@@ -164,5 +178,6 @@ export default connect(mapStateToProps, {
   cancelAppointmentConsultationDoctor,
   removeAppointmentConsultation,
   finishAppointmentConsultationDoctor,
-  acceptAppointmentConsultationDoctor
+  acceptAppointmentConsultationDoctor,
+  addNotificationUser
 })(AppointmentHistory);

@@ -5,7 +5,7 @@ const { check, validationResult } = require("express-validator");
 const MedicalHistory = require("../../models/MedicalHistory");
 const Patient = require("../../models/Patient");
 
-router.post("/add-medical-history", [
+router.post("/add-medical-history", [authorization,
   check("bloodPressure", "please complete all the fields").trim().escape().not().isEmpty(),
   check("bloodSugar", "please complete all the fields").trim().escape().not().isEmpty(),
   check("weight", "please complete all the fields").trim().escape().not().isEmpty(),
@@ -36,7 +36,7 @@ router.post("/add-medical-history", [
   }
 });
 
-router.delete("/remove-medical-history-doctor/:medicalHistoryId", async (req, res) => {
+router.delete("/remove-medical-history-doctor/:medicalHistoryId", authorization, async (req, res) => {
   const medicalHistoryId = req.params.medicalHistoryId;
   try {
     let medicalHistory = await MedicalHistory.findById(medicalHistoryId);
@@ -66,7 +66,7 @@ router.delete("/remove-medical-history-doctor/:medicalHistoryId", async (req, re
   }
 });
 
-router.delete("/remove-medical-history-patient/:medicalHistoryId", async (req, res) => {
+router.delete("/remove-medical-history-patient/:medicalHistoryId", authorization, async (req, res) => {
   const medicalHistoryId = req.params.medicalHistoryId;
   try {
     let medicalHistory = await MedicalHistory.findById(medicalHistoryId);
@@ -95,7 +95,7 @@ router.delete("/remove-medical-history-patient/:medicalHistoryId", async (req, r
   }
 });
 
-router.get("/load-medical-histories-by-userId/:userId", async (req, res) => {
+router.get("/load-medical-histories-by-userId/:userId", authorization, async (req, res) => {
   const userId = req.params.userId;
 
   try {
@@ -105,7 +105,7 @@ router.get("/load-medical-histories-by-userId/:userId", async (req, res) => {
       return res.status(400).send("something went wrong on loading medical history");
     }
 
-    const medicalHistories = await MedicalHistory.find({ _patient: patient._id }).select(["-__v"]).sort({ date: "asc" });
+    const medicalHistories = await MedicalHistory.find({ _patient: patient._id }).select(["-__v"]).sort({ date: "desc" });
     
     if (!medicalHistories) {
       return res.status(400).send("something went wrong on loading medical history");
@@ -118,11 +118,11 @@ router.get("/load-medical-histories-by-userId/:userId", async (req, res) => {
   }
 });
 
-router.get("/load-medical-histories-by-patientId/:patientId", async (req, res) => {
+router.get("/load-medical-histories-by-patientId/:patientId", authorization, async (req, res) => {
   const patientId = req.params.patientId;
 
   try {
-    const medicalHistories = await MedicalHistory.find({ _patient: patientId }).select(["-__v"]).sort({ date: "asc" });
+    const medicalHistories = await MedicalHistory.find({ _patient: patientId }).select(["-__v"]).sort({ date: "desc" });
     
     if (!medicalHistories) {
       return res.status(400).send("something went wrong on loading medical history");
@@ -135,7 +135,7 @@ router.get("/load-medical-histories-by-patientId/:patientId", async (req, res) =
   }
 });
 
-router.get("/load-all-medical-histories", async (req, res) => {
+router.get("/load-all-medical-histories", authorization, async (req, res) => {
   try {
     const medicalHistories = await MedicalHistory.find().select(["-__v"]).sort({ date: "asc" });
     
@@ -150,7 +150,7 @@ router.get("/load-all-medical-histories", async (req, res) => {
   }
 });
 
-router.get("/load-medical-history/:patientId", async (req, res) => {
+router.get("/load-medical-history/:patientId", authorization, async (req, res) => {
   const patientId = req.params.patientId;
   try {
     const medicalHistory = await MedicalHistory.find({ _patient: patientId}).select(["-__v"]).sort({ date: "asc" });

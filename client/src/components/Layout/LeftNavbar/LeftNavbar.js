@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const LeftNavbar = () => {
   const [openSubmenu, toggleSubmenu] = useState(true);
-  
+
   const toggleLeftnavbarSubmenu = e => {
     toggleSubmenu(!openSubmenu);
     let leftnavSubmenu = e.target.parentElement.lastChild;

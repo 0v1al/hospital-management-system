@@ -21,7 +21,7 @@ export const loadDoctor = () => async dispatch => {
   const token = getCookie("tokenDoctor");
   setAxiosHeader(token);
   try {
-    const res = await axios.get("http://localhost:5000/load-doctor");
+    const res = await axios.get("/load-doctor");
     dispatch({
       type: LOAD_DOCTOR,
       data: res.data
@@ -42,9 +42,9 @@ export const loginDoctor = (credentials, history) => async dispatch => {
     }
   };
   try {
-    let result = await axios.post("http://localhost:5000/login-doctor", body, config);
+    let result = await axios.post("/login-doctor", body, config);
     const token = result.data;
-    setCookie("tokenDoctor", token, 1000 * 60 * 60);
+    setCookie("tokenDoctor", token, 1000 * 60 * 60 * 3);
     dispatch({
       type: LOGIN_SUCCESS_DOCTOR
     });
@@ -74,7 +74,7 @@ export const addPatient = (doctorId, patient) => async dispatch => {
         "Content-Type": "application/json"
       }
     };
-    const res = await axios.post(`http://localhost:5000/add-patient/${doctorId}`, body, config);
+    const res = await axios.post(`/add-patient/${doctorId}`, body, config);
     dispatch(createAlert("The patient was added", "success", 2000));
   } catch (err) {
     const errors = err.response.data.errors;
@@ -89,7 +89,7 @@ export const addPatient = (doctorId, patient) => async dispatch => {
 
 export const loadPatients = doctorId => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:5000/load-patients/${doctorId}`);
+    const res = await axios.get(`/load-patients/${doctorId}`);
     dispatch({
       type: LOAD_PATIENTS,
       data: res.data
@@ -101,7 +101,7 @@ export const loadPatients = doctorId => async dispatch => {
 
 export const loadAllPatients = () => async dispatch => {
   try {
-    const res = await axios.get("http://localhost:5000/load-all-patients");
+    const res = await axios.get("/load-all-patients");
     dispatch({
       type: LOAD_PATIENTS,
       data: res.data
@@ -113,7 +113,7 @@ export const loadAllPatients = () => async dispatch => {
 
 export const loadPatient = patientId => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:5000/load-patient/${patientId}`);
+    const res = await axios.get(`/load-patient/${patientId}`);
     dispatch({
       type: LOAD_PATIENT,
       data: res.data
@@ -132,7 +132,7 @@ export const updatePatient = (oldPatientEmail, patientUpdate) => async dispatch 
     }
   };
   try {
-    const res = await axios.put(`http://localhost:5000/update-patient/${oldPatientEmail}`, body, config);
+    const res = await axios.put(`/update-patient/${oldPatientEmail}`, body, config);
     const result = { oldPatientEmail, newPatient: res.data };
     dispatch({
       type: UPDATE_PATIENT,
@@ -153,7 +153,7 @@ export const updatePatient = (oldPatientEmail, patientUpdate) => async dispatch 
 export const removePatient = data => async dispatch => {
   const { patientId, doctorId } = data;
   try {
-    await axios.delete(`http://localhost:5000/remove-patient/${patientId}/${doctorId}`);
+    await axios.delete(`/remove-patient/${patientId}/${doctorId}`);
     dispatch({
       type: REMOVE_PATIENT,
       data: patientId
@@ -178,7 +178,7 @@ export const searchPatient = patientEmail => async dispatch => {
         "Content-Type": "application/json"
       }
     };
-    const res = await axios.post(`http://localhost:5000/search-patient`, body, config);
+    const res = await axios.post(`/search-patient`, body, config);
     dispatch({
       type: SEARCH_PATIENT,
       data: res.data
@@ -206,7 +206,7 @@ export const changePassword = change => async dispatch => {
   };
 
   try {
-    await axios.put("http://localhost:5000/change-password-doctor", body, config);
+    await axios.put("/change-password-doctor", body, config);
     dispatch(createAlert("Your password was changed with success", "success", 2000));
   } catch (err) {
     const errors = err.response.data.errors;
@@ -229,7 +229,7 @@ export const updateProfile = updateProfile => async dispatch => {
   };
 
   try {
-    const res = await axios.put(`http://localhost:5000/update-profile-doctor/${doctorEmail}`, body, config);
+    const res = await axios.put(`/update-profile-doctor/${doctorEmail}`, body, config);
     dispatch({
       type: UPDATE_PROFILE_DOCTOR,
       data: res.data
@@ -249,13 +249,7 @@ export const updateProfile = updateProfile => async dispatch => {
 export const logoutDoctor = (history, doctorEmail) => async dispatch => {
   removeCookie("tokenDoctor");
   setAxiosHeader(null);
-  const body = JSON.stringify({ doctorEmail });
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }
-  axios.put(`http://localhost:5000/logout-doctor`, body, config);
+  await axios.put(`/logout-doctor/${doctorEmail}`);
   dispatch({
     type: LOGOUT_DOCTOR
   });

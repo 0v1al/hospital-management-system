@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const Notification = require("../../models/Notification");
+const Doctor = require("../../models/Doctor");
+const authorization = require("../../middlewares/authorization");
 
-router.post("/add-notification-patient", async (req, res) => {
-  const { patientId, message } = req.body;
-
+router.post("/add-notification-user", authorization, async (req, res) => {
+  const { userId, message } = req.body;
   try {
     const notification = new Notification({
-      _patient: patientId,
+      _user: userId,
       forUser: true,
       message: message
     });
@@ -16,11 +17,11 @@ router.post("/add-notification-patient", async (req, res) => {
     res.status(200).json(notification);
   } catch (err) {
     console.error(err);
-    res.status(500).send("server error [add notification patient]");
+    res.status(500).send("server error [add notification user]");
   }
 });
 
-router.post("/add-notification-doctor", async (req, res) => {
+router.post("/add-notification-doctor", authorization, async (req, res) => {
   const { doctorId, message } = req.body;
 
   try {
@@ -38,31 +39,31 @@ router.post("/add-notification-doctor", async (req, res) => {
   }
 });
 
-router.get("/load-notifications-patient/:patientId", async (req, res) => {
-  const { patientId } = req.params.patientId;
+router.get("/load-notifications-user/:userId", authorization, async (req, res) => {
+  const userId = req.params.userId;
 
   try {
-    const notifications = await Notification.find({ _patient: patientId }).sort({ date: "asc" }).select(["-__v"]);
+    const notifications = await Notification.find({ _user: userId, forUser: true }).sort({ date: "desc" }).select(["-__v"]);
 
     if (!notifications) {
-      return res.status(400).json({ errors: [{ msg: "no norifications" }] });
+      return res.status(200).json({ errors: [{ msg: "no notifications" }] });
     }
 
     res.status(200).json(notifications);
   } catch (err) {
     console.error(err);
-    res.status(500).send("server error [load notification patient]");
+    res.status(500).send("server error [load notification user]");
   }
 });
 
-router.get("/load-notifications-doctor/:doctorId", async (req, res) => {
-  const { doctorId } = req.params.doctorId;
+router.get("/load-notifications-doctor/:doctorId", authorization, async (req, res) => {
+  const doctorId  = req.params.doctorId;
 
   try {
-    const notifications = await Notification.find({ _doctor: doctorId }).sort({ date: "asc" }).select(["-__v"]);
+    const notifications = await Notification.find({ _doctor: doctorId, forDoctor: true }).sort({ date: "desc" }).select(["-__v"]);
 
     if (!notifications) {
-      return res.status(400).json({ errors: [{ msg: "no notifications" }] });
+      return res.status(200).json({ errors: [{ msg: "no notifications" }] });
     }
 
     res.status(200).json(notifications);
@@ -72,55 +73,21 @@ router.get("/load-notifications-doctor/:doctorId", async (req, res) => {
   }
 });
 
-router.delete("/delete-notification-patient/:notificationId", async (req, res) => {
-  const { notificationId } = req.params.notificationId;
-
+router.put("/mark-view-notifications-user", authorization, async (req, res) => {
+  const { userId } = req.body;
+  
   try {
-    const notificationDelete = await Notification.findOneAndDelete({ _id: notificationId });
-
-    if (!notificationDelete) {
-      return res.status(400).send("something went wrong on deleting notification");
-    }
-
-    res.status(200).json(notificationDelete._id);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("server error [delete notification patient]");
-  }
-});
-
-router.delete("/delete-notification-doctor/:notificationId", async (req, res) => {
-  const { notificationId } = req.params.notificationId;
-
-  try {
-    const notificationDelete = await Notification.findOneAndDelete({ _id: notificationId });
-
-    if (!notificationDelete) {
-      return res.status(400).send("something went wrong on deleting notification doctor");
-    }
-
-    res.status(200).json(notificationDelete._id);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("server error [delete notification doctor]");
-  }
-});
-
-router.put("/mark-view-notification-patient", async (req, res) => {
-  const { notificationId } = req.body;
-
-  try {
-    const notificationUpdate = await Notification.findOneAndUpdate(
-      { _id: notificationId },
-      { viewByPatient: true },
+    const notificationsUpdate = await Notification.updateMany(
+      { _user: userId, forUser: true, viewByUser: false },
+      { viewByUser: true },
       { new: true }
     );
 
-    if (!notificationUpdate) {
+    if (!notificationsUpdate) {
       return res.status(400).send("something went wrong on update notification");
     }
 
-    res.status(200).json(notificationUpdate._id);
+    res.status(200).json(userId);
   } catch (err) {
     console.error(err);
     res.status(500).send("server error [update notification patient]");
@@ -128,12 +95,12 @@ router.put("/mark-view-notification-patient", async (req, res) => {
 });
 
 
-router.put("/mark-view-notification-patient", async (req, res) => {
-  const { notificationId } = req.body;
+router.put("/mark-view-notifications-doctor", authorization, async (req, res) => {
+  const { doctorId } = req.body;
 
   try {
-    const notificationUpdate = await Notification.findOneAndUpdate(
-      { _id: notificationId },
+    const notificationUpdate = await Notification.updateMany(
+      { _doctor: doctorId, viewByDoctor: false, forDoctor: true },
       { viewByDoctor: true },
       { new: true }
     );
@@ -142,44 +109,81 @@ router.put("/mark-view-notification-patient", async (req, res) => {
       return res.status(400).send("something went wrong on update notification");
     }
 
-    res.status(200).json(notificationUpdate._id);
+    res.status(200).json(doctorId);
   } catch (err) {
     console.error(err);
     res.status(500).send("server error [update notification doctor]");
   }
 });
 
-router.delete("/delete-notifications-patient/:patientId", async (req, res) => {
-  const { patientId } = req.params.patientId;  
-  const dateCheck = Math.abs(new Date() - 1000 * 60 * 60 * 24 * 7);
-
+router.delete("/delete-notifications-user/:userId", authorization, async (req, res) => {
+  const userId = req.params.userId;  
   try {
-    const notifications = await Notification.deleteMany(
-      { _patient: patientId, viewByPatient: true },
-      { date: { $ls: dateCheck } },
-      { new: true }
+    await Notification.deleteMany(
+      { _user: userId, viewByUser: true, forUser: true },
     );
+    const notifications = await Notification.find({ _user: userId, forUser: true }).sort({ date: "desc" }).select(["-__v"]);
     res.status(200).json(notifications);
   } catch (err) {
     console.error(err);
-    res.status(500).send("server error [delete notification doctor]");
+    res.status(500).send("server error [delete notifications user]");
   }
 });
 
-router.delete("/delete-notifications-doctor/:doctorId", async (req, res) => {
-  const { doctorId } = req.params.doctorId;  
-  const dateCheck = Math.abs(new Date() - 1000 * 60 * 60 * 24 * 7);
-
+router.delete("/delete-notifications-doctor/:doctorId", authorization, async (req, res) => {
+  const doctorId  = req.params.doctorId;  
   try {
-    const notifications = await Notification.deleteMany(
-      { _doctor: doctorId, viewByDoctor: true },
-      { date: { $ls: dateCheck } },
-      { new: true }
+     await Notification.deleteMany(
+      { _doctor: doctorId, viewByDoctor: true, forDoctor: true },
     );
+    const notifications = await Notification.find({ _doctor: doctorId, forDoctor: true }).sort({ date: "desc" }).select(["-__v"]);
     res.status(200).json(notifications);
   } catch (err) {
     console.error(err);
-    res.status(500).send("server error [delete notification doctor]");
+    res.status(500).send("server error [delete notifications doctor]");
+  }
+});
+
+router.get("/number-user-notifications/:userId", authorization, async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const userNotificationsNumber = await Notification.find({ _user: userId, forUser: true, viewByUser: false }).countDocuments();
+    res.status(200).json(userNotificationsNumber);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("server error [get user notifications");
+  }
+});
+
+router.get("/number-doctor-notifications/:doctorId", authorization, async (req, res) => {
+  const doctorId = req.params.doctorId;
+
+  try {
+    const doctorNotificationsNumber = await Notification.find({ _doctor: doctorId, forDoctor: true, viewByDoctor: false }).countDocuments();
+    res.status(200).json(doctorNotificationsNumber);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("server error [get doctor notifications");
+  }
+});
+
+router.post("/add-notification-doctor-by-email", authorization, async (req, res) => {
+  const { doctorEmail, message } = req.body;
+
+  try {
+    const doctor = await Doctor.findOne({ email: doctorEmail});
+    const notification = new Notification({
+      _doctor: doctor._id,
+      forDoctor: true,
+      message: message
+    });
+
+    await notification.save();
+    res.status(200).json(notification); 
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("server error [add notification doctor by email]");
   }
 });
 

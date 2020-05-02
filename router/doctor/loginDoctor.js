@@ -4,6 +4,7 @@ const { check, validationResult } = require("express-validator");
 const Doctor = require("../../models/Doctor");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authorization = require("../../middlewares/authorization");
 
 router.post("/login-doctor", [
   check("email", "Introduce a valid email").isEmail(),
@@ -29,7 +30,7 @@ router.post("/login-doctor", [
       return res.status(422).json({ errors: [{ msg: "Invalid credentials" }] });
     }
 
-    const token = await jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 60), user: { id: doctor._id }, algorithm: "HS384"}, process.env.PRIVATE_KEY);
+    const token = await jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 60 * 3), user: { id: doctor._id }, algorithm: "HS384"}, process.env.PRIVATE_KEY);
 
     // let decoded = await jwt.verify(token, process.env.PRIVATE_KEY);  
     await Doctor.findOneAndUpdate({ email: email }, { loginTime: new Date() });
@@ -40,11 +41,11 @@ router.post("/login-doctor", [
   } 
 });
 
-router.put("/logout-doctor", async (req, res) => {
+router.put("/logout-doctor/:doctorEmail", async (req, res) => {
   try {
-    // const doctorEmail = req.params.doctorEmail;
-    const { doctorEmail } = req.body;
+    const doctorEmail = req.params.doctorEmail;
     await Doctor.findOneAndUpdate({ email: doctorEmail }, { logoutTime: new Date() });
+    res.status(200).send("doctor logout");
   } catch (err) {
     console.error(err);
     res.status(500).send("server error [logout doctor]");

@@ -7,7 +7,7 @@ const Doctor = require("../../models/Doctor");
 const User = require("../../models/User");
 const Admin = require("../../models/Admin");
 
-router.post("/add-patient/:doctorId", [
+router.post("/add-patient/:doctorId", [authorization,
   check("firstname", "You need to add the firstname").trim().escape().not().isEmpty(),
   check("lastname", "You need to add the lastname").trim().escape().not().isEmpty(),
   check("email", "You need to add a valid email").isEmail(),
@@ -72,7 +72,7 @@ router.post("/add-patient/:doctorId", [
   }
 });
 
-router.get("/load-patients/:doctorId", async (req, res) => {
+router.get("/load-patients/:doctorId", authorization, async (req, res) => {
   const doctorId = req.params.doctorId;
   try {
     const patients = await Patient.find({ _doctor: doctorId }).select(["-__v"]).sort({ firstname: "asc", lastname: "asc" });
@@ -88,7 +88,7 @@ router.get("/load-patients/:doctorId", async (req, res) => {
   }
 });
 
-router.get("/load-all-patients", async (req, res) => {
+router.get("/load-all-patients", authorization, async (req, res) => {
   try {
     const patients = await Patient.find().select(["-__v"]).sort({ firstname: "asc", lastname: "asc" });
    
@@ -104,7 +104,7 @@ router.get("/load-all-patients", async (req, res) => {
 });
 
 
-router.get("/load-patient/:patientId", async (req, res) => {
+router.get("/load-patient/:patientId", authorization, async (req, res) => {
   const patientId = req.params.patientId;
   try {
     const patient = await Patient.findById(patientId).select(["-__v"]);
@@ -120,7 +120,7 @@ router.get("/load-patient/:patientId", async (req, res) => {
   }
 });
 
-router.put("/update-patient/:patientEmail", [
+router.put("/update-patient/:patientEmail", [authorization,
   check("firstname", "You need to add the firstname").trim().escape().not().isEmpty(),
   check("lastname", "You need to add the lastname").trim().escape().not().isEmpty(),
   check("email", "You need to add a valid email").isEmail(),
@@ -180,7 +180,7 @@ router.put("/update-patient/:patientEmail", [
   }
 });
 
-router.delete("/remove-patient/:patientId/:doctorId", async (req, res) => {
+router.delete("/remove-patient/:patientId/:doctorId", authorization, async (req, res) => {
   const patientId  = req.params.patientId;
   const doctorId = req.params.doctorId;
   try {
@@ -208,7 +208,7 @@ router.delete("/remove-patient/:patientId/:doctorId", async (req, res) => {
   }
 });
 
-router.post("/search-patient", [
+router.post("/search-patient", [authorization,
   check("patientEmail", "You need to ad a valid email").isEmail()
 ], async (req, res) => {
   const errors = validationResult(req);
@@ -232,7 +232,7 @@ router.post("/search-patient", [
   }
 }); 
 
-router.put("/change-password-doctor", [
+router.put("/change-password-doctor", [authorization,
   check("password", "You need to add your current password").trim().escape().not().isEmpty(),
   check("newPassword", "You need to add your new password").trim().escape().not().isEmpty(),
   check("repeatNewPassword", "You need to add your repeat password").trim().escape().not().isEmpty()
@@ -272,7 +272,7 @@ router.put("/change-password-doctor", [
   }
 });
 
-router.put("/update-profile-doctor/:doctorEmail", [
+router.put("/update-profile-doctor/:doctorEmail", [authorization,
   check("firstname", "you need to add your firstname").trim().escape().not().isEmpty(),
   check("lastname", "you need to add your lastname").trim().escape().not().isEmpty(),
   check("address", "you need to add your address").trim().escape().not().isEmpty(),

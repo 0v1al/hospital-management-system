@@ -69,7 +69,7 @@ const SearchPatient = ({
                     <p>Patient Medical History:</p>
                 </div>
                 <div className={stylesAdminPatientDetails.pacientDetails}>
-                    <p><strong>{`${patient.firstname} ${patient.lastname}`}</strong></p>
+                    <p>{`${patient.firstname} ${patient.lastname}`}</p>
                     <p>{patient.contact}</p>
                     <p>{patient.male ? "Male" : "Female"}</p>
                     <p>{patient.medicalHistory}</p>

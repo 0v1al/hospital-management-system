@@ -32,6 +32,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 }
 
 .navbarLink {
@@ -45,7 +46,7 @@
 }
 
 .navbarLink:last-child {
-	margin-left: 1rem;
+	margin-left: 1.5rem;
 }
 
 .navbarLink i {
@@ -77,6 +78,25 @@
   animation-duration: 350ms;
 }
 
+.navbarSettingsOptionsNotifications {
+	min-width: 18rem !important;
+	font-size: .8rem !important;
+	max-height: 35rem;
+	overflow: auto;
+}
+
+.navbarSettingsOptionsNotifications > a > div {
+	font-style: italic;
+	font-size: .7rem;
+	font-weight: 100 !important;
+	color: var(--text-light);
+	letter-spacing: .1rem;
+}
+
+.navbarSettingsOptionsNotifications > a:not(:last-child), .navbarSettingsOptions > a:not(:last-child) {
+	border-bottom: .1rem solid var(--primary-color-alpha);
+}
+
 @keyframes fadeIn {
   0% { opacity: 0; margin-top: -3rem; }
   100% { opacity: 1; margin-top: 0; }
@@ -103,6 +123,10 @@
 	background-color: rgba(8, 194, 67, 0.315);
 }
 
+.navbarSettings:hover .navbarSettingsOptionsNotifications {
+	display: grid !important;
+}
+
 .navbarSettings:hover .navbarSettingsOptions {
 	display: flex;
 }
@@ -110,4 +134,43 @@
 .navbarContainerLinks {
 	display: flex;
 	flex-direction: row;
+}
+
+.notificationsNumber {
+	/* background-color: rgba(255, 0, 0, 0.952); */
+	background-color: rgb(158, 255, 190);
+	/* color: #fff; */
+	color: var(--text-light) !important;
+	position: absolute;
+	padding: .3rem;
+	font-size: .6rem;
+	border-radius: 50%;
+	border: none;
+	outline: none;
+	right: -25%;
+	top: -40%;
+	z-index: 3;
+	font-weight: bold;
+	height: 1rem;
+	width: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.clear {
+	background-color: rgba(255, 0, 0, 0.419) !important;
+	transition: background-color 200ms ease-in-out;
+}
+
+.clear i {
+	color: red !important;
+}
+
+.clear:hover {
+	background-color: rgba(255, 0, 0, 0.559) !important;
+}
+
+.noNotifications:hover {
+	background-color: rgb(242, 255, 246) !important;
 }

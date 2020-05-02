@@ -2,26 +2,24 @@ import axios from "axios";
 
 import {
   ADD_NOTIFICATION_DOCTOR,
-  ADD_NOTIFICATION_PATIENT,
-  LOAD_NOTIFICATIONS_PATIENT,
+  ADD_NOTIFICATION_USER,
+  LOAD_NOTIFICATIONS_USER,
   LOAD_NOTIFICATIONS_DOCTOR,
-  DELETE_NOTIFICATION_DOCTOR,
-  DELETE_NOTIFICATION_PATIENT,
-  MARK_VIEW_NOTIFICATION_DOCTOR,
-  MARK_VIEW_NOTIFICATION_PATIENT
+  MARK_VIEW_NOTIFICATIONS_DOCTOR,
+  MARK_VIEW_NOTIFICATIONS_USER
 } from "./types";
 
-export const addNotificationPatient = (patientId, message) => async dispatch => {
-  const body = JSON.stringify({ patientId, message });
+export const addNotificationUser = (userId, message) => async dispatch => {
+  const body = JSON.stringify({ userId, message });
   const config = {
     headers: {
       "Content-Type": "application/json"
     }
   };
   try {
-    const res = await axios.post("http://localhost:5000/add-notification-patient", body, config);
+    const res = await axios.post("/add-notification-user", body, config);
     dispatch({
-      type: ADD_NOTIFICATION_PATIENT,
+      type: ADD_NOTIFICATION_USER,
       data: res.data
     });
   } catch (err) {
@@ -37,7 +35,7 @@ export const addNotificationDoctor = (doctorId, message) => async dispatch => {
     }
   };
   try {
-    const res = await axios.post("http://localhost:5000/add-notification-doctor", body, config);
+    const res = await axios.post("/add-notification-doctor", body, config);
     dispatch({
       type: ADD_NOTIFICATION_DOCTOR,
       data: res.data
@@ -47,11 +45,11 @@ export const addNotificationDoctor = (doctorId, message) => async dispatch => {
   }
 };
 
-export const loadNotificationsPatient = patientId => async dispatch => {
+export const loadNotificationsUser = userId => async dispatch => {
   try {
-    const res = await axios.get(`http:/localhost:5000/load-notifications-patient/${patientId}`);
+    const res = await axios.get(`/load-notifications-user/${userId}`);
     dispatch({
-      type: LOAD_NOTIFICATIONS_PATIENT,
+      type: LOAD_NOTIFICATIONS_USER,
       data: res.data
     });
   } catch (err) {
@@ -61,7 +59,7 @@ export const loadNotificationsPatient = patientId => async dispatch => {
 
 export const loadNotificationsDoctor = doctorId => async dispatch => {
   try {
-    const res = await axios.get(`http:/localhost:5000/load-notifications-doctor/${doctorId}`);
+    const res = await axios.get(`/load-notifications-doctor/${doctorId}`);
     dispatch({
       type: LOAD_NOTIFICATIONS_DOCTOR,
       data: res.data
@@ -71,41 +69,17 @@ export const loadNotificationsDoctor = doctorId => async dispatch => {
   }
 };
 
-export const deleteNotificationPatient = notificationId => async dispatch => {
-  try {
-    const res = await axios.delete(`http:/localhost:5000/delete-notification-patient/${notificationId}`);
-    dispatch({
-      type: DELETE_NOTIFICATION_PATIENT,
-      data: res.data
-    });
-  } catch (err) {
-    console.error(err.message);
-  }
-};
-
-export const deleteNotificationDoctor = notificationId => async dispatch => {
-  try {
-    const res = await axios.delete(`http:/localhost:5000/delete-notification-doctor/${notificationId}`);
-    dispatch({
-      type: DELETE_NOTIFICATION_DOCTOR,
-      data: res.data
-    });
-  } catch (err) {
-    console.error(err.message);
-  }
-};
-
-export const markViewNotificationPatient = notificationId => async dispatch => {
-  const body = JSON.stringify({ notificationId });
+export const markViewNotificationsUser = userId => async dispatch => {
+  const body = JSON.stringify({ userId });
   const config = {
     headers: {
       "Content-Type": "application/json"
     }
   };
   try {
-    const res = await axios.put("http://localhost:5000/mark-view-notification-patient", body, config);
+    const res = await axios.put("/mark-view-notifications-user", body, config);
     dispatch({
-      type: MARK_VIEW_NOTIFICATION_PATIENT,
+      type: MARK_VIEW_NOTIFICATIONS_USER,
       data: res.data
     });
   } catch (err) {
@@ -113,17 +87,18 @@ export const markViewNotificationPatient = notificationId => async dispatch => {
   }
 };
 
-export const markViewNotificationDoctor = notificationId => async dispatch => {
-  const body = JSON.stringify({ notificationId });
+export const markViewNotificationsDoctor = doctorId => async dispatch => {
+  const body = JSON.stringify({ doctorId });
   const config = {
     headers: {
       "Content-Type": "application/json"
     }
   };
+
   try {
-    const res = await axios.put("http://localhost:5000/mark-view-notification-doctor", body, config);
+    const res = await axios.put("/mark-view-notifications-doctor", body, config);
     dispatch({
-      type: MARK_VIEW_NOTIFICATION_DOCTOR,
+      type: MARK_VIEW_NOTIFICATIONS_DOCTOR,
       data: res.data
     });
   } catch (err) {
@@ -131,9 +106,13 @@ export const markViewNotificationDoctor = notificationId => async dispatch => {
   }
 };
 
-export const deleteNotificationsPatient = patientId => async dispatch => {
+export const deleteNotificationsUser = userId => async dispatch => {
   try {
-    await axios.delete(`http://localhost:5000/delete-notifications-patient/${patientId}`);
+    const res = await axios.delete(`/delete-notifications-user/${userId}`);
+    dispatch({
+      type: LOAD_NOTIFICATIONS_USER,
+      data: res.data
+    });
   } catch (err) {
     console.error(err.message);
   }
@@ -141,7 +120,29 @@ export const deleteNotificationsPatient = patientId => async dispatch => {
 
 export const deleteNotificationsDoctor = doctorId => async dispatch => {
   try {
-    await axios.delete(`http://localhost:5000/delete-notifications-doctor/${doctorId}`);
+    const res = await axios.delete(`/delete-notifications-doctor/${doctorId}`);
+    dispatch({
+      type: LOAD_NOTIFICATIONS_DOCTOR,
+      data: res.data
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const addNotificationDoctorByEmail = (doctorEmail, message) => async dispatch => {
+  const body = JSON.stringify({ doctorEmail, message });
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  try {
+    const res = await axios.post("/add-notification-doctor-by-email", body, config);
+    dispatch({
+      type: ADD_NOTIFICATION_DOCTOR,
+      data: res.data
+    });
   } catch (err) {
     console.error(err.message);
   }

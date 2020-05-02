@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+
 import { loadUser, addAppointmentConsultation } from "../../actions/user";
 import { loadUsersData, loadDoctorsData, loadSpecializationsData } from "../../actions/data";
+import { addNotificationDoctorByEmail } from "../../actions/notification";
 
 import styles from "./AppointmentConsultation.module.css";
 import stylesLoginAdmin from "../../Admin/LoginAdmin/LoginAdmin.module.css";
@@ -12,6 +14,9 @@ const AppointmentConsultation = ({
 	 loadDoctorsData, 
 	 loadSpecializationsData, 
 	 addAppointmentConsultation, 
+	 addNotificationDoctorByEmail,
+	 userFirstName,
+	 userLastName,
 	 doctors, 
 	 specializations, 
 	 userEmail, 
@@ -57,7 +62,9 @@ const AppointmentConsultation = ({
 	const addConsultationNow = async e => {
 		e.preventDefault();
 		const body = { doctorEmail: doctor, userEmail, consultationDate, consultationTime, doctorSelect, specializationSelect  };
-		addAppointmentConsultation(body);
+		if (addAppointmentConsultation(body)) {
+			addNotificationDoctorByEmail(doctor, `${userFirstName} ${userLastName} sended a consultation request to you`);
+		} 
 	};
 
 	return (
@@ -135,7 +142,16 @@ const mapStateToProps = state => ({
 	specializations: state.data.specializations,
 	loading: state.data.loading,
 	userEmail: state.user.email,
-	alerts: state.alert
+	alerts: state.alert,
+	userFirstName: state.user.firstname,
+	userLastName: state.user.lastname
 });
 
-export default connect(mapStateToProps, { loadUser, loadUsersData, loadDoctorsData, loadSpecializationsData, addAppointmentConsultation })(AppointmentConsultation);
+export default connect(mapStateToProps, { 
+	loadUser, 
+	loadUsersData, 
+	loadDoctorsData, 
+	loadSpecializationsData, 
+	addAppointmentConsultation,
+	addNotificationDoctorByEmail 
+})(AppointmentConsultation);

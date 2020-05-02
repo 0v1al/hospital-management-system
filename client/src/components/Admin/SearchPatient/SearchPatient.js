@@ -79,7 +79,7 @@ const SearchPatient = ({
                     <p>Patient Medical History:</p>
                 </div>
                 <div className={stylesAdminPatientDetails.pacientDetails}>
-                    <p><strong>{`${patient.firstname} ${patient.lastname}`}</strong></p>
+                    <p>{`${patient.firstname} ${patient.lastname}`}</p>
                     <p>{patient.contact}</p>
                     <p>{patient.male ? "Male" : "Female"}</p>
                     <p>{patient.medicalHistory}</p>
@@ -111,7 +111,6 @@ const SearchPatient = ({
                       <th>Body Temperature</th>
                       <th>Medical Prescription</th>
                       <th>Visit Date</th>
-                      <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -126,11 +125,6 @@ const SearchPatient = ({
                             <td>{medicalHistory.bodyTemperature}</td>
                             <td>{medicalHistory.prescription}</td>
                             <td><Moment format="YYYY/MM/DD-HH:mm">{medicalHistory.date}</Moment></td>
-                            <td>
-                              <span className="universalRemoveIcon">
-                                <i className="fas fa-trash"></i>
-                              </span>
-                            </td>
                           </tr>
                       )
                     }

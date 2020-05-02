@@ -4,6 +4,7 @@ const { check, validationResult } = require("express-validator");
 const Admin = require("../../models/Admin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authorization = require("../../middlewares/authorization");
 
 router.post("/login-admin", [
   check("email", "Introduce a valid email").isEmail(),
@@ -30,7 +31,7 @@ router.post("/login-admin", [
       return res.status(422).json({ errors: [{ msg: "Invalid credentials" }] });
     }
 
-    const token = await jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 60), user: { id: admin._id }, algorithm: "HS384"}, process.env.PRIVATE_KEY);
+    const token = await jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 60 * 3), user: { id: admin._id }, algorithm: "HS384"}, process.env.PRIVATE_KEY);
 
     res.status(200).json(token);
   } catch (error) {
@@ -39,7 +40,7 @@ router.post("/login-admin", [
   } 
 });
 
-router.put("/change-password-admin", [
+router.put("/change-password-admin", [authorization,
   check("password", "You need to add your current password").trim().escape().not().isEmpty(),
   check("newPassword", "You need to add your new password").trim().escape().not().isEmpty(),
   check("repeatNewPassword", "You need to add your repeat password").trim().escape().not().isEmpty()

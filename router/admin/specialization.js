@@ -67,7 +67,7 @@ router.delete("/remove-specialization/:specializationName", authorization, async
   }
 });
 
-router.put("/edit-specialization",[
+router.put("/edit-specialization",[authorization,
   check("newSpecialization", "Enter a valid specialization").trim().escape().not().isEmpty()
 ], async (req, res) => {
   const errors = validationResult(req);

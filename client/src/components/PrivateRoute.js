@@ -12,7 +12,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
 );
 
 export const PrivateRouteDoctor = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => getCookie("tokenDoctor") ? (
+  <Route {...rest} render={props => !!getCookie("tokenDoctor") ? (
     <Component {...props} />
   ) : (
     <Redirect to="/" />
@@ -21,7 +21,7 @@ export const PrivateRouteDoctor = ({ component: Component, ...rest }) => (
 );
 
 export const PrivateRouteUser = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => getCookie("tokenUser") ? (
+  <Route {...rest} render={props => !!getCookie("tokenUser") ? (
     <Component {...props} />
   ) : (
     <Redirect to="/" />
@@ -30,7 +30,7 @@ export const PrivateRouteUser = ({ component: Component, ...rest }) => (
 );
 
 export const PrivateRouteAdmin = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => getCookie("tokenAdmin") ? (
+  <Route {...rest} render={props => !!getCookie("tokenAdmin") ? (
     <Component {...props} />
   ) : (
     <Redirect to="/" />

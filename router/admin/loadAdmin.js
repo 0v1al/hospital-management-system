@@ -19,7 +19,7 @@ router.get("/load-admin", authorization, async (req, res) => {
   }
 });
 
-router.get("/get-doctors-number", async (req, res) => {
+router.get("/get-doctors-number", authorization, async (req, res) => {
   try {
     const doctorsNumber = await Doctor.find().count();
     res.status(200).json(doctorsNumber);
@@ -29,7 +29,7 @@ router.get("/get-doctors-number", async (req, res) => {
   }
 });
 
-router.get("/get-users-number", async (req, res) => {
+router.get("/get-users-number", authorization, async (req, res) => {
   try {
     const usersNumber = await User.find().count();
     res.status(200).json(usersNumber);
@@ -39,7 +39,7 @@ router.get("/get-users-number", async (req, res) => {
   }
 });
 
-router.get("/get-patients-number", async (req, res) => {
+router.get("/get-patients-number", authorization, async (req, res) => {
   try {
     const patientsNumber = await Patient.find().count();
   } catch (err) {
@@ -48,7 +48,7 @@ router.get("/get-patients-number", async (req, res) => {
   }
 });
 
-router.get("/get-messages-number", async (req, res) => {
+router.get("/get-messages-number", authorization, async (req, res) => {
   try {
     const messagesNumber = await Message.find().count();
     res.status(200).json(messagesNumber);
@@ -58,7 +58,7 @@ router.get("/get-messages-number", async (req, res) => {
   }
 });
 
-router.get("/get-consultations-number", async (req, res) => {
+router.get("/get-consultations-number",authorization, async (req, res) => {
   try {
     const consultationsNumber = await Consultations.find().count();
     res.status(200).json(consultationsNumber);
@@ -68,7 +68,7 @@ router.get("/get-consultations-number", async (req, res) => {
   }
 });
 
-router.get("/load-entity-number", async (req, res) => {
+router.get("/load-entity-number", authorization, async (req, res) => {
   try {
     const doctorsNumber = await Doctor.find().countDocuments();
     const usersNumber = await User.find().countDocuments();

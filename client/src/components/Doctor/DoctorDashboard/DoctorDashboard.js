@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { loadDoctor } from "../../actions/doctor";
+
 import { Link } from "react-router-dom";
 
 import styles from "../../Admin/AdminDashboard/AdminDashboard.module.css";
 
-const DoctorDashboard = ({ loadDoctor }) => {
+const DoctorDashboard = ({ loadDoctor, doctorId }) => {
+  
   useEffect(() => {
     const fetch = async () => {
       loadDoctor();

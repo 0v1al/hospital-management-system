@@ -4,6 +4,7 @@ import Moment from "react-moment";
 import { saveAs } from "file-saver";
 
 import Spinner from "../../Layout/Spinner/Spinner";
+import { addNotificationUser } from "../../actions/notification";
 import { loadDoctor, loginDoctor, loadPatient } from "../../actions/doctor";
 import { loadMedicalHistoriesByPatientId, addMedicalHistory, removeMedicalHistoryDoctor } from "../../actions/medicalHistory";
 import axios from 'axios';
@@ -18,8 +19,13 @@ const ViewPatient = ({
   addMedicalHistory, 
   loadPatient,
   loadingPatient, 
-  removeMedicalHistoryDoctor, 
+  removeMedicalHistoryDoctor,
+  addNotificationUser, 
   medicalHistories, 
+  doctor: {
+    firstname: doctorFirstname,
+    lastname: doctorLastname
+  },
   patient,
   loading, 
   alerts,
@@ -57,7 +63,9 @@ const ViewPatient = ({
   const addMedicalHistoryNow = async e => {
     e.preventDefault();
     const patientId = match.params.patientId;
-    addMedicalHistory(patientId, input);
+    if (addMedicalHistory(patientId, input)) {
+      addNotificationUser(patient._user, `Doctor ${doctorFirstname} ${doctorLastname} added a new medical history for you`);
+    }
   };
 
   const removeMedicalHistoryDoctorNow = async e => {
@@ -68,8 +76,8 @@ const ViewPatient = ({
 
   const downloadPdf = () => {
     const body = { ...patient, medicalHistories: [ ...medicalHistories ] };
-    axios.post("http://localhost:5000/create-pdf", body)
-      .then(() => axios.get("http://localhost:5000/get-pdf", { responseType: "blob" }))
+    axios.post("/create-pdf", body)
+      .then(() => axios.get("/get-pdf", { responseType: "blob" }))
         .then(res => {
           const pdfBlob = new Blob([res.data], { type: "application/pdf" });
           saveAs(pdfBlob, "newPdf.pdf");
@@ -233,6 +241,7 @@ const ViewPatient = ({
 
 const mapStateToProps = state => ({
   alerts: state.alert,
+  doctor: state.doctor,
   medicalHistories: state.medicalHistory.medicalHistories,
   patient: state.patient.patient,
   loadingPatient: state.patient.loading,
@@ -244,5 +253,6 @@ export default connect(mapStateToProps, {
   loadMedicalHistoriesByPatientId, 
   addMedicalHistory, 
   removeMedicalHistoryDoctor, 
-  loadPatient 
+  loadPatient,
+  addNotificationUser
 })(ViewPatient);

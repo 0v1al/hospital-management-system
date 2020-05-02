@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const Patient = require("../../models/Patient");
 const Admin = require("../../models/Admin");
 const Doctor = require("../../models/Doctor");
+const authorization = require("../../middlewares/authorization");
 
 router.post("/login-user", [
   check("email", "The email is not valid").isEmail(),
@@ -32,7 +33,7 @@ router.post("/login-user", [
       return res.status(400).json({ errors: [{ msg: "Invalid credentials" }] });
     }
 
-    const token = await jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 60), user: { id: user._id }, algorithm: "HS384"}, process.env.PRIVATE_KEY);
+    const token = await jwt.sign({ exp: Math.floor(Date.now() / 1000) + (60 * 60 * 3), user: { id: user._id }, algorithm: "HS384"}, process.env.PRIVATE_KEY);
 
     await User.findOneAndUpdate({ email }, { loginTime: new Date() });
     return res.status(200).json(token);
@@ -42,17 +43,7 @@ router.post("/login-user", [
   } 
 });
 
-router.put("/logout-user/:userEmail", async (req, res) => {
-  try {
-    const userEmail = req.params.userEmail;
-    await User.findOneAndUpdate({ email: userEmail }, { logoutTime: new Date() });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("server error [logout user]");
-  }
-});
-
-router.put("/change-password-user", [
+router.put("/change-password-user", [authorization,
   check("password", "You need to add your actual password").trim().escape().not().isEmpty(),
   check("newPassword", "You need to add your new password").trim().escape().not().isEmpty()
 ], async (req, res) => {
@@ -87,7 +78,7 @@ router.put("/change-password-user", [
   }
 });
 
-router.put("/update-profile-user/:userEmail", [
+router.put("/update-profile-user/:userEmail", [authorization,
   check("firstname", "you need to add your firstname").trim().escape().not().isEmpty(),
   check("lastname", "you need to add your lastname").trim().escape().not().isEmpty(),
   check("location", "you need to add your location").trim().escape().not().isEmpty(),
@@ -129,6 +120,17 @@ router.put("/update-profile-user/:userEmail", [
   } catch (err) {
     console.error(err);
     res.status(500).send("server error [change profile user]");
+  }
+});
+
+router.put("/logout-user/:userEmail", async (req, res) => {
+  try {
+    const userEmail = req.params.userEmail;
+    await User.findOneAndUpdate({ email: userEmail }, { logoutTime: new Date() });
+    res.status(200).send("user logout");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("server error [logout user]");
   }
 });
 

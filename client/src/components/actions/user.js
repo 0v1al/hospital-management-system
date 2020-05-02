@@ -22,7 +22,7 @@ export const loadUser = () => async dispatch => {
   const token = getCookie("tokenUser");
   setAxiosHeader(token);
   try {
-    const res = await axios.get("http://localhost:5000/load-user");
+    const res = await axios.get("/load-user");
     dispatch({
       type: LOAD_USER,
       data: res.data
@@ -41,7 +41,7 @@ export const registerUser = (credentials, history) => async dispatch => {
     }
   };
   try {
-    await axios.post("http://localhost:5000/register-user", body, config);
+    await axios.post("/register-user", body, config);
     dispatch(createAlert("The account was created", "success", 1000));
     setTimeout(() => history.push("/login-user"), 1000);
   } catch (err) {
@@ -64,9 +64,9 @@ export const loginUser = (credentials, history) => async dispatch => {
     }
   };
   try {
-    let result = await axios.post("http://localhost:5000/login-user", body, config);
+    let result = await axios.post("/login-user", body, config);
     const token = result.data;
-    setCookie("tokenUser", token, 1000 * 60 * 60);
+    setCookie("tokenUser", token, 1000 * 60 * 60 * 3);
     dispatch({
       type: LOGIN_SUCCESS_USER
     });
@@ -96,12 +96,13 @@ export const addAppointmentConsultation = consultation => async dispatch => {
     }
   };
   try {
-    const res = await axios.post("http://localhost:5000/add-appointment-consultation", body, config);
+    const res = await axios.post("/add-appointment-consultation", body, config);
     dispatch({
       type: ADD_APPOINTMENT_CONSULTATION,
       data: res.data
     });
     dispatch(createAlert("Consultation was scheduled and sended to the doctor", "success", 2000));
+    return true;
   } catch (err) {
     const errors = err.response.data.errors;
     
@@ -110,12 +111,13 @@ export const addAppointmentConsultation = consultation => async dispatch => {
     }
 
     console.error(err.message);
+    return false;
   }
 };
 
 export const loadUserAppointmentConsultations = userEmail => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:5000/load-user-appointment-consultations/${userEmail}`);
+    const res = await axios.get(`/load-user-appointment-consultations/${userEmail}`);
     dispatch({
       type: LOAD_APPOINTMENT_CONSULTATIONS,
       data: res.data
@@ -127,7 +129,7 @@ export const loadUserAppointmentConsultations = userEmail => async dispatch => {
 
 export const loadDoctorAppointmentConsultations = doctorEmail => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:5000/load-doctor-appointment-consultations/${doctorEmail}`);
+    const res = await axios.get(`/load-doctor-appointment-consultations/${doctorEmail}`);
     dispatch({
       type: LOAD_APPOINTMENT_CONSULTATIONS,
       data: res.data
@@ -139,7 +141,7 @@ export const loadDoctorAppointmentConsultations = doctorEmail => async dispatch 
 
 export const loadAllAppointmentConsultations = () => async dispatch => {
   try {
-    const res = await axios.get("http://localhost:5000/load-all-appointment-consultations");
+    const res = await axios.get("/load-all-appointment-consultations");
     dispatch({
       type: LOAD_APPOINTMENT_CONSULTATIONS,
       data: res.data
@@ -151,7 +153,7 @@ export const loadAllAppointmentConsultations = () => async dispatch => {
 
 export const removeAppointmentConsultation = consultationId => async dispatch => {
   try {
-    const res = await axios.delete(`http://localhost:5000/remove-appointment-consultation/${consultationId}`);
+    const res = await axios.delete(`/remove-appointment-consultation/${consultationId}`);
     dispatch({
       type: REMOVE_APPOINTMENT_CONSULTATION,
       data: res.data._id
@@ -164,7 +166,7 @@ export const removeAppointmentConsultation = consultationId => async dispatch =>
 
 export const cancelAppointmentConsultation = consultationId => async dispatch => {
   try {
-    const res = await axios.put(`http://localhost:5000/cancel-appointment-consultation/${consultationId}`);
+    const res = await axios.put(`/cancel-appointment-consultation/${consultationId}`);
     dispatch({
       type: CANCEL_APPOINTMENT_CONSULTATION,
       data: res.data._id
@@ -179,12 +181,13 @@ export const cancelAppointmentConsultation = consultationId => async dispatch =>
 
 export const cancelAppointmentConsultationDoctor = consultationId => async dispatch => {
   try {
-    const res = await axios.put(`http://localhost:5000/cancel-appointment-consultation-doctor/${consultationId}`);
+    const res = await axios.put(`/cancel-appointment-consultation-doctor/${consultationId}`);
     dispatch({
       type: CANCEL_APPOINTMENT_CONSULTATION_DOCTOR,
       data: res.data._id
     });
     dispatch(createAlert("The consultation was canceled", "success", 2000));
+    return true;
   } catch (err) {
     const errors = err.response.data.errors;
     
@@ -193,17 +196,19 @@ export const cancelAppointmentConsultationDoctor = consultationId => async dispa
     }
 
     console.error(err.message);
+    return false;
   }
 };
 
 export const acceptAppointmentConsultationDoctor = consultationId => async dispatch => {
   try {
-    const res = await axios.put(`http://localhost:5000/accept-appointment-consultation-doctor/${consultationId}`);
+    const res = await axios.put(`/accept-appointment-consultation-doctor/${consultationId}`);
     dispatch({
       type: ACCEPT_APPOINTMENT_CONSULTATION_DOCTOR,
       data: res.data._id
     });
     dispatch(createAlert("The consultation was accepted", "success", 2000));
+    return true;
   } catch (err) {
     const errors = err.response.data.errors;
     
@@ -212,17 +217,19 @@ export const acceptAppointmentConsultationDoctor = consultationId => async dispa
     }
 
     console.error(err.message);
+    return false;
   }
 };
 
 export const finishAppointmentConsultationDoctor = consultationId => async dispatch => {
   try {
-    const res = await axios.put(`http://localhost:5000/finish-appointment-consultation/${consultationId}`);
+    const res = await axios.put(`/finish-appointment-consultation/${consultationId}`);
     dispatch({
       type: FINISH_APPOINTMENT_CONSULTATION,
       data: res.data._id
     });
     dispatch(createAlert("The consultation was finished", "success", 2000));
+    return true;
   } catch (err) {
     const errors = err.response.data.errors;
     
@@ -231,6 +238,7 @@ export const finishAppointmentConsultationDoctor = consultationId => async dispa
     }
 
     console.error(err.message);
+    return false;
   }
 };
 
@@ -244,7 +252,7 @@ export const changePassword = change => async dispatch => {
   };
 
   try {
-    await axios.put("http://localhost:5000/change-password-user", body, config);
+    await axios.put("/change-password-user", body, config);
     dispatch(createAlert("Your password was changed with success", "success", 2000));
   } catch (err) {
     const errors = err.response.data.errors;
@@ -267,7 +275,7 @@ export const updateProfile = updateProfile => async dispatch => {
   };
 
   try {
-    const res = await axios.put(`http://localhost:5000/update-profile-user/${userEmail}`, body, config);
+    const res = await axios.put(`/update-profile-user/${userEmail}`, body, config);
     dispatch({
       type: UPDATE_PROFILE_USER,
       data: res.data
@@ -287,13 +295,7 @@ export const updateProfile = updateProfile => async dispatch => {
 export const logoutUser = (history, userEmail) => async dispatch => {
   removeCookie("tokenUser");
   setAxiosHeader(null);
-  const body = JSON.stringify({ userEmail });
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-  axios.put(`http://localhost:5000/logout-user/${userEmail}`, body, config);
+  await axios.put(`/logout-user/${userEmail}`);
   dispatch({
     type: LOGOUT_USER
   });

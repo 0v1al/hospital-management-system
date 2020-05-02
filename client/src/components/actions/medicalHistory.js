@@ -38,7 +38,7 @@ export const addMedicalHistory = (patientId, medicalHistory) => async dispatch =
 
 export const removeMedicalHistoryDoctor = medicalHistoryId => async dispatch => {
   try {
-    const res = await axios.delete(`http://localhost:5000/remove-medical-history-doctor/${medicalHistoryId}`);
+    const res = await axios.delete(`/remove-medical-history-doctor/${medicalHistoryId}`);
     dispatch({
       type: REMOVE_MEDICAL_HISTORY_DOCTOR,
       data: res.data
@@ -51,7 +51,7 @@ export const removeMedicalHistoryDoctor = medicalHistoryId => async dispatch => 
 
 export const removeMedicalHistoryPatient = medicalHistoryId => async dispatch => {
   try {
-    const res = await axios.delete(`http://localhost:5000/remove-medical-history-patient/${medicalHistoryId}`);
+    const res = await axios.delete(`/remove-medical-history-patient/${medicalHistoryId}`);
     dispatch({
       type: REMOVE_MEDICAL_HISTORY_PATIENT,
       data: res.data
@@ -64,7 +64,7 @@ export const removeMedicalHistoryPatient = medicalHistoryId => async dispatch =>
 
 export const loadMedicalHistoriesByPatientId = patientId => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:5000/load-medical-histories-by-patientId/${patientId}`);
+    const res = await axios.get(`/load-medical-histories-by-patientId/${patientId}`);
     dispatch({
       type: LOAD_MEDICAL_HISTORIES,
       data: res.data
@@ -76,7 +76,7 @@ export const loadMedicalHistoriesByPatientId = patientId => async dispatch => {
 
 export const loadMedicalHistoriesByUserId = patientId => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:5000/load-medical-histories-by-userId/${patientId}`);
+    const res = await axios.get(`/load-medical-histories-by-userId/${patientId}`);
     dispatch({
       type: LOAD_MEDICAL_HISTORIES,
       data: res.data
@@ -88,7 +88,7 @@ export const loadMedicalHistoriesByUserId = patientId => async dispatch => {
 
 export const loadAllMedicalHistories = () => async dispatch => {
   try {
-    const res = await axios.get("http://localhost:5000/load-all-medical-histories");
+    const res = await axios.get("/load-all-medical-histories");
     dispatch({
       type: LOAD_MEDICAL_HISTORIES,
       data: res.data
@@ -100,7 +100,7 @@ export const loadAllMedicalHistories = () => async dispatch => {
 
 export const loadMedicalHistory = patientId => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:5000/load-medical-history/${patientId}`);
+    const res = await axios.get(`/load-medical-history/${patientId}`);
     dispatch({
       type: LOAD_MEDICAL_HISTORIES,
       data: res.data

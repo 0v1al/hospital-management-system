@@ -7,7 +7,7 @@ const Doctor = require("../../models/Doctor");
 const User = require("../../models/User");
 const Patient = require("../../models/Patient");
 
-router.post("/add-appointment-consultation", [
+router.post("/add-appointment-consultation", [authorization,
   check("specializationSelect", "You need to select a specialization").not().isEmpty(),
   check("doctorSelect", "You need to select a doctor").not().isEmpty(),
   check("consultationDate", "You need to add consultation date").not().isEmpty(),
@@ -59,7 +59,7 @@ router.post("/add-appointment-consultation", [
   }
 });
 
-router.get("/load-user-appointment-consultations/:userEmail", async (req, res) => {
+router.get("/load-user-appointment-consultations/:userEmail", authorization, async (req, res) => {
   const userEmail = req.params.userEmail;
  
   try {
@@ -78,7 +78,7 @@ router.get("/load-user-appointment-consultations/:userEmail", async (req, res) =
   }
 });
 
-router.get("/load-doctor-appointment-consultations/:doctorEmail", async (req, res) => {
+router.get("/load-doctor-appointment-consultations/:doctorEmail", authorization, async (req, res) => {
   const doctorEmail = req.params.doctorEmail;
   
   try {
@@ -99,7 +99,7 @@ router.get("/load-doctor-appointment-consultations/:doctorEmail", async (req, re
   }
 });
 
-router.get("/load-all-appointment-consultations", async (req, res) => {
+router.get("/load-all-appointment-consultations", authorization, async (req, res) => {
   try {
     const consultations = await Consultation.find().select(["-__v"]).sort({ creationDate: "asc" }).populate({
       path: "_user",
@@ -112,7 +112,6 @@ router.get("/load-all-appointment-consultations", async (req, res) => {
     if (!consultations){
       return res.status(400).send("something went wrong on loading the consultations");
     } 
-    console.log(consultations);
     res.status(200).json(consultations);
   } catch (err) {
     console.error(err);
@@ -120,7 +119,7 @@ router.get("/load-all-appointment-consultations", async (req, res) => {
   }
 });
 
-router.delete("/remove-appointment-consultation/:consultationId", async (req, res) => {
+router.delete("/remove-appointment-consultation/:consultationId", authorization, async (req, res) => {
   const consultationId = req.params.consultationId;
   
   try {
@@ -152,7 +151,7 @@ router.delete("/remove-appointment-consultation/:consultationId", async (req, re
   }
 });
 
-router.put("/cancel-appointment-consultation/:consultationId", async (req, res) => {
+router.put("/cancel-appointment-consultation/:consultationId", authorization, async (req, res) => {
   const consultationId = req.params.consultationId;
   
   try {
@@ -191,7 +190,7 @@ router.put("/cancel-appointment-consultation/:consultationId", async (req, res) 
   }
 });
 
-router.put("/cancel-appointment-consultation-doctor/:consultationId", async (req, res) => {
+router.put("/cancel-appointment-consultation-doctor/:consultationId", authorization, async (req, res) => {
   const consultationId = req.params.consultationId;
   try {
     const consultation = await Consultation.findById(consultationId);
@@ -229,7 +228,7 @@ router.put("/cancel-appointment-consultation-doctor/:consultationId", async (req
   }
 });
 
-router.put("/finish-appointment-consultation/:consultationId", async (req, res) => {
+router.put("/finish-appointment-consultation/:consultationId", authorization, async (req, res) => {
   const consultationId = req.params.consultationId;
 
   try {
@@ -268,7 +267,7 @@ router.put("/finish-appointment-consultation/:consultationId", async (req, res) 
   }
 });
 
-router.put("/accept-appointment-consultation-doctor/:consultationId", async (req, res) => {
+router.put("/accept-appointment-consultation-doctor/:consultationId", authorization, async (req, res) => {
   const consultationId = req.params.consultationId;
 
   try {

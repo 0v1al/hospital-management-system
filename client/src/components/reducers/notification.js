@@ -1,75 +1,61 @@
 import {
   ADD_NOTIFICATION_DOCTOR,
-  ADD_NOTIFICATION_PATIENT,
-  LOAD_NOTIFICATIONS_PATIENT,
+  ADD_NOTIFICATION_USER,
+  LOAD_NOTIFICATIONS_USER,
   LOAD_NOTIFICATIONS_DOCTOR,
-  DELETE_NOTIFICATION_DOCTOR,
-  DELETE_NOTIFICATION_PATIENT,
-  MARK_VIEW_NOTIFICATION_DOCTOR,
-  MARK_VIEW_NOTIFICATION_PATIENT
+  MARK_VIEW_NOTIFICATIONS_DOCTOR,
+  MARK_VIEW_NOTIFICATIONS_USER
 } from "../actions/types";
 
 const initialState = {
   loading: true,
   doctorNotifications: [],
-  patientNotifications: []
+  userNotifications: []
 }
 
 export default function notification(state = initialState, action) {
   switch (action.type) {
-    case ADD_NOTIFICATION_PATIENT:
+    case ADD_NOTIFICATION_USER:
       return {
-        loading: false,
         ...state,
-        patientNotifications: [ ...state.patientNotifications, action.data ]
+        loading: false,
+        userNotifications: [ ...state.userNotifications, action.data ]
       };
     case ADD_NOTIFICATION_DOCTOR:
       return {
-        loading: false,
         ...state,
+        loading: false,
         doctorNotifications: [ ...state.doctorNotifications, action.data ]
       };
-    case LOAD_NOTIFICATIONS_PATIENT: 
+    case LOAD_NOTIFICATIONS_USER: 
       return {
-        loading: false,
         ...state,
-        patientNotifications: [ ...action.data ]
+        loading: false,
+        userNotifications: action.data
       };
     case LOAD_NOTIFICATIONS_DOCTOR: 
       return {
-        loading: false,
         ...state,
-        doctorNotifications: [ ...action.data ]
+        loading: false,
+        doctorNotifications: action.data 
       };
-    case DELETE_NOTIFICATION_DOCTOR: 
+    case MARK_VIEW_NOTIFICATIONS_USER:
       return {
-        loading: false,
         ...state,
-        doctorNotifications: state.doctorNotifications.filter(notification => notification._id !== action.data)
-      };
-    case DELETE_NOTIFICATION_PATIENT: 
-      return {
         loading: false,
-        ...state,
-        patientNotifications: state.doctorNotifications.filter(notification => notification._id !== action.data)
-      };
-    case MARK_VIEW_NOTIFICATION_PATIENT:
-      return {
-        loading: false,
-        ...state,
-        patientNotifications: state.patientNotifications.map(notification => {
-          if (notification._id === action.data) {
-            notification.viewByPatient = true;
+        userNotifications: state.userNotifications.map(notification => {
+          if (notification._user === action.data) {
+            notification.viewByUser = true;
           }
           return notification;
         })
       };
-      case MARK_VIEW_NOTIFICATION_DOCTOR:
+      case MARK_VIEW_NOTIFICATIONS_DOCTOR:
         return {
-          loading: false,
           ...state,
+          loading: false,
           doctorNotifications: state.doctorNotifications.map(notification => {
-            if (notification._id === action.data) {
+            if (notification._doctor === action.data) {
               notification.viewByDoctor = true;
             }
             return notification;

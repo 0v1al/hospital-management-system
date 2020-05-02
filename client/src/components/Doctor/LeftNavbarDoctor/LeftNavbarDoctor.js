@@ -5,7 +5,7 @@ import styles from "../../Layout/LeftNavbar/LeftNavbar.module.css";
 
 const LeftNavbarDoctor = () => {
   const [openSubmenu, toggleSubmenu] = useState(true);
-  
+
   const toggleLeftnavbarSubmenu = e => {
     toggleSubmenu(!openSubmenu);
     let leftnavSubmenu = e.target.parentElement.lastChild;

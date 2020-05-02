@@ -25,7 +25,7 @@ export const loadAdmin = () => async dispatch => {
   const token = getCookie("tokenAdmin");
   setAxiosHeader(token);
   try {
-    const res = await axios.get("http://localhost:5000/load-admin");
+    const res = await axios.get("/load-admin");
     dispatch({
       type: LOAD_ADMIN,
       data: res.data
@@ -46,9 +46,9 @@ export const loginAdmin = (credentials, history) => async dispatch => {
     }
   };
   try {
-    let result = await axios.post("http://localhost:5000/login-admin", body, config);
+    let result = await axios.post("/login-admin", body, config);
     const token = result.data;
-    setCookie("tokenAdmin", token, 1000 * 60 * 60);
+    setCookie("tokenAdmin", token, 1000 * 60 * 60 * 3);
     dispatch({
       type: LOGIN_SUCCESS_ADMIN
     });
@@ -78,7 +78,7 @@ export const addSpecialization = specialization => async dispatch => {
   };
 
   try {
-    let result = await axios.post("http://localhost:5000/add-specialization", body, config);
+    let result = await axios.post("/add-specialization", body, config);
     dispatch({
       type: ADD_SPECIALIZATION,
       data: result.data
@@ -97,7 +97,7 @@ export const addSpecialization = specialization => async dispatch => {
 
 export const removeSpecialization = specializationName => async dispatch => {
   try {
-    await axios.delete(`http://localhost:5000/remove-specialization/${specializationName}`);
+    await axios.delete(`/remove-specialization/${specializationName}`);
     dispatch({
       type: REMOVE_SPECIALIZATION,
       data: specializationName.toLowerCase()
@@ -116,7 +116,7 @@ export const editSpecialization = (specialization, newSpecialization) => async d
     }
   };
   try {
-    let newSpecialization =  await axios.put("http://localhost:5000/edit-specialization", body, config);
+    let newSpecialization =  await axios.put("/edit-specialization", body, config);
     const result = { specialization, newSpecialization: newSpecialization.data }
     dispatch({
       type: EDIT_SPECIALIZATION,
@@ -136,7 +136,7 @@ export const editSpecialization = (specialization, newSpecialization) => async d
 
 export const loadSpecializations = () => async dispatch => {
   try {
-    let result = await axios.get("http://localhost:5000/load-specializations");
+    let result = await axios.get("/load-specializations");
     dispatch({
       type: LOAD_SPECIALIZATIONS,
       data: result.data
@@ -156,7 +156,7 @@ export const addDoctor = doctorData => async dispatch => {
   };
 
   try {
-    let res = await axios.post("http://localhost:5000/add-doctor", body, config);
+    let res = await axios.post("/add-doctor", body, config);
     
     if (res) {
       dispatch(createAlert("The doctor account was created", "success", 2000));
@@ -186,7 +186,7 @@ export const loadDoctors = () => async dispatch => {
 
 export const removeDoctor = doctorEmail => async dispatch => {
   try {
-    await axios.delete(`http://localhost:5000/remove-doctor/${doctorEmail}`);
+    await axios.delete(`/remove-doctor/${doctorEmail}`);
     dispatch({
       type: REMOVE_DOCTOR,
       data: doctorEmail
@@ -205,7 +205,7 @@ export const updateDoctor = (doctorUpdate) => async dispatch => {
     }
   };
   try {
-    let newDoc =  await axios.put("http://localhost:5000/update-doctor", body, config);
+    let newDoc =  await axios.put("/update-doctor", body, config);
     const result = { doctorEmail: doctorUpdate.doctorEmail, newDoctor: newDoc.data };
     dispatch({
       type: UPDATE_DOCTOR,
@@ -225,7 +225,7 @@ export const updateDoctor = (doctorUpdate) => async dispatch => {
 
 export const loadUsers = () => async dispatch => {
   try {
-    const res = await axios.get("http://localhost:5000/load-users");
+    const res = await axios.get("/load-users");
     dispatch({
       type: LOAD_USERS,
       data: res.data
@@ -237,7 +237,7 @@ export const loadUsers = () => async dispatch => {
 
 export const removeUser = userEmail => async dispatch => {
   try {
-    await axios.delete(`http://localhost:5000/remove-user/${userEmail}`);
+    await axios.delete(`/remove-user/${userEmail}`);
     dispatch({
       type: REMOVE_USER,
       data: userEmail
@@ -258,7 +258,7 @@ export const changePassword = change => async dispatch => {
   };
 
   try {
-    await axios.put("http://localhost:5000/change-password-admin", body, config);
+    await axios.put("/change-password-admin", body, config);
     dispatch(createAlert("Your password was changed with success", "success", 2000));
   } catch (err) {
     const errors = err.response.data.errors;
@@ -273,7 +273,7 @@ export const changePassword = change => async dispatch => {
 
 export const patientReports = (fromDate, toDate) => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:5000/patient-reports/${fromDate}/${toDate}`);
+    const res = await axios.get(`/patient-reports/${fromDate}/${toDate}`);
     dispatch({
       type: PATIENT_REPORTS,
       data: res.data
@@ -291,7 +291,7 @@ export const patientReports = (fromDate, toDate) => async dispatch => {
 
 export const loadEntityNumber = () => async dispatch => {
   try {
-    const res = await axios.get("http://localhost:5000/load-entity-number");
+    const res = await axios.get("/load-entity-number");
     dispatch({
       type: LOAD_ENTITY_NUMBER,
       data: res.data

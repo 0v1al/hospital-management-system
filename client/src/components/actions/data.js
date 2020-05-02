@@ -3,7 +3,7 @@ import { LOAD_DOCTORS_DATA, LOAD_USERS_DATA, LOAD_SPECIALIZATIONS_DATA } from ".
 
 export const loadUsersData = () => async dispatch => {
   try {
-    const res = await axios.get("http://localhost:5000/load-users");
+    const res = await axios.get("/load-users");
     dispatch({
       type: LOAD_USERS_DATA,
       data: res.data
@@ -15,7 +15,7 @@ export const loadUsersData = () => async dispatch => {
 
 export const loadDoctorsData = () => async dispatch => {
   try {
-    let res = await axios.get("http://localhost:5000/load-doctors");
+    let res = await axios.get("/load-doctors");
     dispatch({
       type: LOAD_DOCTORS_DATA,
       data: res.data
@@ -27,7 +27,7 @@ export const loadDoctorsData = () => async dispatch => {
 
 export const loadSpecializationsData = () => async dispatch => {
   try {
-    let result = await axios.get("http://localhost:5000/load-specializations");
+    let result = await axios.get("/load-specializations");
     dispatch({
       type: LOAD_SPECIALIZATIONS_DATA,
       data: result.data

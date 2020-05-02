@@ -24,7 +24,7 @@ const AppointmentHistory = ({ loadAdmin, loadAllAppointmentConsultations, consul
       <div className={["universalContainerTableNoBorder", styles.form].join()}>
         <h3 className="universalDesc universalDescForm">
           <i className="fas fa-notes-medical"></i>
-          Consultation History:
+          Consultation History
         </h3>
         <table className="universalTable">
           <thead>
@@ -45,16 +45,16 @@ const AppointmentHistory = ({ loadAdmin, loadAllAppointmentConsultations, consul
                     <td>{index + 1}</td>
                     <td>
                       {
-                        // `${consultation._doctor.firstname} ${consultation._doctor.lastname}`
+                        `${consultation._doctor.firstname} ${consultation._doctor.lastname}`
                       }
                     </td>
                     <td>
                       {
-                        // `${consultation._user.firstname} ${consultation._user.lastname}`
+                        `${consultation._user.firstname} ${consultation._user.lastname}`
                       }
                     </td>
-                    {/* <td>{consultation._doctor.specialization}</td> */}
-                    {/* <td>{consultation._doctor.consultationPrice}</td> */}
+                    <td>{consultation._doctor.specialization}</td>
+                    <td>{consultation._doctor.consultationPrice}</td>
                     <td>
                       <Moment format="YYYY-MM-DD">{`${consultation.consultationDate}`}</Moment>
                       {`/${consultation.time}`}
@@ -69,6 +69,8 @@ const AppointmentHistory = ({ loadAdmin, loadAllAppointmentConsultations, consul
                       <p className="universalCancel">Canceled By Doctor</p> :
                       consultation.finished ? 
                       <p className="universalFinished">Finished</p> :
+                      consultation.accepted ? 
+                      <p className="universalActive">Accepted</p> :
                       <p className="universalActive">Active</p> 
                     }
                     </td>
