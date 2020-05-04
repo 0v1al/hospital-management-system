@@ -25,8 +25,12 @@ const UpdateMessage = ({ loadAdmin, loadMessages, updateMessage, markAsReadMessa
   }, [loadAdmin, loadMessages]);
   
   useEffect(() => {
+    const getMessageById = () => {
+      const messageId = match.params.messageId;
+      return messages.filter(message => message._id === messageId)[0];
+    }
     setInput(getMessageById());
-  }, [messages]);
+  }, [messages, match.params.messageId]);
 
   function getMessageById() {
     const messageId = match.params.messageId;

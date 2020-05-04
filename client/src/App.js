@@ -45,6 +45,7 @@ import UserUpdateProfile from "./components/User/UpdateProfile/UpdateProfile";
 import AdminChangePassword from "./components/Admin/ChangePassword/ChangePassword";
 import AdminAppointmentHistory from "./components/Admin/AdminAppointmentHistory/AppointmentHistory";
 import UserViewDoctors from "./components/User/ViewDoctor/ViewDoctor";
+import Footer from "./components/Layout/Footer/Footer";
 
 import  "./App.css";
 
@@ -99,6 +100,9 @@ function App() {
         <PrivateRouteUser exact path="/user-update-profile" component={UserUpdateProfile} />
         <PrivateRouteUser exact path="/user-view-doctors" component={UserViewDoctors} />
       </Switch>
+      <Route path="/user-*" component={Footer} />
+      <Route path="/doctor-*" component={Footer} />
+      <Route path="/admin-*" component={Footer} />
     </Router>
   );
 }

@@ -19,7 +19,7 @@
   color: var(--text-light);
   text-transform: uppercase;
   font-weight: 100;
-  font-size: 1rem;
+  /* font-size: 1rem; */
 }
 
 .tableDoctorSpecialization {
@@ -88,4 +88,5 @@
 
 .editSpecialization::placeholder {
   color: #000;
+  font-size: .89rem;
 }

@@ -35,7 +35,7 @@ const Reports = ({ loadAdmin, patientReports, patients, loading, alerts}) => {
   return (
     <div className="universalContainer">
       <h1 className="universalTitle">Admin | Register Between Dates</h1>
-      <form className={[stylesLoginAdmin.universalForm, styles.form].join(" ")} onSubmit={e => patientReportsNow(e)}>
+      <form className={[stylesLoginAdmin.universalForm, styles.form, "universalMt"].join(" ")} onSubmit={e => patientReportsNow(e)}>
         {alerts.length > 0 && 
             <div className="alerts">
               {alerts.map(alert => 
@@ -63,7 +63,20 @@ const Reports = ({ loadAdmin, patientReports, patients, loading, alerts}) => {
         <input type="submit" value="submit" className="universalBtnForm"/>
       </form>
       <div className="universalContainerTable">
-        <h3 className="universalDesc universalDescForm">Registered Patients Between: </h3>
+        <h3 className="universalDesc universalDescForm">
+          <i className="fas fa-calendar-alt"></i>
+          Registered Patients Between:{" "}  
+          {fromDate && 
+            <span className="bold">
+              <Moment format="YYYY/MM/DD">{fromDate}</Moment>
+            </span>
+          }{" "}
+          {fromDate && toDate && 
+            <span className="bold"> 
+              and <Moment format="YYYY/MM/DD">{toDate}</Moment>
+            </span>
+          }
+        </h3>
         <table className="universalTable">
           <thead>
             <tr className="universalTableRow">
@@ -73,7 +86,7 @@ const Reports = ({ loadAdmin, patientReports, patients, loading, alerts}) => {
               <th>Gender</th>
               <th>Creation Date</th>
               <th>Update Date</th>
-              <th>Action</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>

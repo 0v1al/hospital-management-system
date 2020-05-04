@@ -28,25 +28,24 @@ const PatientDetails = ({
       console.log(match.params.patientId);
     };
     fetch();
-  }, [loadAdmin, loadAllPatients, loadMedicalHistoriesByPatientId]);
+  }, [loadAdmin, loadAllPatients, loadMedicalHistoriesByPatientId, match.params.patientId]);
 
   useEffect(() => {
+    const getPatientByEmail = () => {
+      const patientEmail = match.params.patientEmail;
+      return patients.filter(patient => patient.email === patientEmail)[0];
+    }
     setPatient(getPatientByEmail());
-  }, [patients]);
-
-  function getPatientByEmail() {
-    const patientEmail = match.params.patientEmail;
-    return patients.filter(patient => patient.email === patientEmail)[0];
-  }
+  }, [patients, match.params.patientEmail]);
 
   // const { firstname, lastname, email, address, contact, password, specialization } = patient || "";
 
   return patient ? (
     <div className="universalContainer">
       <h2 className="universalTitle">Admin | Manage Patients</h2>
-      <h3 className={["universalDesc", styles.desc].join(" ")}>
+      <h3 className={["universalDesc", "universalDescForm universalMt"].join(" ")}>
           <i className="fas fa-user-edit"></i>
-          Pacient Details
+          Patient Details
       </h3>
       <div className={styles.pacientsDetails}>
         <div className={styles.pacientDetails}>
@@ -75,8 +74,8 @@ const PatientDetails = ({
         </div>
       </div>
       <div className={["universalContainerTableNoBorder", styles.containerTable].join(" ")}>
-        <h3 className={["universalDesc", styles.desc].join(" ")}>
-          <i class="fas fa-notes-medical"></i>
+        <h3 className={["universalDesc", "universalDescForm"].join(" ")}>
+          <i className="fas fa-notes-medical"></i>
           Medical History
         </h3>
         <table className="universalTable">

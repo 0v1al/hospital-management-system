@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import { loadDoctors, loadAdmin, removeDoctor } from "../../actions/admin";
 import Spinner from "../../Layout/Spinner/Spinner";
 
-import styles from "./ManageDoctor.module.css";
-
 const ManageDoctor = ({ loadAdmin, loadDoctors, removeDoctor, doctors, alerts, loading }) => {
   useEffect(() => {
     const fetch = async () => {
@@ -14,7 +12,7 @@ const ManageDoctor = ({ loadAdmin, loadDoctors, removeDoctor, doctors, alerts, l
       loadDoctors();
     };
     fetch();
-  }, [loadDoctors]);
+  }, [loadDoctors, loadAdmin]);
 
   const removeDoctorNow = e => {
     const doctorEmail = e.target.parentElement.parentElement.parentElement.getAttribute("data-email");
@@ -25,7 +23,10 @@ const ManageDoctor = ({ loadAdmin, loadDoctors, removeDoctor, doctors, alerts, l
     <div className="universalContainer">
       <h2 className="universalTitle">Admin | Manage Doctors</h2>
       <div className="universalContainerTableNoBorder">
-        <h3 className="universalDesc">Manage Doctors</h3>
+        <h3 className="universalDesc universalDescForm">
+          <i className="fas fa-list-alt"></i>
+          Manage Doctors
+        </h3>
         {alerts.length > 0 && 
             <div className="alerts">
               {alerts.map(alert => 

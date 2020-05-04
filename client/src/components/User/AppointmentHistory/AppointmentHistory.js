@@ -39,7 +39,7 @@ const AppointmentHistory = ({
     if (userEmail) {
       fetch();
     }
-  }, [email, loadUserAppointmentConsultations]);
+  }, [email, loadUserAppointmentConsultations, userEmail]);
 
   const removeConsultation = async e => {
     const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");

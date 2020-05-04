@@ -36,7 +36,7 @@ const SearchPatient = ({
     if (!patient) {
       setSubmit(false);
     }
-  }, [alerts]);  
+  }, [alerts, patient]);  
 
   const searchPatientNow = async e => {
     e.preventDefault();
@@ -47,7 +47,7 @@ const SearchPatient = ({
   return (
     <div className="universalContainer">
       <h1 className="universalTitle">Admin | Search Patient</h1>
-      <form className={[stylesLoginAdmin.universalForm, styles.form, stylesHere_1.form].join(" ")} onSubmit={e => searchPatientNow(e)}>
+      <form className={[stylesLoginAdmin.universalForm, styles.form, stylesHere_1.form, "universalMt"].join(" ")} onSubmit={e => searchPatientNow(e)}>
         {alerts.length > 0 && 
           <div className="alerts">
             {alerts.map(alert => 
@@ -128,6 +128,7 @@ const SearchPatient = ({
                           </tr>
                       )
                     }
+                    return null; //!unknow
                   }
                   )) : (<Spinner />)}
                 </tbody>

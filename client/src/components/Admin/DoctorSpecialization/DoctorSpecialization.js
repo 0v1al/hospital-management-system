@@ -50,7 +50,11 @@ const DoctorSpecialization = ({ loadAdmin, addSpecialization, loadSpecialization
     <div className="universalContainer">
       <h2 className="universalTitle">Admin | Doctor Specialization</h2>
       <form className={styles.formDoctorSpecialization} onSubmit={e => addSpecializationSubmit(e)}>
-        <input type="text" className="universalInput" placeholder="Add doctor specialization..." name="doctorSpecialization" value={doctorSpecialization} onChange={e => setInput({ ... input, [e.target.name]: e.target.value }) }/>
+        <h3 className="universalDesc universalDescForm">
+          <i className="fas fa-user-plus"></i>
+          Add doctor specialization
+        </h3>
+        <input type="text" className="universalInput" placeholder="Add doctor specialization..." name="doctorSpecialization" value={doctorSpecialization} onChange={e => setInput({ ...input, [e.target.name]: e.target.value }) }/>
         <input type="submit" value="Add" className={styles.btnDoctorSpecialization}/>
       </form>
       <div className={styles.containerTable}>
@@ -61,10 +65,13 @@ const DoctorSpecialization = ({ loadAdmin, addSpecialization, loadSpecialization
                 )} 
             </div>
           } 
-        <h3 className={styles.descDoctorSpecialization}>Doctor Specializations</h3>
-        <table className={styles.tableDoctorSpecialization}>
+        <h3 className="universalDesc universalDescForm">
+          <i className="fas fa-list-alt"></i>  
+          Doctor Specializations
+        </h3>
+        <table className="universalTable">
           <thead>
-            <tr className={styles.tableDoctorSpecializationRow}>
+            <tr className="universalTableRow">
               <th>#</th>
               <th>Specialization</th>
               <th>Registration Date</th>
@@ -74,7 +81,7 @@ const DoctorSpecialization = ({ loadAdmin, addSpecialization, loadSpecialization
           </thead>
           <tbody>
             {!specializationsLoading ? (specializations.map((specialization, index) => 
-             (<tr className={styles.tableDoctorSpecializationRow} key={index} data-name-specialization={specialization.specialization}>
+             (<tr className="universalTableRow" key={index} data-name-specialization={specialization.specialization}>
                 <td>{index + 1}</td>
                 <td>
                   <input className={styles.editSpecialization} placeholder={`${specialization.specialization[0].toUpperCase()}${specialization.specialization.slice(1)}`} onKeyPress={e => editSpecializationInput(e)}  disabled />

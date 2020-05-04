@@ -2,11 +2,8 @@ import React, { useEffect } from 'react'
 import { connect } from "react-redux";
 import { loadAdmin } from "../../actions/admin";
 import { loadMessages, removeMessage } from "../../actions/message";
-import { Link } from "react-router-dom";
 import Spinner from "../../Layout/Spinner/Spinner";
 import Moment from "react-moment";
-
-import styles from "./Messages.module.css";
 
 const ReadMessages = ({ loadAdmin, loadMessages, removeMessage, messages, alerts, loading }) => {
   useEffect(() => {
@@ -26,7 +23,7 @@ const ReadMessages = ({ loadAdmin, loadMessages, removeMessage, messages, alerts
     <div className="universalContainer">
       <h2 className="universalTitle">Admin | Contact Messages</h2>
       <div className="universalContainerTableNoBorder">
-        <h3 className={["universalDesc", styles.desc].join(" ")}>
+        <h3 className={["universalDesc universalDescForm"].join(" ")}>
           <i className="fas fa-book-open"></i>
           Read Messages
         </h3>

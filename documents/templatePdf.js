@@ -1,7 +1,12 @@
 module.exports = data => {
-  const today = new Date();
   const date = new Date(data.date);
-  const visitDate = new Date(data.medicalHistories[0].date);
+  let visitDate;
+  if (data.medicalHistories.length > 0) {
+    visitDate = new Date(data.medicalHistories[0].date);
+    visitDate = `${visitDate.getFullYear()}/${visitDate.getMonth()}/${visitDate.getDay()}`;
+  } else {
+    visitDate = "---";
+  }
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -25,26 +30,19 @@ module.exports = data => {
             position: relative;
             margin-bottom: 5rem;
           }
-          .patients {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+          .patients {  
             padding-bottom: 3rem;
             border-bottom: 1px solid rgb(8, 194, 67);
-            color: rgba(0, 0, 0, .7);;
+            color: rgba(0, 0, 0, .7);
           }
           .patient p {
             line-height: 3;
             font-size: 1.3rem;
           }
-          .patient:nth-child(odd) {
-            font-weight: bold;
-          }
           .patient {
             position: relative; 
             display: inline-block;
-          }
-          .patient:not(:last-child) {
-            margin-right: 5rem;
+            margin-right: 6rem;
           }
           .universalTitle::before {
             content: "";
@@ -108,22 +106,22 @@ module.exports = data => {
           </h1>
           <div class="patients">
             <div class="patient">
-                <p>Patient Name:</p>
-                <p>Patient Contact:</p>
-                <p>Patient Gender:</p>
-                <p>Patient Medical History:</p>
+                <p><strong>Patient Name:</strong></p>
+                <p><strong>Patient Contact:</strong></p>
+                <p><strong>Patient Gender:</strong></p>
+                <p><strong>Patient Disease:</strong></p>
             </div>
             <div class="patient">
                 <p>${data.firstname} ${data.lastname}</p>
                 <p>${data.contact}</p>
                 <p>${data.male ? "Male" : "Female"}</p>
                 <p>${data.medicalHistory ? data.medicalHistory : "---"}</p>
-            </div>
+            </div></br>
             <div class="patient">
-                <p>Patient Email:</p>
-                <p>Patient Address:</p>
-                <p>Patient Age:</p>
-                <p>Patient Reg Date:</p>
+                <p><strong>Patient Email:</strong></p>
+                <p><strong>Patient Address:</strong></p>
+                <p><strong>Patient Age:</strong></p>
+                <p><strong>Patient Reg Date:</strong></p>
             </div>
             <div class="patient">
                 <p>${data.email}</p>
@@ -150,12 +148,12 @@ module.exports = data => {
               </thead>
               <tbody>
                 <tr class="universalTableRow" >
-                  <td>${data.medicalHistories[data.medicalHistories.length - 1].bloodPressure}</td>
-                  <td>${data.medicalHistories[data.medicalHistories.length - 1].weight}</td>
-                  <td>${data.medicalHistories[data.medicalHistories.length - 1].bloodSugar}</td>
-                  <td>${data.medicalHistories[data.medicalHistories.length - 1].bodyTemperature}</td>
-                  <td>${data.medicalHistories[data.medicalHistories.length - 1].prescription ? data.medicalHistories[0].prescription : "---"}</td>
-                  <td>${visitDate.getFullYear()}/${visitDate.getMonth() + 1}/${visitDate.getDay()}</td>
+                  <td>${data.medicalHistories.length > 0 ? data.medicalHistories[0].bloodPressure : "---"}</td>
+                  <td>${data.medicalHistories.length > 0 ? data.medicalHistories[0].weight : "---"}</td>
+                  <td>${data.medicalHistories.length > 0 ? data.medicalHistories[0].bloodSugar : "---"}</td>
+                  <td>${data.medicalHistories.length > 0 ? data.medicalHistories[0].bodyTemperature : "---"}</td>
+                  <td>${data.medicalHistories.length > 0 && data.medicalHistories[0].prescription ? data.medicalHistories[0].prescription : "---"}</td>
+                  <td>${visitDate}</td>
                 </tr>
               </tbody>
             </table>

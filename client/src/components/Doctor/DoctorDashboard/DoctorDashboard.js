@@ -17,7 +17,7 @@ const DoctorDashboard = ({ loadDoctor, doctorId }) => {
   }, [loadDoctor])
 
   return (
-    <div className={styles.adminDashboardContainer}>
+    <div className="universalContainer">
       <h1 className={styles.titleAdminDashboard}>doctor | dashboard</h1>
       <div className={[styles.adminDashboardCards, styles.doctorCards].join(" ")}>
         <div className={styles.adminDashboardCard}>

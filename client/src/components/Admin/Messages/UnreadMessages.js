@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import Spinner from "../../Layout/Spinner/Spinner";
 
-import styles from "./Messages.module.css";
-
 const UnreadMessages = ({ loadAdmin, loadMessages, removeMessage, messages, alerts, loading }) => {
   useEffect(() => {
     const fetch = async () => {
@@ -26,7 +24,7 @@ const UnreadMessages = ({ loadAdmin, loadMessages, removeMessage, messages, aler
     <div className="universalContainer">
       <h2 className="universalTitle">Admin | Contact Messages</h2>
       <div className="universalContainerTableNoBorder">
-        <h3 className={["universalDesc", styles.desc].join(" ")}>
+        <h3 className={["universalDesc", "universalDescForm"].join(" ")}>
           <i class="fas fa-book-open"></i>
           Unread Messages
         </h3>

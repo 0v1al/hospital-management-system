@@ -30,7 +30,10 @@ const Users = ({ loadAdmin, loadUsers, removeUser, users, loading, alerts }) => 
             )} 
         </div>
       } 
-      <h3 className="universalDesc">Manage Users</h3>
+      <h3 className="universalDesc universalDescForm">
+        <i className="fas fa-list-alt"></i>
+        Manage Users
+      </h3>
       <table className="universalTable">
         <thead>
           <tr className="universalTableRow">

@@ -20,7 +20,10 @@ const Patients = ({ loadAdmin, loadAllPatients, patients, loading }) => {
     <div className="universalContainer">
       <h2 className="universalTitle">Admin | Patients</h2>
       <div className="universalContainerTableNoBorder">
-        <h3 className="universalDesc">Manage Patients</h3>
+        <h3 className="universalDesc universalDescForm">
+          <i className="fas fa-list-alt"></i>
+          Manage Patients
+        </h3>
         <table className="universalTable">
           <thead>
             <tr className="universalTableRow">

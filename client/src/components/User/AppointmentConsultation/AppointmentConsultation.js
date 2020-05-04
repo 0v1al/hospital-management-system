@@ -53,11 +53,11 @@ const AppointmentConsultation = ({
 				setConsultationPrice(doctorConsultationPrice);
 			}
 		}
-	}, [doctor]);
+	}, [doctor, doctors, input]);
 
 	useEffect(() => {
 		setInput({ ...input, specializationSelect: specialization });
-	}, [specialization])
+	}, [specialization, input])
 
 	const addConsultationNow = async e => {
 		e.preventDefault();
@@ -108,6 +108,7 @@ const AppointmentConsultation = ({
 															</option>
 														);
 									}
+									return null; //!unknow
 								})}
 							</select>
 						</div>

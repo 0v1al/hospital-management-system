@@ -4,8 +4,6 @@ import Moment from "react-moment";
 import { loadAdmin, loadUsers } from "../actions/admin";
 import Spinner from "../Layout/Spinner/Spinner";
 
-import styles from "./UserSessionLogs.module.css";
-
 const UserSessionLogs = ({ loadAdmin, loadUsers, users, loading }) => {
   useEffect(() => {
     const fetch = async () => {
@@ -27,7 +25,7 @@ const UserSessionLogs = ({ loadAdmin, loadUsers, users, loading }) => {
     <div className="universalContainer">
       <h1 className="universalTitle">Admin | User Session Logs</h1>
       <div className="universalContainerTableNoBorder">
-        <h3 className={["universalDesc", styles.desc].join(" ")}>
+        <h3 className={["universalDesc universalDescForm"].join(" ")}>
           <i className="fas fa-sign-in-alt"></i>
           User Session Logs
         </h3>

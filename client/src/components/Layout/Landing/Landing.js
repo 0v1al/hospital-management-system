@@ -31,19 +31,19 @@ const Landing = ({ loggedAdmin, loggedDoctor, loggedUser }) => {
 						<div className={styles.facilities}>
 							<div className={styles.facilitie}>
 								<i className="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
+								<p>Scheduling Consultations</p>
 							</div>
 							<div className={styles.facilitie}>
 								<i className="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
+								<p>View Available Doctors</p>
 							</div>
 							<div className={styles.facilitie}>
 								<i className="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
+								<p>View Your Medical Details</p>
 							</div>
 							<div className={styles.facilitie}>
 								<i className="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
+								<p>Cancel Consultations</p>
 							</div>
 						</div>
 						<Link to="/login-user" className={styles.link}>Login/Register</Link>
@@ -54,19 +54,19 @@ const Landing = ({ loggedAdmin, loggedDoctor, loggedUser }) => {
 						<div className={styles.facilities}>
 							<div className={styles.facilitie}>
 								<i className="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
+								<p>Registration/Manage Patients</p>
 							</div>
 							<div className={styles.facilitie}>
 								<i className="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
+								<p>View Consultations</p>
 							</div>
 							<div className={styles.facilitie}>
 								<i className="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
+								<p>Add Medical History for a Patient</p>
 							</div>
 							<div className={styles.facilitie}>
 								<i className="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
+								<p>Search Patients</p>
 							</div>
 						</div>
 						<Link to="/login-doctor" className={styles.link}>Login</Link>
@@ -77,19 +77,19 @@ const Landing = ({ loggedAdmin, loggedDoctor, loggedUser }) => {
 						<div className={styles.facilities}>
 							<div className={styles.facilitie}>
 								<i className="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
+								<p>Registration/Manage Doctors</p>
 							</div>
 							<div className={styles.facilitie}>
 								<i className="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
+								<p>View All Consultations</p>
 							</div>
 							<div className={styles.facilitie}>
 								<i className="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
+								<p>View Messages Contact</p>
 							</div>
 							<div className={styles.facilitie}>
 								<i className="fas fa-caret-right"></i>
-								<p>Facilities that user can do!</p>
+								<p>Search Patients</p>
 							</div>
 						</div>
 						<Link to="/login-admin" className={styles.link}>Login</Link>

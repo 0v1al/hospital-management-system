@@ -34,13 +34,13 @@ const UpdatePatient = ({ loadDoctor, loadPatients, doctorId, updatePatient, pati
       if (doctorId) loadPatients(doctorId);
     };
     fetch();
-  }, [doctorId]);
+  }, [doctorId, loadPatients]);
 
   useEffect(() => {
     const patientEmail = match.params.patientEmail;
     const patientByEmail = patients.filter(pat => pat.email === patientEmail)[0];
     setPatient(patientByEmail);
-  }, [patients]);
+  }, [patients, match.params.patientEmail]);
   
   const updatePatientNow = async e => {
     e.preventDefault();
@@ -61,7 +61,7 @@ const UpdatePatient = ({ loadDoctor, loadPatients, doctorId, updatePatient, pati
         } 
         <h3 className={["universalDesc", styles.desc].join(" ")}>
           <i className="fas fa-user-edit"></i>
-          Update Doctor
+          Update Patient
         </h3>
         <div className={stylesLoginAdmin.inputGroup}>
           <label>* Patient Firstname:</label>

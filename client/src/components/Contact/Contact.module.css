@@ -1,13 +1,13 @@
 .landing {
   position: relative;
-  height: calc(100vh - 3rem);
+  height: calc(100vh - 7rem);
 }
 
 .contactContainer {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -45%);
   width: 50%;
   margin-left: -6rem !important;
   animation-name: fadeIn;
@@ -32,8 +32,14 @@
 
 .title {
   color: var(--text-light);
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   align-self: start;
+  text-transform: uppercase;
+}
+
+.title i {
+  color: var(--primary-color);
+  margin-right: .5rem;
 }
 
 .btnSend {

@@ -64,11 +64,11 @@ const UpdateProfile = ({
     <h1 className="universalTitle">Doctor | Edit Profile</h1>
     {!loading ? (
       <>
-        <div className={stylesHere.profileDesc}>
+        <div className={[stylesHere.profileDesc, "universalMt"].join(" ")}>
           <p>Doctor <strong>{`${doctor.firstname} ${doctor.lastname} `}</strong> Profile</p>
-          <p>Register Date: <Moment format="YYYY-MM-DD">{doctor.date}</Moment></p>
+          <p>Register Date: <Moment className="bold" format="YYYY-MM-DD">{doctor.date}</Moment></p>
         </div>
-        <form className={["universalForm"].join(" ")} onSubmit={e => updateDoctorProfileNow(e)}>
+        <form className={["universalForm", "universalFormMt"].join(" ")} onSubmit={e => updateDoctorProfileNow(e)}>
           {alerts.length > 0 && 
             <div className="alerts">
               {alerts.map(alert => 

@@ -50,7 +50,7 @@ const MedicalHistory = ({
                 )} 
               </div>
             }
-        <h3 className={["universalDesc", stylesAdminPatientDetails.desc].join(" ")}>
+        <h3 className={["universalDesc", "universalDescForm"].join(" ")}>
           <i class="fas fa-notes-medical"></i>
           Medical History
         </h3>
@@ -87,6 +87,7 @@ const MedicalHistory = ({
                     </tr>
                   )
               }
+              return null; //!unknow
             }
             )) : (<Spinner />)}
           </tbody>

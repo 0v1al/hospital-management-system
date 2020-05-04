@@ -14,7 +14,7 @@ const AdminDashboard = ({ loadAdmin, loadEntityNumber, entityNumber, loading }) 
   }, [loadAdmin, loadEntityNumber])
 
   return (
-    <div className={styles.adminDashboardContainer}>
+    <div className="universalContainer">
       <h1 className={styles.titleAdminDashboard}>admin | dashboard</h1>
       {!loading && !!entityNumber ? (
         <div className={styles.adminDashboardCards}>

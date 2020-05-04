@@ -32,8 +32,9 @@ html {
 body {
 	min-height: 100%;
 	padding-top: var(--body-padding-top);
-	padding-left: var(--left-navbar-width);
-	/* background: linear-gradient(146deg, rgba(27, 160, 15, 0.11) 14%, rgba(25, 233, 18, 0.068) 96%, rgba(2, 204, 106, 0.048) 100%); */
+  padding-left: var(--left-navbar-width);
+  padding-bottom: 5rem;
+  position: relative;
 }
 
 h1, h2, h3 {
@@ -85,6 +86,10 @@ h1, h2, h3 {
   max-width: 960px;
   margin: 0 auto;
   padding: 3rem 0;
+  
+  animation-name: fadeIn;
+  animation-fill-mode: forwards;
+  animation-duration: 750ms;
 }
 
 .universalForm {
@@ -98,6 +103,11 @@ h1, h2, h3 {
 	background-color: var(--primary-color-alpha);
 	padding: 2rem 1rem 1rem 1rem;
   margin-bottom: 3rem;
+  margin-top: 4rem;
+}
+
+.universalFormMt {
+  margin-top: 1rem !important;
 }
 
 .universalFormBg { 
@@ -117,7 +127,6 @@ h1, h2, h3 {
   letter-spacing: .1rem;
 	font-weight: 400;
 	position: relative;
-	margin-bottom: 5rem;
 }
 
 .universalTitle::before {
@@ -222,7 +231,7 @@ h1, h2, h3 {
 .universalContainerTable, .universalContainerTableNoBorder {
 	border-top: .01rem solid var(--primary-color);
   padding-top: 3rem;
-  margin-top: 3rem;
+  margin-top: 1.5rem;
 }
 
 .universalContainerTableNoBorder { border-top: none; }
@@ -238,9 +247,14 @@ h1, h2, h3 {
   width: 100%;
   min-height: 10rem;
   position: relative;
+  font-size: .9rem;
+  text-align: left;
 }
 
-.universalTableRow { transition: background-color 200ms ease-in-out; }
+.universalTableRow { 
+  transition: background-color 200ms ease-in-out;
+  font-size: .9rem !important;
+}
 .universalTableRow:hover { background-color: var(--primary-color-alpha-hover); }
 .universalTableRow:nth-child(odd) { background-color: var(--primary-color-alpha-hover); }
 
@@ -248,18 +262,42 @@ h1, h2, h3 {
   background-color: var(--primary-color);
   color: #fff;
   font-weight: 100 !important;
+  font-size: .9rem;
+  padding: .4rem;
 }
 
 .universalTableRow th, .universalTableRow td {
-  text-align: left;
-  padding: 10px;
+  padding: .4rem;
+  font-size: .9rem;
+  font-weight: 100 !important;
 }
 
 .universalEditIcon, .universalRemoveIcon { cursor: pointer; }
 .universalEditIcon i, .universalRemoveIcon i { transition: transform 200ms ease-in-out; }
-.universalEditIcon:hover i, .universalRemoveIcon:hover i { transform: scale(1.4); }
-.universalEditIcon { color: var(--primary-color); }
-.universalRemoveIcon { color: rgba(255, 0, 0, 0.719); }
+.universalEditIcon:hover i, .universalRemoveIcon:hover i { transform: scale(1.5); }
+
+.universalEditIcon { 
+  color: var(--primary-color); 
+  text-transform: uppercase; 
+  font-weight: bold;
+}
+.universalRemoveIcon { 
+  color: rgba(255, 0, 0, 0.619); 
+  text-transform: uppercase; 
+  font-weight: bold;
+}
+
+.universalCancel {
+  color: rgba(255, 0, 0, 0.619); 
+  text-transform: uppercase; 
+  /* font-weight: bold; */
+}
+
+.universalActive, .universalFinished {
+  color: var(--primary-color);
+  text-transform: uppercase; 
+  /* font-weight: bold; */
+}
 
 input:disabled {
   color: var(--primary-color);
@@ -269,3 +307,10 @@ input:disabled {
   /* background-color: rgba(12, 44, 22, 0.6) !important; */
 }
 
+.universalMt {
+  margin-top: 3rem;
+}
+
+.bold {
+  font-weight: bold;
+}

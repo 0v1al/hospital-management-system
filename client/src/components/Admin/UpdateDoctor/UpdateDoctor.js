@@ -17,18 +17,17 @@ const UpdateDoctor = ({ match, loadDoctors, loadAdmin, loadSpecializations, doct
       loadDoctors();
     };
     fetch();
-  }, [loadAdmin, loadDoctors]);
+  }, [loadAdmin, loadDoctors, loadSpecializations]);
 
   useEffect(() => {
+    const getDoctorByEmail = () => {
+      const doctorEmail = match.params.doctorEmail;
+      return doctors.filter(doc => doc.email === doctorEmail)[0];
+    };
     setDoctor(getDoctorByEmail());
-  }, [doctors]);
+  }, [doctors, match.params.doctorEmail]);
 
-  const { firstname, lastname, email, address, contact, password, specialization, consultationPrice } = doctor || "";
-
-  function getDoctorByEmail() {
-    const doctorEmail = match.params.doctorEmail;
-    return doctors.filter(doc => doc.email === doctorEmail)[0];
-  }
+  const { firstname, lastname, email, address, contact, password, consultationPrice } = doctor || "";
 
   const updateDoctorSubmit = e => {
     e.preventDefault();

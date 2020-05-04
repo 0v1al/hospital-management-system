@@ -20,7 +20,7 @@ const ViewDoctor = ({ loadUser, loadDoctorsData, doctors, loading }) => {
   return (
     <div className="universalContainer">
       <h1 className="universalTitle">User | View Doctors</h1>
-      <h3 className="universalDesc universalDescForm">
+      <h3 className="universalDesc universalDescForm universalMt">
         <i class="fas fa-list-alt"></i>
         View All Doctors That are Available Now
       </h3>

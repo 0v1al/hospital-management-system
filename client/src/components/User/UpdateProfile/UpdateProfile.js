@@ -58,11 +58,11 @@ const UpdateProfile = ({
     <h1 className="universalTitle">User | Edit Profile</h1>
     {!loading ? (
       <>
-        <div className={stylesHere.profileDesc}>
+        <div className={[stylesHere.profileDesc, "universalMt"].join(" ")}>
           <p>User <strong>{`${user.firstname} ${user.lastname} `}</strong> Profile</p>
-          <p>Register Date: <Moment format="YYYY-MM-DD">{user.date}</Moment></p>
+          <p>Register Date: <Moment className="bold" format="YYYY-MM-DD">{user.date}</Moment></p>
         </div>
-        <form className={["universalForm"].join(" ")} onSubmit={e => updateUserProfileNow(e)}>
+        <form className={["universalForm", "universalFormMt"].join(" ")} onSubmit={e => updateUserProfileNow(e)}>
           {alerts.length > 0 && 
             <div className="alerts">
               {alerts.map(alert => 

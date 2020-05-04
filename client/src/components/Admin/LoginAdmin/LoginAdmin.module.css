@@ -54,11 +54,17 @@
   color: var(--text-light);
 }
 
+.description p {
+  font-size: .8rem;
+  text-transform: uppercase;
+}
+
 .description h1 { 
   color: var(--text-color);
   letter-spacing: .1rem;
   text-transform: uppercase;
   margin-bottom: .5rem;
+  font-size: 1.5rem;
 }
 
 .description h1 i {

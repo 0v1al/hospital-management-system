@@ -5,7 +5,7 @@ import { saveAs } from "file-saver";
 
 import Spinner from "../../Layout/Spinner/Spinner";
 import { addNotificationUser } from "../../actions/notification";
-import { loadDoctor, loginDoctor, loadPatient } from "../../actions/doctor";
+import { loadDoctor, loadPatient } from "../../actions/doctor";
 import { loadMedicalHistoriesByPatientId, addMedicalHistory, removeMedicalHistoryDoctor } from "../../actions/medicalHistory";
 import axios from 'axios';
 
@@ -48,7 +48,7 @@ const ViewPatient = ({
       loadMedicalHistoriesByPatientId(match.params.patientId);
     };
     fetch();
-  }, [loginDoctor, loadMedicalHistoriesByPatientId]);
+  }, [loadMedicalHistoriesByPatientId, loadDoctor, loadPatient, match.params.patientId]);
 
   const showModal = e => {
     e.preventDefault();
@@ -89,7 +89,7 @@ const ViewPatient = ({
       <div className={styles.overlay}></div>
       <div className={styles.modal}>
         <form className={["universalForm", styles.formModal].join(" ")} onSubmit={e => addMedicalHistoryNow(e)} >
-          {alerts.length > 0 && 
+          {alerts.length > 0 && modal && 
             <div className="alerts">
               {alerts.map(alert => 
                 <span key={alert.id} className={`alert alert-${alert.type}`}>{alert.msg}</span>
@@ -145,7 +145,7 @@ const ViewPatient = ({
       {modal && modalDom}
       <div className="universalContainer">
         <h1 className="universalTitle">Doctor | Manage Patient</h1>
-        <h3 className={["universalDesc", stylesAdminPatientDetails.desc].join(" ")}>
+        <h3 className={["universalDesc", "universalDescForm", "universalMt", stylesAdminPatientDetails.desc].join(" ")}>
             <i className="fas fa-user-edit"></i>
             Patient Details
         </h3>
@@ -185,14 +185,14 @@ const ViewPatient = ({
         </button>
 
         <div className={["universalContainerTableNoBorder", stylesAdminPatientDetails.containerTable].join(" ")}>
-          {alerts.length > 0 && 
+          {alerts.length > 0 &&  modal === false && 
               <div className="alerts">
                 {alerts.map(alert => 
                   <span key={alert.id} className={`alert alert-${alert.type}`}>{alert.msg}</span>
                 )} 
               </div>
             }
-          <h3 className={["universalDesc", stylesAdminPatientDetails.desc].join(" ")}>
+          <h3 className={["universalDesc", "universalDescForm", stylesAdminPatientDetails.desc].join(" ")}>
             <i class="fas fa-notes-medical"></i>
             Medical History
           </h3>
@@ -229,6 +229,7 @@ const ViewPatient = ({
                       </tr>
                   )
                 }
+                return null; //!unknow
               }
               )) : (<Spinner />)}
             </tbody>

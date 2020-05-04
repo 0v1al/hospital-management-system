@@ -53,7 +53,7 @@ const AppointmentHistory = ({
     if (email) {
       fetch();
     }
-  }, [email]);
+  }, [email, loadDoctorAppointmentConsultations]);
 
   const removeConsultation = async e => {
     const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");
@@ -70,7 +70,6 @@ const AppointmentHistory = ({
   
   const acceptConsultation = async e => {
     const consultationId = e.target.parentElement.parentElement.getAttribute("data-id");
-    const userId = e.target.parentElement.parentElement.getAttribute("data-user");
     if (acceptAppointmentConsultationDoctor(consultationId)) {
       const userId = e.target.parentElement.parentElement.getAttribute("data-user");
       addNotificationUser(userId, `Doctor ${doctorFirstname} ${doctorLastname} accepted your consultation request`);
@@ -89,7 +88,10 @@ const AppointmentHistory = ({
     <div className="universalContainer">
       <h1 className="universalTitle">Doctor | Consultations History</h1>
       <div className="universalContainerTableNoBorder">
-        <h3 className="universalDesc">Consultations History</h3>
+        <h3 className="universalDesc universalDescForm">
+          <i className="fas fa-calendar-alt"></i>
+          Consultations History
+        </h3>
         {alerts.length > 0 && 
             <div className="alerts">
               {alerts.map(alert => 

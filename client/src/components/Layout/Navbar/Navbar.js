@@ -47,15 +47,14 @@ const Navbar = ({
 	const [userNotificationsNumber, setUserNotificationsNumber] = useState(0);
 	const [doctorNotificationsNumber, setDoctorNotificationsNumber] = useState(0);
 
-	const logoutTimeDoctor = async () => {
-		await axios.put(`/logout-doctor${doctorEmail}`);
-	};
-
-	const logoutTimeUser = async () => {
-		await axios.put(`/logout-user/${userEmail}`);
-	};
-
 	useEffect(() => {
+		const logoutTimeDoctor = async () => {
+			await axios.put(`/logout-doctor${doctorEmail}`);
+		};
+	
+		const logoutTimeUser = async () => {
+			await axios.put(`/logout-user/${userEmail}`);
+		};
 		return () => {
 			if (loggedDoctor && doctorEmail) {
 				logoutTimeDoctor();
@@ -65,7 +64,7 @@ const Navbar = ({
 				logoutTimeUser();
 			}
 		}
-	}, []);
+	}, [userEmail, loggedUser, loggedDoctor, doctorEmail]);
 
   useEffect(() => {
     const fetch = async () => {
@@ -93,7 +92,7 @@ const Navbar = ({
 		if (userId && loggedUser) {
 			fetch();
 		}
-	}, [userId, userNotifications]);
+	}, [userId, userNotifications, loggedUser]);
 
 	useEffect(() => {
 		const fetch = async () => {
@@ -104,7 +103,7 @@ const Navbar = ({
 		if (doctorId && loggedDoctor) {
 			fetch();
 		}
-	}, [doctorId, doctorNotifications]);
+	}, [doctorId, doctorNotifications, loggedDoctor]);
 
 	let links;
 
@@ -179,7 +178,7 @@ const Navbar = ({
 						<div className={[styles.navbarLink, styles.navbarSettings].join(" ")}>
 							<i className="fas fa-bell"></i>
 							<div className={[styles.navbarSettingsOptions, styles.navbarSettingsOptionsNotifications].join(" ")}>
-								{!loadingNotifications && doctorNotifications.length > 0 && <a className={styles.clear} onClick={deleteNotificationsDoctorNow}>
+								{!loadingNotifications && doctorNotifications.length > 0 && <a href="#!" className={styles.clear} onClick={deleteNotificationsDoctorNow}>
 									<i className="fas fa-trash-alt"></i>
 									clear
 								</a>}
@@ -193,7 +192,7 @@ const Navbar = ({
 												</div>
 											</Link>
 										))
-									) : (<a className={styles.noNotifications} >no notifications</a>)
+									) : (<a href="#!" className={styles.noNotifications} >no notifications</a>)
 								) : (<Spinner />)}
 							</div>
 						</div>
@@ -220,7 +219,7 @@ const Navbar = ({
 						<div className={[styles.navbarLink, styles.navbarSettings].join(" ")}>
 							<i className="fas fa-bell"></i>
 							<div className={[styles.navbarSettingsOptions, styles.navbarSettingsOptionsNotifications].join(" ")}>
-								{!loadingNotifications && userNotifications.length > 0 && <a className={styles.clear} onClick={deleteNotificationsUserNow}>
+								{!loadingNotifications && userNotifications.length > 0 && <a href="#!" className={styles.clear} onClick={deleteNotificationsUserNow}>
 									<i className="fas fa-trash-alt"></i>
 									clear
 								</a>}
@@ -245,7 +244,7 @@ const Navbar = ({
 													</div>
 												</Link>
 										)})		
-									) : (<a className={styles.noNotifications} >no notifications</a>)
+									) : (<a href="#!" className={styles.noNotifications} >no notifications</a>)
 								) : (<Spinner />)}
 							</div>
 						</div>

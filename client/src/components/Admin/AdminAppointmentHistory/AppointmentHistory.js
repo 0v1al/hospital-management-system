@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from "react-redux";
 import Moment from "react-moment";
 
@@ -21,7 +21,7 @@ const AppointmentHistory = ({ loadAdmin, loadAllAppointmentConsultations, consul
   return (
     <div className="universalContainer">
       <h1 className="universalTitle">Admin | Appointmen tHistory</h1>
-      <div className={["universalContainerTableNoBorder", styles.form].join()}>
+      <div className={["universalContainerTableNoBorder universalMt", styles.form].join()}>
         <h3 className="universalDesc universalDescForm">
           <i className="fas fa-notes-medical"></i>
           Consultation History

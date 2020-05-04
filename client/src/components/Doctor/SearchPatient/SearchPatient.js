@@ -32,7 +32,7 @@ const SearchPatient = ({
     if (!patient) {
       setSubmit(false);
     }
-  }, [alerts]);  
+  }, [alerts, patient]);  
 
   const searchPatientNow = async e => {
     e.preventDefault();
@@ -87,7 +87,7 @@ const SearchPatient = ({
                     <p><Moment format="YYYY-MM-DD">{patient.date}</Moment></p>
                 </div>
               </div>
-              <h3 className={["universalDesc", stylesAdminPatientDetails.desc].join(" ")}>
+              <h3 className={["universalDesc", "universalDescForm"].join(" ")}>
                 <i class="fas fa-notes-medical"></i>
                 Medical History
               </h3>
@@ -124,6 +124,7 @@ const SearchPatient = ({
                           </tr>
                       )
                     }
+                    return null; //!unknow
                   }
                   )) : (<Spinner />)}
                 </tbody>

@@ -32,7 +32,11 @@ const Contact = ({ addMessage, alerts }) => {
                 <span key={alert.id} className={`alert alert-${alert.type}`}>{alert.msg}</span> 
               )} </div>
           }
-          <h2 className={styles.title}>Contact Us</h2>
+          <h2 className={styles.title}>
+            <i className="fas fa-address-book"></i>
+            Contact Us
+          </h2>
+          <h3 className="universalDesc universalDescForm">Send a Message to the us</h3>
           <div className={stylesLoginAdmin.inputGroup}>
             <label>* Name:</label>
             <div className={[stylesLoginAdmin.inputRegister, stylesLoginAdmin.userIcon].join(" ")}>

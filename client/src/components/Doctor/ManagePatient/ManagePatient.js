@@ -24,7 +24,7 @@ const ManagePatient = ({ loadDoctor, loadPatients, removePatient, doctorId, pati
       }
     };
     fetch();
-  }, [doctorId]);
+  }, [doctorId, loadPatients]);
 
   const removePatientNow = async e => {
     const patientId = e.target.parentElement.parentElement.parentElement.getAttribute("data-id");

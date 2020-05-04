@@ -74,7 +74,7 @@ export const addPatient = (doctorId, patient) => async dispatch => {
         "Content-Type": "application/json"
       }
     };
-    const res = await axios.post(`/add-patient/${doctorId}`, body, config);
+    await axios.post(`/add-patient/${doctorId}`, body, config);
     dispatch(createAlert("The patient was added", "success", 2000));
   } catch (err) {
     const errors = err.response.data.errors;

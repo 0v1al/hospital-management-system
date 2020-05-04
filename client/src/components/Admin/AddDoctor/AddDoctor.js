@@ -19,15 +19,15 @@ const AddDoctor = ({ loadAdmin, addDoctor, loadSpecializations, specializations,
   });
 
   useEffect(() => {
-    const fetch = async fetch => {
+    const fetch = async () => {
       loadAdmin();
       loadSpecializations();
     };
 
     fetch();
-  }, [loadSpecializations]);
+  }, [loadSpecializations, loadAdmin]);
 
-  const { firstname, lastname, email, address, contact, password, consultationPrice, specialization } = input;
+  const { firstname, lastname, email, address, contact, password, consultationPrice } = input;
 
   const addDoctorSubmit = e => {
     e.preventDefault();
