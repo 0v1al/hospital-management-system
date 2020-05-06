@@ -49,6 +49,7 @@ router.post("/add-appointment-consultation", [authorization,
       _user: user._id,
       _doctor: doctor._id,
       consultationDate: consultationDate,
+      userEmail: userEmail,
       time: consultationTime
     });
     await consultation.save();

@@ -35,7 +35,7 @@ const ManagePatient = ({ loadDoctor, loadPatients, removePatient, doctorId, pati
 
   return (
     <div className="universalContainer">
-      <h2 className="universalTitle">Admin | Manage Patients</h2>
+      <h2 className="universalTitle">Doctor | Manage Patients</h2>
       <div className="universalContainerTableNoBorder">
         <h3 className={["universalDesc", styles.desc].join(" ")}>
           <i className="fas fa-tasks"></i>

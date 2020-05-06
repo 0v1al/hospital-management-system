@@ -63,7 +63,7 @@ const ViewPatient = ({
   const addMedicalHistoryNow = async e => {
     e.preventDefault();
     const patientId = match.params.patientId;
-    if (addMedicalHistory(patientId, input)) {
+    if (addMedicalHistory(patientId, input, doctorFirstname, doctorLastname)) {
       addNotificationUser(patient._user, `Doctor ${doctorFirstname} ${doctorLastname} added a new medical history for you`);
     }
   };

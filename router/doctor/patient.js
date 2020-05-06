@@ -6,6 +6,7 @@ const Patient = require("../../models/Patient");
 const Doctor = require("../../models/Doctor");
 const User = require("../../models/User");
 const Admin = require("../../models/Admin");
+const Consultation = require("../../models/Consultation");
 
 router.post("/add-patient/:doctorId", [authorization,
   check("firstname", "You need to add the firstname").trim().escape().not().isEmpty(),
@@ -39,8 +40,14 @@ router.post("/add-patient/:doctorId", [authorization,
     const patient = await Patient.findOne({ email: email });
     
     if (patient) {
+      if (patient._doctor.includes(doctorId)) {
+        return res.status(400).json({ errors: [{ msg: "Patient already registered" }] });
+      }
+    }
+
+    if (patient) {
       patient._doctor.push(doctorId);
-      await newPatient.save(error => error ? console.log(error) : null);
+      await patient.save(error => error ? console.log(error) : null);
       return res.status(200).json(patient);
     }
 
@@ -183,6 +190,7 @@ router.put("/update-patient/:patientEmail", [authorization,
 router.delete("/remove-patient/:patientId/:doctorId", authorization, async (req, res) => {
   const patientId  = req.params.patientId;
   const doctorId = req.params.doctorId;
+
   try {
     const patient = await Patient.findById(patientId);
    
@@ -190,7 +198,9 @@ router.delete("/remove-patient/:patientId/:doctorId", authorization, async (req,
       return res.status(400).send("something went wrong on deleting the patient");
     }
 
-    if (patient.consultationActive) {
+    const activeConsultations = await Consultation.find({ _user: patient._user, _doctor: doctorId, active: true });
+
+    if (activeConsultations.length > 0) {
       return res.status(400).json({ errors: [{ msg: "You need to finish the consultation of the patient first" }] });
     }
 

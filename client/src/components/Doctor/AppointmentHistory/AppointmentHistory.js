@@ -104,10 +104,10 @@ const AppointmentHistory = ({
             <tr className="universalTableRow">
               <th>#</th>
               <th>Patient Name</th>
-              <th>Specialization</th>
-              <th>Consultation Price</th>
-              <th>Consultation Date/Time</th>
-              <th>Send Time</th>
+              <th>Email</th>
+              <th>Price</th>
+              <th>Date/Time</th>
+              <th>Sent Time</th>
               <th>Status</th>
               <th></th>
             </tr>
@@ -120,7 +120,7 @@ const AppointmentHistory = ({
                     consultation._doctor && (
                       `${consultation._user.firstname} ${consultation._user.lastname}`
                 )}</td>
-                <td>{specialization}</td>
+                <td>{consultation.userEmail}</td>
                 <td>{consultationPrice}</td>
                 <td>
                   <Moment format="YYYY/MM/DD">{`${new Date(consultation.consultationDate)}`}</Moment>

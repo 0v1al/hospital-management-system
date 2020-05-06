@@ -5,6 +5,7 @@ const PatientSchema = new Schema({
   _doctor: [
     {
       type: Schema.ObjectId,
+      consultationActive: Boolean,
       ref: "doctors"
     }
   ],

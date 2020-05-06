@@ -53,11 +53,11 @@ const AppointmentConsultation = ({
 				setConsultationPrice(doctorConsultationPrice);
 			}
 		}
-	}, [doctor, doctors, input]);
+	}, [doctor, doctors]);
 
 	useEffect(() => {
 		setInput({ ...input, specializationSelect: specialization });
-	}, [specialization, input])
+	}, [specialization])
 
 	const addConsultationNow = async e => {
 		e.preventDefault();
@@ -114,7 +114,7 @@ const AppointmentConsultation = ({
 						</div>
 				</div>
 				<div className={stylesLoginAdmin.inputGroup}>
-						<label>Consultacion Price:</label>
+						<label>Consultation Price:</label>
 						<div className={[stylesLoginAdmin.inputRegister, stylesLoginAdmin.dollarIcon].join(" ")}>
 							<input type="text" placeholder="" name="consultationPrice" value={consultationPrice ? consultationPrice : ""} disabled/>
 						</div>

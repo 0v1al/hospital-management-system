@@ -83,7 +83,7 @@ const AppointmentHistory = ({
             </tr>
           </thead>
           <tbody>
-          {!loading > 0 ? (consultations.map((consultation, index) => 
+          {!loading ? (consultations.map((consultation, index) => 
              (<tr className={[`universalTableRow ${consultation.active ? "" : "canceled"}`].join(" ")} data-id={consultation._id} doctor-id={consultation._doctor._id} key={index}>
                 <td>{index + 1}</td>
                 <td>

@@ -12,6 +12,7 @@ const ConsultationSchema = new Schema({
   },
   consultationDate: Date,
   time: String,
+  userEmail: String,
   creationDate: {
     type: Date,
     default: Date.now

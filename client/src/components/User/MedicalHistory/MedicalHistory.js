@@ -58,6 +58,7 @@ const MedicalHistory = ({
           <thead>
               <tr className="universalTableRow">
                 <th>#</th>
+                <th>Doctor</th>
                 <th>Blood Pressure</th>
                 <th>Weight</th>
                 <th>Blood Sugar</th>
@@ -68,11 +69,12 @@ const MedicalHistory = ({
               </tr>
           </thead>
           <tbody>
-            {(!loading) ? (medicalHistories.map((medicalHistory, index) => {
+            {!loading ? (medicalHistories.map((medicalHistory, index) => {
               if (!medicalHistory.deletePatient) {
                   return (
                     <tr className="universalTableRow" data-id={medicalHistory._id}  key={index}>
                       <td>{index + 1}</td>
+                      <td>{medicalHistory.doctorFullname}</td>
                       <td>{medicalHistory.bloodPressure}</td>
                       <td>{medicalHistory.weight}</td>
                       <td>{medicalHistory.bloodSugar}</td>

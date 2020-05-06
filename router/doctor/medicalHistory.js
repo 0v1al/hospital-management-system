@@ -19,14 +19,15 @@ router.post("/add-medical-history", [authorization,
   }
 
   try {
-    const { patientId, bloodPressure, bloodSugar, weight, bodyTemperature, prescription } = req.body;
+    const { patientId, bloodPressure, bloodSugar, weight, bodyTemperature, prescription, doctorFullname } = req.body;
     const medicalHistory = new MedicalHistory({
       _patient: patientId,
       bloodPressure: bloodPressure,
       bloodSugar: bloodSugar,
       weight: weight,
       bodyTemperature: bodyTemperature,
-      prescription: prescription
+      prescription: prescription,
+      doctorFullname: doctorFullname
     });
     await medicalHistory.save(err => err && console.log(err));
     res.status(200).json(medicalHistory);
@@ -105,7 +106,7 @@ router.get("/load-medical-histories-by-userId/:userId", authorization, async (re
       return res.status(400).send("something went wrong on loading medical history");
     }
 
-    const medicalHistories = await MedicalHistory.find({ _patient: patient._id }).select(["-__v"]).sort({ date: "desc" });
+    const medicalHistories = await MedicalHistory.find({ _patient: patient._id }).sort({ date: "desc" }).select(["-__v"]);
     
     if (!medicalHistories) {
       return res.status(400).send("something went wrong on loading medical history");
@@ -137,7 +138,7 @@ router.get("/load-medical-histories-by-patientId/:patientId", authorization, asy
 
 router.get("/load-all-medical-histories", authorization, async (req, res) => {
   try {
-    const medicalHistories = await MedicalHistory.find().select(["-__v"]).sort({ date: "asc" });
+    const medicalHistories = await MedicalHistory.find().select(["-__v"]).sort({ date: "desc" });
     
     if (!medicalHistories) {
       return res.status(400).send("something went wrong on loading medical history");
@@ -153,7 +154,7 @@ router.get("/load-all-medical-histories", authorization, async (req, res) => {
 router.get("/load-medical-history/:patientId", authorization, async (req, res) => {
   const patientId = req.params.patientId;
   try {
-    const medicalHistory = await MedicalHistory.find({ _patient: patientId}).select(["-__v"]).sort({ date: "asc" });
+    const medicalHistory = await MedicalHistory.find({ _patient: patientId}).sort({ date: "desc" }).select(["-__v"]).sort({ date: "asc" });
     
     if (!medicalHistory) {
       return res.status(400).send("something went wrong on loading medical history");

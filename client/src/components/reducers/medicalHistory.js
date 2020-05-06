@@ -2,7 +2,8 @@ import {
   ADD_MEDICAL_HISTORY, 
   REMOVE_MEDICAL_HISTORY_DOCTOR, 
   REMOVE_MEDICAL_HISTORY_PATIENT, 
-  LOAD_MEDICAL_HISTORIES 
+  LOAD_MEDICAL_HISTORIES,
+  LOAD_MEDICAL_HISTORIES_ERROR 
 } from "../actions/types";
 
 const initialState = {
@@ -39,7 +40,13 @@ export default function medicalHistory(state = initialState, action) {
         ...state,
         loading: false,
         medicalHistories: [ ...action.data ]
-      }
+      };
+    case LOAD_MEDICAL_HISTORIES_ERROR:
+      return {
+        ...state,
+        loading: false,
+        medicalHistories: []
+      };
     default:
       return state;
   }

@@ -19,6 +19,7 @@ const MedicalHistorySchema = new Schema({
     type: Boolean,
     default: false
   },
+  doctorFullname: String,
   date: {
     type: Date,
     default: Date.now

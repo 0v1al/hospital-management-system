@@ -66,6 +66,7 @@ const UpdateProfile = ({
       <>
         <div className={[stylesHere.profileDesc, "universalMt"].join(" ")}>
           <p>Doctor <strong>{`${doctor.firstname} ${doctor.lastname} `}</strong> Profile</p>
+          <p>Specialization: <strong>{`${doctor.specialization[0].toUpperCase()}${doctor.specialization.slice(1)}`}</strong></p>
           <p>Register Date: <Moment className="bold" format="YYYY-MM-DD">{doctor.date}</Moment></p>
         </div>
         <form className={["universalForm", "universalFormMt"].join(" ")} onSubmit={e => updateDoctorProfileNow(e)}>
