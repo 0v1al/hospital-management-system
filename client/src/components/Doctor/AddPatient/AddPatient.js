@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { loadDoctor, addPatient } from "../../actions/doctor";
 
+import stylesHere from "./AddPatient.module.css";
 import styles from "../../Admin/AddDoctor/AddDoctor.module.css";
 import stylesLoginAdmin from "../../Admin/LoginAdmin/LoginAdmin.module.css";
 
@@ -58,6 +59,7 @@ const AddPatient = ({ loadDoctor, addPatient, doctorId, alerts }) => {
           <i className="fas fa-user-plus"></i>
           Add Patient
         </h3>
+        <p className={stylesHere.warning}>! the patient email must be the same as that of the user who sent the consultation</p>
         <div className={stylesLoginAdmin.inputGroup}>
           <label>* Patient Firstname:</label>
           <div className={[stylesLoginAdmin.inputRegister, stylesLoginAdmin.userIcon].join(" ")}>

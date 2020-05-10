@@ -45,16 +45,16 @@ const AppointmentHistory = ({ loadAdmin, loadAllAppointmentConsultations, consul
                     <td>{index + 1}</td>
                     <td>
                       {
-                        `${consultation._doctor.firstname} ${consultation._doctor.lastname}`
+                       consultation._doctor && `${consultation._doctor.firstname} ${consultation._doctor.lastname}`
                       }
                     </td>
                     <td>
                       {
-                        `${consultation._user.firstname} ${consultation._user.lastname}`
+                        consultation._user && `${consultation._user.firstname} ${consultation._user.lastname}`
                       }
                     </td>
-                    <td>{consultation._doctor.specialization}</td>
-                    <td>{consultation._doctor.consultationPrice}</td>
+                    <td>{consultation._doctor && consultation._doctor.specialization}</td>
+                    <td>{consultation._doctor && consultation._doctor.consultationPrice}</td>
                     <td>
                       <Moment format="YYYY-MM-DD">{`${consultation.consultationDate}`}</Moment>
                       {`/${consultation.time}`}

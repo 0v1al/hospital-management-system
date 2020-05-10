@@ -65,7 +65,7 @@ router.get("/load-user-appointment-consultations/:userEmail", authorization, asy
  
   try {
     const user = await User.findOne({ email: userEmail });
-    const consultations = await Consultation.find({ _user: user._id }).select(["-__v"]).populate({
+    const consultations = await Consultation.find({ _user: user._id }).select(["-__v"]).sort({ creationDate: "desc" }).populate({
       path: "_doctor",
       select: "firstname lastname specialization consultationPrice"
     });
@@ -84,7 +84,7 @@ router.get("/load-doctor-appointment-consultations/:doctorEmail", authorization,
   
   try {
     const doctor = await Doctor.findOne({ email: doctorEmail });
-    const consultations = await Consultation.find({ _doctor: doctor._id }).select(["-__v"]).populate({
+    const consultations = await Consultation.find({ _doctor: doctor._id }).select(["-__v"]).sort({ creationDate: "desc" }).populate({
       path: "_user",
       select: "firstname lastname"
     });
@@ -102,7 +102,7 @@ router.get("/load-doctor-appointment-consultations/:doctorEmail", authorization,
 
 router.get("/load-all-appointment-consultations", authorization, async (req, res) => {
   try {
-    const consultations = await Consultation.find().select(["-__v"]).sort({ creationDate: "asc" }).populate({
+    const consultations = await Consultation.find().select(["-__v"]).sort({ creationDate: "desc" }).populate({
       path: "_user",
       select: "firstname lastname"
     }).populate({

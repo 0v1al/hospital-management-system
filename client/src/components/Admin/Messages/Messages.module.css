@@ -35,7 +35,6 @@
 }
 
 .btnSend:last-child {
-  margin-left: 1rem;
   width: 8rem !important;
   background: transparent;
   border: .1rem solid var(--primary-color);
@@ -51,7 +50,6 @@
   color: var(--primary-color);
   width: 10rem;
   align-self: flex-end;
-  margin-left: 1rem;
 }
 
 .containerBtns {

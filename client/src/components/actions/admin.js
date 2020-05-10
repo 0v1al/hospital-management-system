@@ -278,6 +278,7 @@ export const patientReports = (fromDate, toDate) => async dispatch => {
       type: PATIENT_REPORTS,
       data: res.data
     });
+    dispatch(createAlert("Reports between these dates", "success", 2000));
   } catch (err) {
     const errors = err.response.data.errors;
     

@@ -117,7 +117,7 @@ const AppointmentHistory = ({
              (<tr className={[`universalTableRow ${consultation.active ? "" : "canceled"}`].join(" ")} data-id={consultation._id} data-user={consultation._user._id}  key={index}>
                 <td>{index + 1}</td>
                 <td>{
-                    consultation._doctor && (
+                    consultation._user && (
                       `${consultation._user.firstname} ${consultation._user.lastname}`
                 )}</td>
                 <td>{consultation.userEmail}</td>

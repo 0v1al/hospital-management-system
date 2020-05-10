@@ -1,0 +1,8 @@
+.warning {
+  color: red;
+  font-size: .7rem;
+  text-transform: uppercase;
+  align-self: flex-start;
+  margin-bottom: .5rem;
+  font-weight: bold;
+}

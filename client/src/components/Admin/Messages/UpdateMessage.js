@@ -56,7 +56,7 @@ const UpdateMessage = ({ loadAdmin, loadMessages, updateMessage, markAsReadMessa
   return !loading ? (
     <div className="universalContainer">
       <h2 className="universalTitle">Admin | Contact Messages</h2>
-      <div>
+      <div className="universalMt">
         <h3 className={["universalDesc", styles.desc].join(" ")}>
           <i class="fas fa-edit"></i> 
           Update Message
@@ -86,11 +86,7 @@ const UpdateMessage = ({ loadAdmin, loadMessages, updateMessage, markAsReadMessa
             <span className={styles.messageValue}>{message}</span>
           </div>
           <div className={styles.messageContainer}>
-            <form onSubmit={e => updateMessageNow(e)}>
-              <span className={styles.messageFields}>Admin Response:</span> 
-              <textarea className={["universalInput", styles.message].join(" ")} type="text" rows="4" cols="40" placeholder="Enter response..." name="response" value={response} onChange={e => setInput({ ...input, [e.target.name]: e.target.value }) } />
-              <div className={styles.containerBtns}>
-                <input className={styles.btnSend} type="submit" value="update"/>                  
+            <div className={styles.containerBtns}>
                 {isMarkedAsRead() ?
                   (
                     <span className={styles.messageReaded}>Message readed</span>
@@ -98,8 +94,7 @@ const UpdateMessage = ({ loadAdmin, loadMessages, updateMessage, markAsReadMessa
                     <input className={styles.btnSend} type="submit" value="mark as read" onClick={e => markAsReadTheMessage(e)} />
                   )
                 }
-              </div>
-            </form>
+            </div>
           </div>
         </div>  
       </div> 

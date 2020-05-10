@@ -11,6 +11,7 @@ import styles from "./Reports.module.css";
 import stylesLoginAdmin from "../LoginAdmin/LoginAdmin.module.css";
 
 const Reports = ({ loadAdmin, patientReports, patients, loading, alerts}) => {
+  const [reported, setReported] = useState(false);
   const [input, setInput] = useState({
     fromDate: "",
     toDate: ""
@@ -30,6 +31,7 @@ const Reports = ({ loadAdmin, patientReports, patients, loading, alerts}) => {
      return store.dispatch(createAlert("You need to add the date", "fail", 2000));
     }
     patientReports(fromDate, toDate);
+    setReported(true);
   };
 
   return (
@@ -60,7 +62,7 @@ const Reports = ({ loadAdmin, patientReports, patients, loading, alerts}) => {
           </div>
           <span>[* = required]</span>
         </div>
-        <input type="submit" value="submit" className="universalBtnForm"/>
+        <input type="submit" value="submit" className="universalBtnForm" />
       </form>
       <div className="universalContainerTable">
         <h3 className="universalDesc universalDescForm">
@@ -91,7 +93,7 @@ const Reports = ({ loadAdmin, patientReports, patients, loading, alerts}) => {
           </thead>
           <tbody>
             {loading ? (patients.map((patient, index) => 
-                (<tr className="universalTableRow" data-email={patient.email}  key={index}>
+                reported && (<tr className="universalTableRow" data-email={patient.email}  key={index}>
                     <td>{index + 1}</td>
                     <td>
                       {
