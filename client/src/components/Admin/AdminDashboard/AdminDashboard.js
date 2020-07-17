@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { loadAdmin, loadEntityNumber } from "../../actions/admin"; 
+import { loadAdmin, loadEntityNumber } from "../../actions/admin";
 import Spinner from "../../Layout/Spinner/Spinner";
 import styles from "./AdminDashboard.module.css";
 
-const AdminDashboard = ({ loadAdmin, loadEntityNumber, entityNumber, loading }) => {
+const AdminDashboard = ({
+  loadAdmin,
+  loadEntityNumber,
+  entityNumber,
+  loading,
+}) => {
   useEffect(() => {
     const fetch = async () => {
       loadAdmin();
       loadEntityNumber();
     };
     fetch();
-  }, [loadAdmin, loadEntityNumber])
+  }, [loadAdmin, loadEntityNumber]);
 
   return (
     <div className="universalContainer">
@@ -42,7 +47,8 @@ const AdminDashboard = ({ loadAdmin, loadEntityNumber, entityNumber, loading }) 
             </span>
             <h3 className={styles.adminDashboardCardTitle}>Consultations</h3>
             <p className={styles.adminDashboardCardDesc}>
-              Total Consultations: <span>{entityNumber.consultationsNumber}</span>
+              Total Consultations:{" "}
+              <span>{entityNumber.consultationsNumber}</span>
             </p>
           </div>
           <div className={styles.adminDashboardCard}>
@@ -64,14 +70,19 @@ const AdminDashboard = ({ loadAdmin, loadEntityNumber, entityNumber, loading }) 
             </p>
           </div>
         </div>
-      ) : (<Spinner/>)}
+      ) : (
+        <Spinner />
+      )}
+      <p></p>
     </div>
-  );  
+  );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   loading: state.admin.loading,
-  entityNumber: state.admin.entityNumber
+  entityNumber: state.admin.entityNumber,
 });
 
-export default connect(mapStateToProps, { loadAdmin, loadEntityNumber })(AdminDashboard);
+export default connect(mapStateToProps, { loadAdmin, loadEntityNumber })(
+  AdminDashboard
+);

@@ -6,12 +6,12 @@ const PatientSchema = new Schema({
     {
       type: Schema.ObjectId,
       consultationActive: Boolean,
-      ref: "doctors"
-    }
+      ref: "doctors",
+    },
   ],
   _user: {
     type: Schema.ObjectId,
-    ref: "users"
+    ref: "users",
   },
   firstname: String,
   lastname: String,
@@ -25,9 +25,12 @@ const PatientSchema = new Schema({
   consultationActive: Boolean,
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  updateDate: Date
+  updateDate: Date,
+  dataNastere: {
+    type: Date,
+  },
 });
 
 const Patient = mongoose.model("patients", PatientSchema);

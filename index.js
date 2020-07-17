@@ -1,4 +1,4 @@
-require('dotenv').config({ path: "./config/.env" });
+require("dotenv").config({ path: "./config/.env" });
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -16,14 +16,19 @@ const routeMessage = require("./router/message/message");
 const routeAppointment = require("./router/user/consultation");
 const routePatient = require("./router/doctor/patient");
 const routeMedicalHistory = require("./router/doctor/medicalHistory");
-const routePdf = require("./router/doctor/generatePdf"); 
+const routePdf = require("./router/doctor/generatePdf");
 const routeNotification = require("./router/notification/notification");
 
 const app = express();
 
-mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
-.then(() => console.log('database connection established...'))
-.catch(err => console.log(`${err} [database connection]`));
+mongoose
+  .connect(process.env.DB_CONNECTION, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
+  .then(() => console.log("database connection established..."))
+  .catch((err) => console.log(`${err} [database connection]`));
 
 app.use(cors());
 app.use(express.json());

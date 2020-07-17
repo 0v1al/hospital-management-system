@@ -103,7 +103,7 @@ const AppointmentHistory = ({
                   <Moment format="YYYY/MM/DD">{`${new Date(consultation.consultationDate)}`}</Moment>
                   {`/${consultation.time}`}
                 </td>
-                <td><Moment format="YYYY/MM/DD">{consultations.creationDate}</Moment></td>
+                <td><Moment format="YYYY/MM/DD">{consultation.creationDate}</Moment></td>
                 <td>{
                   consultation.canceled ? 
                   <p className="universalCancel">Canceled By You</p> : 

@@ -179,6 +179,8 @@ const ViewPatient = ({
         ) : (<Spinner />)}
         <button className={["universalBtnForm", styles.btn].join(" ")} onClick={e => showModal(e)}>add medical history</button>
 
+        {/* <button className={["universalBtnForm", styles.btn].join(" ")} onClick={e => addPrespcription(e)}>add prescription</button> */}
+
         <button className={["universalBtnForm", styles.btn].join(" ")} onClick={downloadPdf}>
           <i class="fas fa-file-download"></i>
           download pdf
